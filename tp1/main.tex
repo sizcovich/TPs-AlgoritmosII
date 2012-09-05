@@ -72,9 +72,9 @@
 \tadExporta{abcat, generadores, observadores básicos}
 \tadUsa{\tadNombre{Nombre}}
 
-\tadIgualdadObservacional{a_{1}}{ a_{2}}{arbolcategorias}{$(a_{1} =_{obs} a_{2}
-\Leftrightarrow categoria(a_{1}) = categoria(a_{2}) \land subcategorias(a_{1}) =
-subcategorias(a_{2}))$}
+\tadIgualdadObservacional{$a_{1}$}{$a_{2}$}{arbolcategorias}{($a_{1}$ $=_{obs}$ $a_{2}$
+\Leftrightarrow categoria($a_{1}$) = categoria($a_{2}$) $\land$ subcategorias($a_{1}$) =
+subcategorias($a_{2}$))}
 \tadAlinearFunciones{\argumento = 0?}{nat/$n$,nat/$m$}
 \tadObservadores
 
@@ -88,13 +88,18 @@ subcategorias(a_{2}))$}
 
 
 \tadOtrasOperaciones
+%nombreUnico: nombre x conj(abcat) -> bool
 
+%sacarNombres: conj(abcat) -> conj(nombre)
+
+%todasLasCategorias: abcat -> conj(nombre)
 
 \tadAxiomas
 \tadAlinearAxiomas{pred(suc($n$))}
 \tadAxioma{categoria(nodo(n, conj(a)))}{n}
-\tadAxioma{subcategorias (nodo(n, conj(a)))}{conj(a)}
-
+\tadAxioma{subcategorias(nodo(n, conj(a)))}{conj(a)}
+\tadAxioma{nombreUnico(n, ca)}{$\neg$(n $\in$ sacarNombres(ca)}
+\tadAxioma{sacarNombres(ca)}{if $\emptyset$?(ca) then $\emptyset$ else todasLasCategorias(dameUno(ca)) $\cup$ sacarNombres(sinUno(ca))}
 \end{tad}
 
 
@@ -105,32 +110,48 @@ subcategorias(a_{2}))$}
 \tadExporta{sist, generadores, observadores básicos}
 \tadUsa{\tadNombre{Fecha, Link, Nombre, Arbol de categorias}}
 
-\tadIgualdadObservacional{ s_{1}}{s_{2}}{sistema}{$(s_{1} =_{obs} s_{2}
-\Leftrightarrow (todosLosLinks(s_{1}) = todosLosLinks(s_{2}) \land
- ((\forall: link \in todosLosLinks(s_{1})) visitas(l, s_{1}) = visitas(l, s_{2}) ) \land
-((\forall l: link \in todosLosLinks(s_{1})) categoria(l, s_{1}) = categoria(l, s_{2})))$}
+\tadIgualdadObservacional{$s_{1}$}{$s_{2}$}{sistema}{($s_{1}$ $=_{obs}$ $s_{2}$
+$\Leftrightarrow$ (todosLosLinks($s_{1}$) = todosLosLinks($s_{2}$) $\land$
+ (($\forall$ l:link $\in$ todosLosLinks($s_{1}$))visitas(l, $s_{1}$) = visitas(l, $s_{2}$)) $\land$
+(($\forall$ l:link $\in$ todosLosLinks($s_{1}$))categoria(l, $s_{1}$) = categoria(l, $s_{2}$)))}
 \tadAlinearFunciones{\argumento = 0?}{nat/$n$,nat/$m$}
 \tadObservadores
 
+\tadOperacion{arbol}{sist}{abcat}{}
 \tadOperacion{todosLosLinks}{sist}{conjunto(link)}{}
 \tadOperacion{visitas}{link x sist}{conjunto(fecha)}{}
-\tadOperacion{categoria}{link x sist}{nombre}{}
+\tadOperacion{categoria}{link l x sist s}{nombre}{linkEnSist(l, s)}
 
 
 \tadGeneradores
 
 \tadOperacion{inicio}{abcat}{sist}{}
-\tadOperacion{registrarLink}{link x nombre x sist}{sist}{$link unico \land
-nombre en sist$}
-\tadOperacion{registrarAcceso}{fecha x link x sist}{sist}{link en sist}
+\tadOperacion{registrarLink}{link l x nombre n x sist s}{sist}{linkUnico(l, s) $\land$
+nombreEnSist(n, s)}
+\tadOperacion{registrarAcceso}{fecha x link l x sist}{sist}{linkEnSist(l, s)}
 
 
 \tadOtrasOperaciones
+%linkUnico: link x sist -> bool
 
+%nombreEnSist: nombre x sist -> bool
+
+%linkEnSist: link x sist -> bool
 
 \tadAxiomas
 \tadAlinearAxiomas{pred(suc($n$))}
-
+\tadAxioma{todosLosLinks(inicio(a))}{$\emptyset$}
+\tadAxioma{todosLosLinks(registrarAcceso(f, l, s))}{todosLosLinks(s)}
+\tadAxioma{todosLosLinks(registrarLink(l, n, s))}{Ag(l, todosLosLinks(s))}
+\tadAxioma{visitas(l, inicio(a))}{$\emptyset$}
+\tadAxioma{visitas(l, registrarAcceso(f, l’, s))}{if (l = l’) then Ag(f, visitas(l ,s)) else visitas (l, s) fi} %como escribimos los if?
+\tadAxioma{visitas(l, registrarLink(l’, n, s))}{visitas(l, s)}
+\tadAxioma{categoria(l, registrarAcceso(f, l’, s))}{categoria (l, s)}
+\tadAxioma{categoria(l, registrarLink(l’, n, s))}{if (l = l’) then n else categoria (l, s) fi}
+\tadAxioma{arbol(inicio(a))}{a}
+\tadAxioma{arbol(registrarAcceso(f, l, s))}{arbol(s)}
+\tadAxioma{arbol(registrarLink(l, n, s))}{arbol(s)}
+\tadAxioma{linkUnico(l, inicio(a))}{true}
 
 \end{tad}
 

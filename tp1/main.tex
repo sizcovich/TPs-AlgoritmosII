@@ -72,7 +72,9 @@
 \tadExporta{abcat, generadores, observadores básicos}
 \tadUsa{\tadNombre{Nombre}}
 
-\tadIgualdadObservacional{n}{m}{nat}{$(\forall a_{1}, a_{2} : arbolcategorias)(a_{1} =_{obs} a_{2} \Leftrightarrow categoria(a_{1}) = categoria(a_{2}) \andlogic subcategorias(a_{1}) = subcategorias(a_{2}))$}
+\tadIgualdadObservacional{a_{1}}{ a_{2}}{arbolcategorias}{$(a_{1} =_{obs} a_{2}
+\Leftrightarrow categoria(a_{1}) = categoria(a_{2}) \land subcategorias(a_{1}) =
+subcategorias(a_{2}))$}
 \tadAlinearFunciones{\argumento = 0?}{nat/$n$,nat/$m$}
 \tadObservadores
 
@@ -103,7 +105,10 @@
 \tadExporta{sist, generadores, observadores básicos}
 \tadUsa{\tadNombre{Fecha, Link, Nombre, Arbol de categorias}}
 
-\tadIgualdadObservacional{n}{m}{nat}{$(\forall s_{1}, s_{2}: sistema) (s_{1} =_{obs} s_{2} \Leftrightarrow (todosLosLinks(s_{1}) = todosLosLinks(s_{2}) \andlogic ((\forall l: link \in todosLosLinks(s_{1})) visitas(l, s_{1}) = visitas(l, s_{2}) ) \andlogic ((\forall l: link \in todosLosLinks(s_{1})) categoria(l, s_{1}) = categoria(l, s_{2})))$}
+\tadIgualdadObservacional{ s_{1}}{s_{2}}{sistema}{$(s_{1} =_{obs} s_{2}
+\Leftrightarrow (todosLosLinks(s_{1}) = todosLosLinks(s_{2}) \land
+ ((\forall: link \in todosLosLinks(s_{1})) visitas(l, s_{1}) = visitas(l, s_{2}) ) \land
+((\forall l: link \in todosLosLinks(s_{1})) categoria(l, s_{1}) = categoria(l, s_{2})))$}
 \tadAlinearFunciones{\argumento = 0?}{nat/$n$,nat/$m$}
 \tadObservadores
 
@@ -115,7 +120,8 @@
 \tadGeneradores
 
 \tadOperacion{inicio}{abcat}{sist}{}
-\tadOperacion{registrarLink}{link x nombre x sist}{sist}{link unico ^ nombre en sist}
+\tadOperacion{registrarLink}{link x nombre x sist}{sist}{$link unico \land
+nombre en sist$}
 \tadOperacion{registrarAcceso}{fecha x link x sist}{sist}{link en sist}
 
 

@@ -88,11 +88,11 @@ subcategorias($a_{2}$))}
 
 
 \tadOtrasOperaciones
-%nombreUnico: nombre x conj(abcat) -> bool
+\tadOperacion{nombreUnico}{nombre x conj(abcat)}{bool}{}
 
-%sacarNombres: conj(abcat) -> conj(nombre)
+\tadOperacion{sacarNombres}{conj(abcat)}{conj(nombre){}
 
-%todasLasCategorias: abcat -> conj(nombre)
+\tadOperacion{todasLasCategorias}{abcat}{conj(nombre)}{}
 
 \tadAxiomas
 \tadAlinearAxiomas{˜˜˜˜˜˜˜˜˜˜˜˜}
@@ -132,11 +132,11 @@ nombreEnSist(n, s)}
 
 
 \tadOtrasOperaciones
-\tadOperacion linkUnico: link x sist -> bool
+\tadOperacion{linkUnico}{link x sist}{bool}{}
 
-\tadOperacion nombreEnSist: nombre x sist -> bool
+\tadOperacion{nombreEnSist}{nombre x sist}{bool}{}
 
-\tadOperacion linkEnSist: link x sist -> bool
+\tadOperacion{linkEnSist}{link x sis}{bool}{}
 
 \tadAxiomas
 \tadAlinearAxiomas{pred(suc($n$))}
@@ -152,6 +152,21 @@ nombreEnSist(n, s)}
 \tadAxioma{arbol(registrarAcceso(f, l, s))}{arbol(s)}
 \tadAxioma{arbol(registrarLink(l, n, s))}{arbol(s)}
 \tadAxioma{linkUnico(l, inicio(a))}{true}
+\tadAxioma{linkUnico(l, registrarAcceso(f, l’, s))}{linkUnico(l, s)}
+
+\tadAxioma{linkUnico(l, registrarLink(l’, n, s))}{if (l = l’) then false else linkUnico(l, s) fi}
+
+\tadAxioma{nombreEnSist(n, inicio(a))}{$\neg$(n $\in$ todasLasCategorias(a))}
+
+\tadAxioma{nombreEnSist(n, registrarAcceso(f, l, s))}{nombreEnSist(n, s)}
+
+\tadAxioma{nombreEnSist(n, registrarLink(l, n’, s))}{nombreEnSist(n, s)}
+
+\tadAxioma{linkEnSist(l, inicio(a))}{false}
+
+\tadAxioma{linkEnSist(l, registrarAcceso(f, l’, s))}{linkEnSist(l, s)}
+
+\tadAxioma{linkEnSist(l, registrarLink(l’, n, s))}{if (l = l’) then true else linkEnSist(l, s) fi}
 
 \end{tad}
 

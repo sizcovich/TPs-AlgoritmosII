@@ -1,6 +1,6 @@
 \documentclass[10pt, a4paper]{article}
 \usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=1.5cm, top=3.5cm]{geometry}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}
 \usepackage{indentfirst}
@@ -20,8 +20,8 @@
 \hypersetup{%
  % Para que el PDF se abra a página completa.
  pdfstartview= {FitH \hypercalcbp{\paperheight-\topmargin-1in-\headheight}},
- pdfauthor={C\'atedra de Algoritmos y Estructuras de Datos II - DC - UBA},
- pdfkeywords={TADs b\'asicos},
+ pdfauthor={Cátedra de Algoritmos y Estructuras de Datos II - DC - UBA},
+ pdfkeywords={TADs básicos},
  pdfsubject={Tipos abstractos de datos básicos}
 }
 
@@ -42,19 +42,19 @@
 
 \author{Algoritmos y Estructuras de Datos II, DC, UBA.}
 \date{}
-\title{Tipos abstractos de datos b\'asicos}
+\title{Tipos abstractos de datos básicos}
 
 \begin{document}
 
 \materia{Algoritmos y Estructuras de Datos II}
-\submateria{Tipos abstractos de datos b\'asicos}
+\submateria{Tipos abstractos de datos básicos}
 \titulo{LinkLinkIt}
-\subtitulo{Catalogo de rutas en internet}
+\subtitulo{Catálogo de rutas en internet}
 \grupo{3}
 \integrante{Barabas, Ariel}{775/11}{ariel.baras@gmail.com}
 \integrante{Izcovich, Sabrina}{550/11}{sizcovich@gmail.com}
 \integrante{Otero, Fernando}{424/11}{fergabot@gmail.com}
-\integrante{Vita, Sebasti\'an}{149/11}{sebastian\_vita@yahoo.com.ar}
+\integrante{Vita, Sebastián}{149/11}{sebastian\_vita@yahoo.com.ar}
 
 %Pagina de titulo e indice
 \thispagestyle{empty}
@@ -162,8 +162,7 @@ nombreEnSist(n, s)}
 \tadAxioma{nombreEnSist(n, registrarLink(l, n', s))}{nombreEnSist(n, s)}
 \tadAxioma{linkEnSist(l, inicio(a))}{false}
 \tadAxioma{linkEnSist(l, registrarAcceso(f, l', s))}{linkEnSist(l, s)}
-\tadAxioma{linkEnSist(l, registrarLink(l', n, s))}{if (l = l') then true else
-linkEnSist(l, s) fi}
+\tadAxioma{linkEnSist(l, registrarLink(l', n, s))}{$\if${l = l'}{true}{linkEnSist(l, s)}$\fi$}
 
 \end{tad}
 

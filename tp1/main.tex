@@ -65,27 +65,39 @@
 \newpage
 
 %TADS
+\section{TAD \tadNombre{LINK}}
+
+\begin{tad}{\tadNombre{Link ES string}}
+
+\section{TAD \tadNombre{NOMBRE}}
+
+\begin{tad}{\tadNombre{Nombre ES string}}
+
+\section{TAD \tadNombre{FECHA}}
+
+\begin{tad}{\tadNombre{Fecha ES nat}}
+
+
 \section{TAD \tadNombre{ARBOL DE CATEGORIAS}}
 
-\begin{tad}{\tadNombre{AbCat}}
-\tadGeneros{AbCat}
+\begin{tad}{\tadNombre{ARBOL DE CATEGORIAS}}
+\tadGeneros{abcat}
 \tadExporta{abcat, generadores, observadores básicos}
 \tadUsa{\tadNombre{Nombre}}
 
-\tadIgualdadObservacional{a_{1}}{a_{2}}{arbolcategorias}{($a_{1}$ $=_{obs}$ $a_{2}$
-$\Leftrightarrow$ categoria($a_{1}$) = categoria($a_{2}$) $\land$ subcategorias($a_{1}$) =
+\tadIgualdadObservacional{a_{1}}{a_{2}}{abcat}{( categoria($a_{1}$) = categoria($a_{2}$)) $\land$ (subcategorias($a_{1}$) =
 subcategorias($a_{2}$))}
 
 
 \tadObservadores
-\tadAlinearFunciones{subcategorias}{abcat(nombre)}
-\tadOperacion{subcategorias}{abcat(nombre)}{conjunto(abcat(nombre))}{}
-\tadOperacion{categoria}{abcat(nombre)}{nombre}{}
+\tadAlinearFunciones{subcategorias}{abcat)}
+\tadOperacion{subcategorias}{abcat}{conj(abcat)}{}
+\tadOperacion{categoria}{abcat}{nombre}{}
 
 
 \tadGeneradores
 \tadAlinearFunciones{aaaaaaaaa}{aaaaaaaaaaaaaaaaaaaaa}
-\tadOperacion{nodo}{nombre x conjunto(abcat)}{abcat}{nombre unico}
+\tadOperacion{nodo}{nombre n x conj(abcat) ca}{abcat}{nombreUnico(n, ca)}
 
 
 \tadOtrasOperaciones
@@ -99,8 +111,9 @@ subcategorias($a_{2}$))}
 \tadAlinearAxiomas{aaaaaaaaaaaaaaaaaaaaaaaaaaa}
 \tadAxioma{categoria(nodo(n, conj(a)))}{n}
 \tadAxioma{subcategorias(nodo(n, conj(a)))}{conj(a)}
-\tadAxioma{nombreUnico(n, ca)}{$\neg$(n $\in$ sacarNombres(ca)}
+\tadAxioma{nombreUnico(n, ca)}{$\neg$(n $\in$ sacarNombres(ca))}
 \tadAxioma{sacarNombres(ca)}{if $\emptyset$?(ca) then $\emptyset$ else todasLasCategorias(dameUno(ca)) $\cup$ sacarNombres(sinUno(ca))}
+\tadAxioma{todasLasCategorias (nodo(n, ca))}{Ag(n, sacarNombres (ca))}
 \end{tad}
 
 

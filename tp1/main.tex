@@ -82,7 +82,7 @@
 
 \begin{tad}{\tadNombre{ARBOL DE CATEGORIAS}}
 \tadGeneros{abcat}
-\tadExporta{abcat, generadores, observadores básicos}
+\tadExporta{abcat, generadores, observadores básicos, todasLasCategorias}
 \tadUsa{\tadNombre{Nombre}}
 
 \tadIgualdadObservacional{a_{1}}{a_{2}}{abcat}{( categoria($a_{1}$) = categoria($a_{2}$)) $\land$ (subcategorias($a_{1}$) =
@@ -107,7 +107,8 @@ subcategorias($a_{2}$))}
 \tadOperacion{todasLasCategorias}{abcat}{conj(nombre)}{}
 
 
-\tadAxiomas
+\tadAxiomas 
+\forall a: abcat, \forall n: nombre, \forall ca: conj(abcat)
 \tadAlinearAxiomas{aaaaaaaaaaaaaaaaaaaaaaaaaaa}
 \tadAxioma{categoria(nodo(n, conj(a)))}{n}
 \tadAxioma{subcategorias(nodo(n, conj(a)))}{conj(a)}
@@ -119,15 +120,14 @@ subcategorias($a_{2}$))}
 
 \section{TAD \tadNombre{SISTEMA}}
 
-\begin{tad}{\tadNombre{Sist}}
-\tadGeneros{Sist}
+\begin{tad}{\tadNombre{SISTEMA}}
+\tadGeneros{sist}
 \tadExporta{sist, generadores, observadores básicos}
 \tadUsa{\tadNombre{Fecha, Link, Nombre, Arbol de categorias}}
 
-\tadIgualdadObservacional{s_{1}}{s_{2}}{sistema}{($s_{1}$ $=_{obs}$ $s_{2}$
-$\Leftrightarrow$ (todosLosLinks($s_{1}$) = todosLosLinks($s_{2}$) $\land$
- (($\forall$ l:link $\in$ todosLosLinks($s_{1}$))visitas(l, $s_{1}$) = visitas(l, $s_{2}$)) $\land$
-(($\forall$ l:link $\in$ todosLosLinks($s_{1}$))categoria(l, $s_{1}$) = categoria(l, $s_{2}$)))}
+\tadIgualdadObservacional{s_{1}}{s_{2}}{sistema}{(arbol($s_{1}$) = arbol($s_{2}$)) $\land$(todosLosLinks($s_{1}$) = todosLosLinks($s_{2}$)) $\land_{L}$
+ (($\forall$ l:link $\in$ todosLosLinks($s_{1}$))visitas(l, $s_{1}$) = visitas(l, $s_{2}$)) $\land_{L}$
+(($\forall$ l:link $\in$ todosLosLinks($s_{1}$))categoria(l, $s_{1}$) = categoria(l, $s_{2}$))}
 
 
 \tadAlinearFunciones{aaaaaaaaaaaaaaaaaaa}{aaaaaaaaaaaaaaaaaaa}
@@ -135,8 +135,8 @@ $\Leftrightarrow$ (todosLosLinks($s_{1}$) = todosLosLinks($s_{2}$) $\land$
 
 \tadObservadores
 \tadOperacion{arbol}{sist}{abcat}{}
-\tadOperacion{todosLosLinks}{sist}{conjunto(link)}{}
-\tadOperacion{visitas}{link x sist}{conjunto(fecha)}{}
+\tadOperacion{todosLosLinks}{sist}{conj(link)}{}
+\tadOperacion{visitas}{link x sist}{conj(fecha)}{}
 \tadOperacion{categoria}{link l x sist s}{nombre}{linkEnSist(l, s)}
 
 
@@ -155,6 +155,7 @@ nombreEnSist(n, s)}
 
 
 \tadAxiomas
+\forall a: abcat, \forall f: fecha, \forall l,l': link, \forall s: sist, \forall n,n': nombre 
 \tadAlinearAxiomas{aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
 \tadAxioma{todosLosLinks(inicio(a))}{$\emptyset$}
 \tadAxioma{todosLosLinks(registrarAcceso(f, l, s))}{todosLosLinks(s)}

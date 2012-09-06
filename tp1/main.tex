@@ -20,8 +20,8 @@
 \hypersetup{%
  % Para que el PDF se abra a página completa.
  pdfstartview= {FitH \hypercalcbp{\paperheight-\topmargin-1in-\headheight}},
- pdfauthor={Cátedra de Algoritmos y Estructuras de Datos II - DC - UBA},
- pdfkeywords={TADs básicos},
+ pdfauthor={C\'atedra de Algoritmos y Estructuras de Datos II - DC - UBA},
+ pdfkeywords={TADs b\'asicos},
  pdfsubject={Tipos abstractos de datos básicos}
 }
 
@@ -65,51 +65,43 @@
 \newpage
 
 %TADS
-\section{TAD \tadNombre{LINK}}
+\section{Alias}
 
-\begin{tad}{\tadNombre{Link ES string}}
-
-\section{TAD \tadNombre{NOMBRE}}
-
-\begin{tad}{\tadNombre{Nombre ES string}}
-
-\section{TAD \tadNombre{FECHA}}
-
-\begin{tad}{\tadNombre{Fecha ES nat}}
+\tad{\tadNombre{Link} ES \tadNombre{string}}
+\tad{\tadNombre{Nombre} ES \tadNombre{string}}
+\tad{\tadNombre{Fecha} ES \tadNombre{nat}}
 
 
 \section{TAD \tadNombre{ARBOL DE CATEGORIAS}}
 
 \begin{tad}{\tadNombre{ARBOL DE CATEGORIAS}}
-\tadGeneros{abcat}
-\tadExporta{abcat, generadores, observadores básicos, todasLasCategorias}
+\tadGeneros{abCat}
+\tadExporta{abCat, generadores, observadores b\'asicos, todasLasCategorias}
 \tadUsa{\tadNombre{Nombre}}
 
-\tadIgualdadObservacional{a_{1}}{a_{2}}{abcat}{( categoria($a_{1}$) = categoria($a_{2}$)) $\land$ (subcategorias($a_{1}$) =
+\tadIgualdadObservacional{a_{1}}{a_{2}}{abCat}{( categoria($a_{1}$) = categoria($a_{2}$)) $\land$ (subcategorias($a_{1}$) =
 subcategorias($a_{2}$))}
 
 
 \tadObservadores
-\tadAlinearFunciones{subcategorias}{abcat)}
-\tadOperacion{subcategorias}{abcat}{conj(abcat)}{}
-\tadOperacion{categoria}{abcat}{nombre}{}
+\tadAlinearFunciones{todasLasCategorias}{nombre n,conj(abCat)\ ca}
+\tadOperacion{subcategorias}{abCat}{conj(abCat)}{}
+\tadOperacion{categoria}{abCat}{nombre}{}
 
 
 \tadGeneradores
-\tadAlinearFunciones{aaaa}{aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
-\tadOperacion{nodo}{nombre n,conj(abcat) ca}{abcat}{nombreUnico(n, ca)}
+\tadOperacion{nodo}{nombre n,conj(abCat)\ ca}{abCat}{nombreUnico(n, ca)}
 
 
 \tadOtrasOperaciones
-\tadAlinearFunciones{aaaaaaaaaaaaaaaa}{aaaaaaaaaaaaaaaaaaaaaa}
-\tadOperacion{nombreUnico}{nombre,conj(abcat)}{bool}{}
-\tadOperacion{sacarNombres}{conj(abcat)}{conj(nombre)}{}
-\tadOperacion{todasLasCategorias}{abcat}{conj(nombre)}{}
+\tadOperacion{nombreUnico}{nombre,conj(abCat)}{bool}{}
+\tadOperacion{sacarNombres}{conj(abCat)}{conj(nombre)}{}
+\tadOperacion{todasLasCategorias}{abCat}{conj(nombre)}{}
 
 
 \tadAxiomas 
-($\forall$a: abcat, $\forall$n: nombre, $\forall$ca: conj(abcat))
-\tadAlinearAxiomas{aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
+($\forall$a: abCat, $\forall$n: nombre, $\forall$ca: conj(abCat))
+\tadAlinearAxiomas{todasLasCategorias(nodo(n, ca))}{Ag(n, sacarNombres (ca))}
 \tadAxioma{categoria(nodo(n, conj(a)))}{n}
 \tadAxioma{subcategorias(nodo(n, conj(a)))}{conj(a)}
 \tadAxioma{nombreUnico(n, ca)}{$\neg$(n $\in$ sacarNombres(ca))}
@@ -130,21 +122,17 @@ subcategorias($a_{2}$))}
 (($\forall$ l:link $\in$ todosLosLinks($s_{1}$))categoria(l, $s_{1}$) = categoria(l, $s_{2}$))}
 
 
-\tadAlinearFunciones{aaaaaaaaaaaa}{aaaaaaaaaaaaa}
-
-
 \tadObservadores
-\tadOperacion{arbol}{sist}{abcat}{}
+\tadAlinearFunciones{registrarAcceso}{link l,nombre n,sist s}{sist}{linkUnico(l, s) $\land$ nombreEnSist(n, s)}
+\tadOperacion{arbol}{sist}{abCat}{}
 \tadOperacion{todosLosLinks}{sist}{conj(link)}{}
 \tadOperacion{visitas}{link,sist}{conj(fecha)}{}
 \tadOperacion{categoria}{link l,sist s}{nombre}{linkEnSist(l, s)}
 
 
 \tadGeneradores
-\tadAlinearFunciones{aaaaaaaaaaaaa}{aaaaaaaaaaaaaaaaaaaaa}
-\tadOperacion{inicio}{abcat}{sist}{}
-\tadOperacion{registrarLink}{link l,nombre n,sist s}{sist}{linkUnico(l, s) $\land$
-nombreEnSist(n, s)}
+\tadOperacion{inicio}{abCat}{sist}{}
+\tadOperacion{registrarLink}{link l,nombre n,sist s}{sist}{linkUnico(l, s) $\land$ nombreEnSist(n, s)}
 \tadOperacion{registrarAcceso}{fecha,link l,sist}{sist}{linkEnSist(l, s)}
 
 
@@ -155,8 +143,8 @@ nombreEnSist(n, s)}
 
 
 \tadAxiomas
-($\forall$a: abcat, $\forall$f: fecha, $\forall$l,l': link, $\forall$s: sist, $\forall$ n,n': nombre) 
-\tadAlinearAxiomas{aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
+($\forall$a: abCat, $\forall$f: fecha, $\forall$l,l': link, $\forall$s: sist, $\forall$ n,n': nombre) 
+\tadAlinearAxiomas{nombreEnSist(n, registrarAcceso(f, l, s))}{nombreEnSist(n, s)}
 \tadAxioma{todosLosLinks(inicio(a))}{$\emptyset$}
 \tadAxioma{todosLosLinks(registrarAcceso(f, l, s))}{todosLosLinks(s)}
 \tadAxioma{todosLosLinks(registrarLink(l, n, s))}{Ag(l, todosLosLinks(s))}

@@ -96,13 +96,13 @@ subcategorias($a_{2}$))}
 
 
 \tadGeneradores
-\tadAlinearFunciones{aaaaaaaaa}{aaaaaaaaaaaaaaaaaaaaa}
-\tadOperacion{nodo}{nombre n x conj(abcat) ca}{abcat}{nombreUnico(n, ca)}
+\tadAlinearFunciones{aaaa}{aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
+\tadOperacion{nodo}{nombre n,conj(abcat) ca}{abcat}{nombreUnico(n, ca)}
 
 
 \tadOtrasOperaciones
 \tadAlinearFunciones{aaaaaaaaaaaaaaaa}{aaaaaaaaaaaaaaaaaaaaaa}
-\tadOperacion{nombreUnico}{nombre x conj(abcat)}{bool}{}
+\tadOperacion{nombreUnico}{nombre,conj(abcat)}{bool}{}
 \tadOperacion{sacarNombres}{conj(abcat)}{conj(nombre)}{}
 \tadOperacion{todasLasCategorias}{abcat}{conj(nombre)}{}
 
@@ -114,7 +114,7 @@ subcategorias($a_{2}$))}
 \tadAxioma{subcategorias(nodo(n, conj(a)))}{conj(a)}
 \tadAxioma{nombreUnico(n, ca)}{$\neg$(n $\in$ sacarNombres(ca))}
 \tadAxioma{sacarNombres(ca)}{if $\emptyset$?(ca) then $\emptyset$ else todasLasCategorias(dameUno(ca)) $\cup$ sacarNombres(sinUno(ca))}
-\tadAxioma{todasLasCategorias (nodo(n, ca))}{Ag(n, sacarNombres (ca))}
+\tadAxioma{todasLasCategorias(nodo(n, ca))}{Ag(n, sacarNombres (ca))}
 \end{tad}
 
 
@@ -136,22 +136,22 @@ subcategorias($a_{2}$))}
 \tadObservadores
 \tadOperacion{arbol}{sist}{abcat}{}
 \tadOperacion{todosLosLinks}{sist}{conj(link)}{}
-\tadOperacion{visitas}{link x sist}{conj(fecha)}{}
-\tadOperacion{categoria}{link l x sist s}{nombre}{linkEnSist(l, s)}
+\tadOperacion{visitas}{link,sist}{conj(fecha)}{}
+\tadOperacion{categoria}{link l,sist s}{nombre}{linkEnSist(l, s)}
 
 
 \tadGeneradores
-\tadAlinearFunciones{aaaaaaaaaaaaaaa}{aaaaaaaaaaaaaaaa}
+\tadAlinearFunciones{aaaaaaaaaaaaa}{aaaaaaaaaaaaaaaa}
 \tadOperacion{inicio}{abcat}{sist}{}
-\tadOperacion{registrarLink}{link l x nombre n x sist s}{sist}{linkUnico(l, s) $\land$
+\tadOperacion{registrarLink}{link l,nombre n,sist s}{sist}{linkUnico(l, s) $\land$
 nombreEnSist(n, s)}
-\tadOperacion{registrarAcceso}{fecha x link l x sist}{sist}{linkEnSist(l, s)}
+\tadOperacion{registrarAcceso}{fecha,link l,sist}{sist}{linkEnSist(l, s)}
 
 
 \tadOtrasOperaciones
-\tadOperacion{linkUnico}{link x sist}{bool}{}
-\tadOperacion{nombreEnSist}{nombre x sist}{bool}{}
-\tadOperacion{linkEnSist}{link x sis}{bool}{}
+\tadOperacion{linkUnico}{link,sist}{bool}{}
+\tadOperacion{nombreEnSist}{nombre,sist}{bool}{}
+\tadOperacion{linkEnSist}{link,sis}{bool}{}
 
 
 \tadAxiomas

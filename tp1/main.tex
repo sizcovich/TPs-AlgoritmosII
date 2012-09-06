@@ -108,8 +108,8 @@ subcategorias($a_{2}$))}
 
 
 \tadAxiomas 
-\forall a: abcat, \forall n: nombre, \forall ca: conj(abcat)
-\tadAlinearAxiomas{aaaaaaaaaaaaaaaaaaaaaaaaaaa}
+($\forall$a: abcat, $\forall$n: nombre, $\forall$ca: conj(abcat))
+\tadAlinearAxiomas{aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
 \tadAxioma{categoria(nodo(n, conj(a)))}{n}
 \tadAxioma{subcategorias(nodo(n, conj(a)))}{conj(a)}
 \tadAxioma{nombreUnico(n, ca)}{$\neg$(n $\in$ sacarNombres(ca))}
@@ -130,7 +130,7 @@ subcategorias($a_{2}$))}
 (($\forall$ l:link $\in$ todosLosLinks($s_{1}$))categoria(l, $s_{1}$) = categoria(l, $s_{2}$))}
 
 
-\tadAlinearFunciones{aaaaaaaaaaaaaaaaaaa}{aaaaaaaaaaaaaaaaaaa}
+\tadAlinearFunciones{aaaaaaaaaaaa}{aaaaaaaaaaaaa}
 
 
 \tadObservadores
@@ -141,7 +141,7 @@ subcategorias($a_{2}$))}
 
 
 \tadGeneradores
-\tadAlinearFunciones{aaaaaaaaaaaaa}{aaaaaaaaaaaaaaaa}
+\tadAlinearFunciones{aaaaaaaaaaaaa}{aaaaaaaaaaaaaaaaaaaaa}
 \tadOperacion{inicio}{abcat}{sist}{}
 \tadOperacion{registrarLink}{link l,nombre n,sist s}{sist}{linkUnico(l, s) $\land$
 nombreEnSist(n, s)}
@@ -155,7 +155,7 @@ nombreEnSist(n, s)}
 
 
 \tadAxiomas
-\forall a: abcat, \forall f: fecha, \forall l,l': link, \forall s: sist, \forall n,n': nombre 
+($\forall$a: abcat, $\forall$f: fecha, $\forall$l,l': link, $\forall$s: sist, $\forall$ n,n': nombre) 
 \tadAlinearAxiomas{aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
 \tadAxioma{todosLosLinks(inicio(a))}{$\emptyset$}
 \tadAxioma{todosLosLinks(registrarAcceso(f, l, s))}{todosLosLinks(s)}

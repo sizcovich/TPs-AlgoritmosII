@@ -147,22 +147,23 @@ nombreEnSist(n, s)}
 \tadAxioma{todosLosLinks(registrarAcceso(f, l, s))}{todosLosLinks(s)}
 \tadAxioma{todosLosLinks(registrarLink(l, n, s))}{Ag(l, todosLosLinks(s))}
 \tadAxioma{visitas(l, inicio(a))}{$\emptyset$}
-\tadAxioma{visitas(l, registrarAcceso(f, l’, s))}{if (l = l’) then Ag(f, visitas(l ,s)) else visitas (l, s) fi} %como escribimos los if?
-\tadAxioma{visitas(l, registrarLink(l’, n, s))}{visitas(l, s)}
-\tadAxioma{categoria(l, registrarAcceso(f, l’, s))}{categoria (l, s)}
-\tadAxioma{categoria(l, registrarLink(l’, n, s))}{if (l = l’) then n else categoria (l, s) fi}
+\tadAxioma{visitas(l, registrarAcceso(f, l', s))}{if (l = l') then Ag(f, visitas(l ,s)) else visitas (l, s) fi} %como escribimos los if?
+\tadAxioma{visitas(l, registrarLink(l', n, s))}{visitas(l, s)}
+\tadAxioma{categoria(l, registrarAcceso(f, l', s))}{categoria (l, s)}
+\tadAxioma{categoria(l, registrarLink(l', n, s))}{if (l = l') then n else categoria (l, s) fi}
 \tadAxioma{arbol(inicio(a))}{a}
 \tadAxioma{arbol(registrarAcceso(f, l, s))}{arbol(s)}
 \tadAxioma{arbol(registrarLink(l, n, s))}{arbol(s)}
 \tadAxioma{linkUnico(l, inicio(a))}{true}
-\tadAxioma{linkUnico(l, registrarAcceso(f, l’, s))}{linkUnico(l, s)}
-\tadAxioma{linkUnico(l, registrarLink(l’, n, s))}{if (l = l’) then false else linkUnico(l, s) fi}
+\tadAxioma{linkUnico(l, registrarAcceso(f, l', s))}{linkUnico(l, s)}
+\tadAxioma{linkUnico(l, registrarLink(l', n, s))}{if (l = l') then false else linkUnico(l, s) fi}
 \tadAxioma{nombreEnSist(n, inicio(a))}{$\neg$(n $\in$ todasLasCategorias(a))}
 \tadAxioma{nombreEnSist(n, registrarAcceso(f, l, s))}{nombreEnSist(n, s)}
-\tadAxioma{nombreEnSist(n, registrarLink(l, n’, s))}{nombreEnSist(n, s)}
+\tadAxioma{nombreEnSist(n, registrarLink(l, n', s))}{nombreEnSist(n, s)}
 \tadAxioma{linkEnSist(l, inicio(a))}{false}
-\tadAxioma{linkEnSist(l, registrarAcceso(f, l’, s))}{linkEnSist(l, s)}
-\tadAxioma{linkEnSist(l, registrarLink(l’, n, s))}{if (l = l’) then true else linkEnSist(l, s) fi}
+\tadAxioma{linkEnSist(l, registrarAcceso(f, l', s))}{linkEnSist(l, s)}
+\tadAxioma{linkEnSist(l, registrarLink(l', n, s))}{if (l = l') then true else
+linkEnSist(l, s) fi}
 
 \end{tad}
 

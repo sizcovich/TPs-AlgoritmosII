@@ -1,8 +1,8 @@
 \documentclass[10pt, a4paper]{article}
 \usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=1.5cm, top=3.5cm]{geometry}
-\usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{indentfirst}
 \usepackage{fancyhdr}
 \usepackage{latexsym}
@@ -162,7 +162,7 @@ nombreEnSist(n, s)}
 \tadAxioma{nombreEnSist(n, registrarLink(l, n', s))}{nombreEnSist(n, s)}
 \tadAxioma{linkEnSist(l, inicio(a))}{false}
 \tadAxioma{linkEnSist(l, registrarAcceso(f, l', s))}{linkEnSist(l, s)}
-\tadAxioma{linkEnSist(l, registrarLink(l', n, s))}{$\if${l = l'}{true}{linkEnSist(l, s)}$\fi$}
+\tadAxioma{linkEnSist(l, registrarLink(l', n, s))}{if (l = l') then true else linkEnSist(l, s) fi}
 
 \end{tad}
 

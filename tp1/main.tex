@@ -90,7 +90,7 @@ subcategorias($a_{2}$))}
 
 
 \tadGeneradores
-\tadOperacion{nodo}{nombre n,conj(abCat)\ ca}{abCat}{nombreUnico(n, ca)}
+\tadOperacion{nodo}{nombre \ n,conj(abCat)\ ca}{abCat}{nombreUnico(n, ca)}
 
 
 \tadOtrasOperaciones
@@ -100,8 +100,8 @@ subcategorias($a_{2}$))}
 
 
 \tadAxiomas 
-($\forall$a: abCat, $\forall$n: nombre, $\forall$ca: conj(abCat))
-\tadAlinearAxiomas{todasLasCategorias(nodo(n, ca))}{Ag(n, sacarNombres (ca))}
+$\forall$ a: abCat, $\forall$ n: nombre, $\forall$ ca: conj(abCat)
+\tadAlinearAxiomas{todasLasCategorias(nodo(n, ca))}
 \tadAxioma{categoria(nodo(n, conj(a)))}{n}
 \tadAxioma{subcategorias(nodo(n, conj(a)))}{conj(a)}
 \tadAxioma{nombreUnico(n, ca)}{$\neg$(n $\in$ sacarNombres(ca))}
@@ -123,17 +123,17 @@ subcategorias($a_{2}$))}
 
 
 \tadObservadores
-\tadAlinearFunciones{registrarAcceso}{link l,nombre n,sist s}{sist}{linkUnico(l, s) $\land$ nombreEnSist(n, s)}
+\tadAlinearFunciones{registrarAcceso}{link l,nombre n,sist s}
 \tadOperacion{arbol}{sist}{abCat}{}
 \tadOperacion{todosLosLinks}{sist}{conj(link)}{}
 \tadOperacion{visitas}{link,sist}{conj(fecha)}{}
-\tadOperacion{categoria}{link l,sist s}{nombre}{linkEnSist(l, s)}
+\tadOperacion{categoria}{link \ l,sist \ s}{nombre}{linkEnSist(l, s)}
 
 
 \tadGeneradores
 \tadOperacion{inicio}{abCat}{sist}{}
-\tadOperacion{registrarLink}{link l,nombre n,sist s}{sist}{linkUnico(l, s) $\land$ nombreEnSist(n, s)}
-\tadOperacion{registrarAcceso}{fecha,link l,sist}{sist}{linkEnSist(l, s)}
+\tadOperacion{registrarLink}{link \ l,nombre \ n,sist \ s}{sist}{linkUnico(l, s) $\land$ nombreEnSist(n, s)}
+\tadOperacion{registrarAcceso}{fecha,link \ l,sist \ s}{sist}{linkEnSist(l, s)}
 
 
 \tadOtrasOperaciones
@@ -143,8 +143,8 @@ subcategorias($a_{2}$))}
 
 
 \tadAxiomas
-($\forall$a: abCat, $\forall$f: fecha, $\forall$l,l': link, $\forall$s: sist, $\forall$ n,n': nombre) 
-\tadAlinearAxiomas{nombreEnSist(n, registrarAcceso(f, l, s))}{nombreEnSist(n, s)}
+$\forall$ a: abCat, $\forall$ f: fecha, $\forall$ l,l': link, $\forall$ s: sist, $\forall$ n,n': nombre 
+\tadAlinearAxiomas{nombreEnSist(n, registrarAcceso(f, l, s))}
 \tadAxioma{todosLosLinks(inicio(a))}{$\emptyset$}
 \tadAxioma{todosLosLinks(registrarAcceso(f, l, s))}{todosLosLinks(s)}
 \tadAxioma{todosLosLinks(registrarLink(l, n, s))}{Ag(l, todosLosLinks(s))}

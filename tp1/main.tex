@@ -77,7 +77,7 @@
 \begin{tad}{\tadNombre{ARBOL DE CATEGORIAS}}
 \tadGeneros{abCat}
 \tadExporta{abCat, generadores, observadores b\'asicos, todasLasCategorias}
-\tadUsa{\tadNombre{Nombre}}
+\tadUsa{\tadNombre{Nombre, Bool, Conj(\alpha) }}
 
 \tadIgualdadObservacional{a_{1}}{a_{2}}{abCat}{( categoria($a_{1}$) = categoria($a_{2}$)) $\land$ (subcategorias($a_{1}$) =
 subcategorias($a_{2}$))}
@@ -114,8 +114,8 @@ $\forall$ a: abCat, $\forall$ n: nombre, $\forall$ ca: conj(abCat)
 
 \begin{tad}{\tadNombre{SISTEMA}}
 \tadGeneros{sist}
-\tadExporta{sist, generadores, observadores b\'asicos}
-\tadUsa{\tadNombre{Fecha, Link, Nombre, Arbol de categorias}}
+\tadExporta{sist, generadores, observadores b\'asicos, AccesosRecientes}
+\tadUsa{\tadNombre{Fecha, Link, Nombre, Arbol de categorias, Nat, Bool, Conj(\alpha)}}
 
 \tadIgualdadObservacional{s_{1}}{s_{2}}{sistema}{(arbol($s_{1}$) = arbol($s_{2}$)) $\land$(todosLosLinks($s_{1}$) = todosLosLinks($s_{2}$)) $\land_{L}$
  (($\forall$ l:link $\in$ todosLosLinks($s_{1}$))visitas(l, $s_{1}$) = visitas(l, $s_{2}$)) $\land_{L}$
@@ -139,9 +139,9 @@ $\forall$ a: abCat, $\forall$ n: nombre, $\forall$ ca: conj(abCat)
 \tadOtrasOperaciones
 \tadOperacion{linkUnico}{link,sist}{bool}{}
 \tadOperacion{nombreEnSist}{nombre,sist}{bool}{}
-\tadOperacion{linkEnSist}{link,sis}{bool}{}
-
-
+\tadOperacion{linkEnSist}{link,sist}{bool}{}
+\tadOperacion{ultimoAcceso}{sist}{nat}{}
+\tadOperacion{AccesosRecientes}{link, sist \ s, sist \ s'}{nat}{linkEnSist $\land$ s = s'}
 \tadAxiomas
 $\forall$ a: abCat, $\forall$ f: fecha, $\forall$ l,l': link, $\forall$ s: sist, $\forall$ n,n': nombre 
 \tadAlinearAxiomas{nombreEnSist(n, registrarAcceso(f, l, s))}
@@ -165,6 +165,12 @@ $\forall$ a: abCat, $\forall$ f: fecha, $\forall$ l,l': link, $\forall$ s: sist,
 \tadAxioma{linkEnSist(l, inicio(a))}{false}
 \tadAxioma{linkEnSist(l, registrarAcceso(f, l', s))}{linkEnSist(l, s)}
 \tadAxioma{linkEnSist(l, registrarLink(l', n, s))}{if (l = l') then true else linkEnSist(l, s) fi}
+\tadAxioma{ultimoAcceso(inicio(a))}{0}
+\tadAxioma{ultimoAcceso(registrarAcceso(f, l, s))}{if (f $>$ ultimoAcceso (s)) then f else ultimoAcceso (s) fi}
+\tadAxioma{ultimoAcceso(registrarLink(l, n, s))}{ultimoAcceso (s)}
+\tadAxioma{AccesosRecientes(l, inicio(a), s')}{0}
+\tadAxioma{AccesosRecientes(l, registrarAcceso(f, l', s), s')}{if ((l $=$ l') $\land$ (ultimoAcceso (s') - 3) $\leq$ f) then 1 + accesosRecientes (l, s, s') else accesosRecientes (l, s, s') fi}
+\tadAxioma{AccesosRecientes(l, registrarLink(l', n, s), s')}{AccesosRecientes (l, s, s')}
 
 \end{tad}
 

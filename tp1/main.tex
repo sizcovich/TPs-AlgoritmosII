@@ -134,7 +134,6 @@
 \tadOperacion{visitasDeAyer}{link,sist \ s, sist \ s'}{conj(fecha)}{s = s'}
 \tadOperacion{visitasDeAntesdeayer}{link,sist \ s, sist \ s'}{conj(fecha)}{s = s'}
 \tadOperacion{categoria}{link \ l,sist \ s}{nombre}{linkEnSist(l, s)}
-\tadOperacion{\#linksEnCat}{sist \ s, nombre \ n}{nat}{nombreEnSist(n, s)}
 
 
 \tadGeneradores
@@ -149,6 +148,8 @@
 \tadOperacion{linkEnSist}{link,sist}{bool}{}
 \tadOperacion{ultimoAcceso}{sist}{nat}{}
 \tadOperacion{AccesosRecientes}{link \ l, sist \ s}{nat}{$\neg$ linkEnSist(l, s)}
+\tadOperacion{\#linksEnCat}{sist \ s, sist \ s', nombre \ n}{nat}{nombreEnSist(n, s) $\land$ s = s'}
+
 
 \tadAxiomas[$\forall$ a: abCat, $\forall$ f: fecha, $\forall$ l,l': link, $\forall$ s,s': sist, $\forall$ n,n': nombre] 
 \tadAlinearAxiomas{visitasDeAntesdeayer(l, registrarAcceso(f, l', s), s')}
@@ -182,7 +183,9 @@
 \tadAxioma{ultimoAcceso(registrarAcceso(f, l, s))}{\IF (f $>$ ultimoAcceso(s)) THEN f ELSE ultimoAcceso(s) FI}
 \tadAxioma{ultimoAcceso(registrarLink(l, n, s))}{ultimoAcceso(s)}
 \tadAxioma{AccesosRecientes(l, s)}{\#visitasDeHoy(l, s, s) $+$ \#visitasDeAyer(l, s, s) $+$ \#visitasDeAntesdeayer(l, s, s)}
-
+\tadAxioma{\#linksEnCat(registrarAcceso(f, l, s), s', n)}{\#linksEnCat(s, s', n)}
+\tadAxioma{\#linksEnCat(registrarLink(l, n, s), s', n')}{\IF n $\in$ categoriasHijas(arbol (s'), n') THEN 1 $+$ \#linksEnCat(s, s', n) ELSE \#linksEnCat(s, s', n)FI}
+\tadAxioma{\#linksEnCat(inicio(a))}{0}
 \end{tad}
 
 \end{document}

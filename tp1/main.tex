@@ -76,7 +76,7 @@
 
 \begin{tad}{\tadNombre{ARBOL DE CATEGORIAS}}
 \tadGeneros{abCat}
-\tadExporta{abCat, generadores, observadores b\'asicos, todasLasCategorias}
+\tadExporta{abCat, generadores, observadores b\'asicos, todasLasCategorias, categoriasHijas}
 \tadUsa{\tadNombre{Nombre, Bool, Conj($\alpha$)}}
 
 \tadIgualdadObservacional{a_1}{a_2}{abCat}{( categoria($a_1$) \igobs categoria($a_2$)) $\land$ (subcategorias($a_1$) \igobs subcategorias($a_2$))}
@@ -96,14 +96,20 @@
 \tadOperacion{nombreUnico}{nombre,conj(abCat)}{bool}{}
 \tadOperacion{sacarNombres}{conj(abCat)}{conj(nombre)}{}
 \tadOperacion{todasLasCategorias}{abCat}{conj(nombre)}{}
+\tadOperacion{categoriasHijas}{abCat \ a , nombre \ n}{conj(nombre)}{nombreEnArbol(a, n)}
+\tadOperacion{sacarArboles}{conj (abCat), nombre}{conj(nombre)}{}
+\tadOperacion{nombreEnArbol}{abCat , nombre}{bool}{}
 
-\tadAxiomas[$\forall$ a: abCat, $\forall$ n: nombre, $\forall$ ca: conj(abCat)]
+\tadAxiomas[$\forall$ a: abCat, $\forall$ n,n': nombre, $\forall$ ca: conj(abCat)]
 \tadAlinearAxiomas{todasLasCategorias(nodo(n, ca))}
 \tadAxioma{categoria(nodo(n, conj(a)))}{n}
 \tadAxioma{subcategorias(nodo(n, conj(a)))}{conj(a)}
 \tadAxioma{nombreUnico(n, ca)}{$\neg$(n $\in$ sacarNombres(ca))}
 \tadAxioma{sacarNombres(ca)}{\IF $\emptyset$?(ca) THEN $\emptyset$ ELSE todasLasCategorias(dameUno(ca)) $\cup$ sacarNombres(sinUno(ca)) FI}
 \tadAxioma{todasLasCategorias(nodo(n, ca))}{Ag(n, sacarNombres (ca))}
+\tadAxioma{categoriasHijas(nodo(n, ca), n')}{\IF n = n' THEN todasLasCategorias(nodo(n, ca)) ELSE sacarArboles(ca, n) FI}
+\tadAxioma{sacarArboles(ca, n)}{\IF $\emptyset$?(ca) THEN $\emptyset$ ELSE categoriasHijas(dameUno(ca), n) $\cup$ sacarArboles(sinUno(ca), n) FI}
+\tadAxioma{nombreEnArbol(a, n)}{\IF n $\in$ todasLasCategorias(a) THEN true ELSE false FI}
 
 \end{tad}
 
@@ -112,7 +118,7 @@
 
 \begin{tad}{\tadNombre{SISTEMA}}
 \tadGeneros{sist}
-\tadExporta{sist, generadores, observadores b\'asicos, AccesosRecientes}
+\tadExporta{sist, generadores, observadores b\'asicos, AccesosRecientes, \#linksEnCat}
 \tadUsa{\tadNombre{Fecha, Link, Nombre, Arbol de categorias, Nat, Bool, Conj($\alpha$)}}
 
 \tadIgualdadObservacional{s_1}{s_2}{sistema}{(arbol($s_1$) \igobs arbol($s_2$)) $\land$ (todosLosLinks($s_1$) \igobs todosLosLinks($s_2$)) $\land_L$
@@ -128,6 +134,7 @@
 \tadOperacion{visitasDeAyer}{link,sist \ s, sist \ s'}{conj(fecha)}{s = s'}
 \tadOperacion{visitasDeAntesdeayer}{link,sist \ s, sist \ s'}{conj(fecha)}{s = s'}
 \tadOperacion{categoria}{link \ l,sist \ s}{nombre}{linkEnSist(l, s)}
+\tadOperacion{\#linksEnCat}{sist \ s, nombre \ n}{nat}{nombreEnSist(n, s)}
 
 
 \tadGeneradores
@@ -141,7 +148,7 @@
 \tadOperacion{nombreEnSist}{nombre,sist}{bool}{}
 \tadOperacion{linkEnSist}{link,sist}{bool}{}
 \tadOperacion{ultimoAcceso}{sist}{nat}{}
-\tadOperacion{AccesosRecientes}{link \ l, sist \ s}{nat}{linkEnSist(l, s)}
+\tadOperacion{AccesosRecientes}{link \ l, sist \ s}{nat}{$\neg$ linkEnSist(l, s)}
 
 \tadAxiomas[$\forall$ a: abCat, $\forall$ f: fecha, $\forall$ l,l': link, $\forall$ s,s': sist, $\forall$ n,n': nombre] 
 \tadAlinearAxiomas{visitasDeAntesdeayer(l, registrarAcceso(f, l', s), s')}

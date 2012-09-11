@@ -119,7 +119,7 @@
 \begin{tad}{\tadNombre{SISTEMA}}
 \tadGeneros{sist}
 \tadExporta{sist, generadores, observadores b\'asicos, AccesosRecientes, \#linksEnCat}
-\tadUsa{\tadNombre{Fecha, Link, Nombre, Arbol de categorias, Nat, Bool, Conj($\alpha$)}}
+\tadUsa{\tadNombre{Fecha, Link, Nombre, Arbol de categorias, Nat, Bool, Conj($\alpha$), Secu($\alpha$)}}
 
 \tadIgualdadObservacional{s_1}{s_2}{sistema}{(arbol($s_1$) \igobs arbol($s_2$)) $\land$ (todosLosLinks($s_1$) \igobs todosLosLinks($s_2$)) $\land_L$
  (($\forall$ l:link $\in$ todosLosLinks($s_1$)) visitasDeHoy(l, $s_1$, $s_1$) \igobs visitasDeHoy(l, $s_2$, $s_2$) $\land$ visitasDeAyer(l, $s_1$, $s_1$) \igobs visitasDeAyer(l, $s_2$, $s_2$) $\land$ visitasDeAntesdeayer(l, $s_1$, $s_1$) \igobs visitasDeAntesdeayer(l, $s_2$, $s_2$)) $\land_L$

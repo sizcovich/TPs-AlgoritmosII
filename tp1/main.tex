@@ -109,7 +109,7 @@
 \tadAxioma{todasLasCategorias(nodo(n, ca))}{Ag(n, sacarNombres (ca))}
 \tadAxioma{categoriasHijas(nodo(n, ca), n')}{\IF n = n' THEN todasLasCategorias(nodo(n, ca)) ELSE sacarArboles(ca, n) FI}
 \tadAxioma{sacarArboles(ca, n)}{\IF $\emptyset$?(ca) THEN $\emptyset$ ELSE categoriasHijas(dameUno(ca), n) $\cup$ sacarArboles(sinUno(ca), n) FI}
-\tadAxioma{nombreEnArbol(a, n)}{\IF n $\in$ todasLasCategorias(a) THEN true ELSE false FI}
+\tadAxioma{nombreEnArbol(a, n)}{n $\in$ todasLasCategorias(a)}
 
 \end{tad}
 

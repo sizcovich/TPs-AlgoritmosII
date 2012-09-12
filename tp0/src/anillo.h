@@ -120,6 +120,8 @@ private:
 		Nodo *anterior;
 	};
 
+	ostream& mostrarNodo(ostream &out, const Nodo *a) const;
+
 	Nodo *este;
 
 	Nodo *seleccion;
@@ -198,9 +200,10 @@ void Anillo<T>::agregar(const T& nuevoValor) {
 		nuevoNodo->anterior = este->anterior;
 		este->anterior = nuevoNodo;
 	} else {
-		este = nuevoNodo->siguiente = nuevoNodo->anterior = nuevoNodo;
+		nuevoNodo->siguiente = nuevoNodo->anterior = nuevoNodo;
 	}
 
+	este = nuevoNodo;
 	total++;
 }
 
@@ -259,13 +262,26 @@ ostream& Anillo<T>::mostrarAnillo(ostream &out) const {
 	if (i > 0) {
 		Nodo *elem = este;
 		while (--i > 0) {
-			out << *elem->valor << ", ";
+			mostrarNodo(out, elem) << ", ";
 
 			elem = elem->siguiente;
 		}
-		out << *elem->valor;
+		elem = elem->siguiente;
+
+		mostrarNodo(out, elem);
 	}
 	return out << "]";
+}
+
+
+template<typename T>
+ostream& Anillo<T>::mostrarNodo(ostream &out, const Nodo *elem) const {
+	out << *elem->valor;
+
+	if (seleccion == elem)
+		out << "*";
+
+	return out;
 }
 
 

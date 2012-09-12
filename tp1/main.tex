@@ -122,7 +122,7 @@
 \tadUsa{\tadNombre{Fecha, Link, Nombre, Arbol de categorias, Nat, Bool, Conj($\alpha$), Secu($\alpha$)}}
 
 \tadIgualdadObservacional{s_1}{s_2}{sistema}{(arbol($s_1$) \igobs arbol($s_2$)) $\land$ (todosLosLinks($s_1$) \igobs todosLosLinks($s_2$)) $\land_L$
- (($\forall$ l:link $\in$ todosLosLinks($s_1$)) visitasDeHoy(l, $s_1$, $s_1$) \igobs visitasDeHoy(l, $s_2$, $s_2$) $\land$ visitasDeAyer(l, $s_1$, $s_1$) \igobs visitasDeAyer(l, $s_2$, $s_2$) $\land$ visitasDeAntesdeayer(l, $s_1$, $s_1$) \igobs visitasDeAntesdeayer(l, $s_2$, $s_2$)) $\land_L$
+ (($\forall$ l:link $\in$ todosLosLinks($s_1$)) visitasDeHoy(l, $s_1$) \igobs visitasDeHoy(l, $s_2$) $\land$ visitasDeAyer(l, $s_1$) \igobs visitasDeAyer(l, $s_2$) $\land$ visitasDeAntesdeayer(l, $s_1$) \igobs visitasDeAntesdeayer(l, $s_2$)) $\land_L$
 (($\forall$ l:link $\in$ todosLosLinks($s_1$))categoria(l, $s_1$) \igobs categoria(l, $s_2$))}
 
 
@@ -130,9 +130,9 @@
 \tadAlinearFunciones{visitasDeAntesdeayer}{link \ l,nombre \ n,sist \ s}
 \tadOperacion{arbol}{sist}{abCat}{}
 \tadOperacion{todosLosLinks}{sist}{conj(link)}{}
-\tadOperacion{visitasDeHoy}{link,sist \ s, sist \ s'}{secu(fecha)}{s = s'}
-\tadOperacion{visitasDeAyer}{link,sist \ s, sist \ s'}{secu(fecha)}{s = s'}
-\tadOperacion{visitasDeAntesdeayer}{link,sist \ s, sist \ s'}{secu(fecha)}{s = s'}
+\tadOperacion{visitasDeHoy}{link \ l, sist \ s}{secu(fecha)}{linkEnSist(l, s)}
+\tadOperacion{visitasDeAyer}{link \ l, sist \ s}{secu(fecha)}{linkEnSist(l, s)}
+\tadOperacion{visitasDeAntesdeayer}{link \ l, sist \ s}{secu(fecha)}{linkEnSist(l, s)}
 \tadOperacion{categoria}{link \ l,sist \ s}{nombre}{linkEnSist(l, s)}
 
 
@@ -148,7 +148,9 @@
 \tadOperacion{linkEnSist}{link,sist}{bool}{}
 \tadOperacion{ultimoAcceso}{sist}{nat}{}
 \tadOperacion{AccesosRecientes}{link \ l, sist \ s}{nat}{$\neg$ linkEnSist(l, s)}
-\tadOperacion{\#linksEnCat}{sist \ s, sist \ s', nombre \ n}{nat}{nombreEnSist(n, s) $\land$ s = s'}
+\tadOperacion{\#linksEnCat}{sist \ s, nombre \ n}{nat}{nombreEnSist(n, s)}
+\tadOperacion{links}{sist \ s, nombre \ n, abcat a}{nat}{}
+\tadOperacion{visitas}{sist, link, nat}{secu(fecha)}{}
 
 
 \tadAxiomas[$\forall$ a: abCat, $\forall$ f: fecha, $\forall$ l,l': link, $\forall$ s,s': sist, $\forall$ n,n': nombre] 
@@ -156,15 +158,12 @@
 \tadAxioma{todosLosLinks(inicio(a))}{$\emptyset$}
 \tadAxioma{todosLosLinks(registrarAcceso(f, l, s))}{todosLosLinks(s)}
 \tadAxioma{todosLosLinks(registrarLink(l, n, s))}{Ag(l, todosLosLinks(s))}
-\tadAxioma{visitasDeHoy(l, inicio(a), s')}{$<>$}
-\tadAxioma{visitasDeHoy(l, registrarAcceso(f, l', s), s')}{\IF (l = l' $\land$ ultimoAcceso(s') = f) THEN f $\bullet$ visitasDeHoy(l , s, s') ELSE visitasDeHoy(l, s, s') FI}
-\tadAxioma{visitasDeHoy(l, registrarLink(l', n, s), s')}{visitasDeHoy(l, s, s')}
-\tadAxioma{visitasDeAyer(l, inicio(a), s')}{$<>$}
-\tadAxioma{visitasDeAyer(l, registrarAcceso(f, l', s), s')}{\IF (l = l' $\land$ (ultimoAcceso(s')- 1) = f) THEN f $\bullet$ visitasDeAyer(l , s, s') ELSE visitasDeAyer(l, s, s') FI}
-\tadAxioma{visitasDeAyer(l, registrarLink(l', n, s), s')}{visitasDeAyer(l, s, s')}
-\tadAxioma{visitasDeAntesdeayer(l, inicio(a), s')}{$<>$}
-\tadAxioma{visitasDeAntesdeayer(l, registrarAcceso(f, l', s), s')}{\IF (l = l' $\land$ (ultimoAcceso(s')- 2) = f) THEN f $\bullet$ visitasDeAntesdeayer(l , s, s') ELSE visitasDeAntesdeayer(l, s, s') FI}
-\tadAxioma{visitasDeAntesdeayer(l, registrarLink(l', n, s), s')}{visitasDeAntesdeayer(l, s, s')}
+\tadAxioma{visitas(l, inicio(a), n)}{$<>$}
+\tadAxioma{visitas(l, registrarAcceso(f, l', s), n)}{\IF (l = l' $\land$ n = f) THEN f $\bullet$ visitas(l , s, n) ELSE visitas(l, s, n) FI}
+\tadAxioma{visitas(l, registrarLink(l', n, s), n')}{visitasDeHoy(l, s, n')}
+\tadAxioma{visitasDeHoy(l, s)}{visitas(l, s, ultimoAcceso(s))}
+\tadAxioma{visitasDeAyer(l, s)}{visitas(l, s, (ultimoAcceso(s) - 1))}
+\tadAxioma{visitasDeAntesdeayer(l, s)}{visitas(l, s, (ultimoAcceso(s) - 2))}
 \tadAxioma{categoria(l, registrarAcceso(f, l', s))}{categoria (l, s)}
 \tadAxioma{categoria(l, registrarLink(l', n, s))}{\IF (l = l') THEN n ELSE categoria (l, s) FI}
 \tadAxioma{arbol(inicio(a))}{a}
@@ -183,9 +182,10 @@
 \tadAxioma{ultimoAcceso(registrarAcceso(f, l, s))}{\IF (f $>$ ultimoAcceso(s)) THEN f ELSE ultimoAcceso(s) FI}
 \tadAxioma{ultimoAcceso(registrarLink(l, n, s))}{ultimoAcceso(s)}
 \tadAxioma{AccesosRecientes(l, s)}{long(visitasDeHoy(l, s, s)) $+$ long(visitasDeAyer(l, s, s)) $+$ long(visitasDeAntesdeayer(l, s, s))}
-\tadAxioma{\#linksEnCat(registrarAcceso(f, l, s), s', n)}{\#linksEnCat(s, s', n)}
-\tadAxioma{\#linksEnCat(registrarLink(l, n, s), s', n')}{\IF n $\in$ categoriasHijas(arbol (s'), n') THEN 1 $+$ \#linksEnCat(s, s', n) ELSE \#linksEnCat(s, s', n)FI}
-\tadAxioma{\#linksEnCat(inicio(a))}{0}
+\tadAxioma{links(registrarAcceso(f, l, s), n, a)}{links(s, n, a)}
+\tadAxioma{links(registrarLink(l, n, s), n', a)}{\IF n $\in$ categoriasHijas(a, n') THEN 1 $+$ links(s, n', a) ELSE links(s, n', a)FI}
+\tadAxioma{links(inicio(a))}{0}
+\tadAxioma{\#linksEnCat(s, n)}{links(s, n, arbol(s))}
 \end{tad}
 
 \end{document}

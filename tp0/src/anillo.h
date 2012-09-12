@@ -179,14 +179,14 @@ int Anillo<T>::tamanio() const {
 
 template<typename T>
 const T& Anillo<T>::actual() const {
-	return este->valor;
+	return *este->valor;
 }
 
 
 template<typename T>
 const T& Anillo<T>::siguiente() {
 	este = este->siguiente;
-	return *este->valor;
+	return *este->anterior->valor;
 }
 
 
@@ -245,7 +245,7 @@ bool Anillo<T>::hayMarcado() const {
 
 template<typename T>
 const T& Anillo<T>::marcado() const {
-	return seleccion;
+	return *seleccion->valor;
 }
 
 

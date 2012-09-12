@@ -53,12 +53,26 @@ void MostrarAnilloConDosElementosYUnoMarcado() {
 	delete a;
 }
 
+void AndanActualMarcadoSiguiente() {
+	Anillo<int>* a = new Anillo<int>();
+	a->agregar(4);
+	a->agregar(5);
+	a->marcar();
+	a->agregar(6);
+	ASSERT_EQ(a->actual(), 6);
+	ASSERT_EQ(a->marcado(), 5);
+	ASSERT_EQ(a->siguiente(), 6);
+	ASSERT_EQ(a->actual(), 5);
+	delete a;
+}
+
 int main(void) {
 	RUN_TEST(AnilloNuevoEsVacio);
     RUN_TEST(AnilloUnitarioAlEliminarQuedaVacio);
 	RUN_TEST(AnilloUnitarioDaSiguiente);
     RUN_TEST(MostrarAnilloVacio);
     RUN_TEST(MostrarAnilloConDosElementosYUnoMarcado);
+    RUN_TEST(AndanActualMarcadoSiguiente);
 
 	return 0;
 }

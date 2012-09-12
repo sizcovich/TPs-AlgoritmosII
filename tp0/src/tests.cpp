@@ -43,11 +43,13 @@ void MostrarAnilloVacio() {
 	delete a;
 }
 
-void MostrarAnilloConDosElementos() {
+void MostrarAnilloConDosElementosYUnoMarcado() {
 	Anillo<int>* a = new Anillo<int>();
 	a->agregar(4);
 	a->agregar(5);
-	ASSERT_EQ(to_s(a), "[5, 4]");
+	a->marcar();
+	a->agregar(6);
+	ASSERT_EQ(to_s(a), "[6, 5*, 4]");
 	delete a;
 }
 
@@ -56,7 +58,7 @@ int main(void) {
     RUN_TEST(AnilloUnitarioAlEliminarQuedaVacio);
 	RUN_TEST(AnilloUnitarioDaSiguiente);
     RUN_TEST(MostrarAnilloVacio);
-    RUN_TEST(MostrarAnilloConDosElementos);
+    RUN_TEST(MostrarAnilloConDosElementosYUnoMarcado);
 
 	return 0;
 }

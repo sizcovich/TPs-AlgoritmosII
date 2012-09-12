@@ -79,7 +79,7 @@
 \tadExporta{abCat, generadores, observadores b\'asicos, todasLasCategorias, categoriasHijas}
 \tadUsa{\tadNombre{Nombre, Bool, Conj($\alpha$)}}
 
-\tadIgualdadObservacional{a_1}{a_2}{abCat}{( categoria($a_1$) \igobs categoria($a_2$)) $\land$ (subcategorias($a_1$) \igobs subcategorias($a_2$))}
+\tadIgualdadObservacional{a_1}{a_2}{abCat}{(categoria($a_1$) \igobs categoria($a_2$)) $\land$ (subcategorias($a_1$) \igobs subcategorias($a_2$))}
 
 
 \tadObservadores
@@ -89,16 +89,16 @@
 
 
 \tadGeneradores
-\tadOperacion{nodo}{nombre \ n,conj(abCat)\ ca}{abCat}{nombreUnico(n, ca)}
+\tadOperacion{nodo}{nombre\ n,conj(abCat)\ ca}{abCat}{nombreUnico(n, ca)}
 
 
 \tadOtrasOperaciones
 \tadOperacion{nombreUnico}{nombre,conj(abCat)}{bool}{}
 \tadOperacion{sacarNombres}{conj(abCat)}{conj(nombre)}{}
 \tadOperacion{todasLasCategorias}{abCat}{conj(nombre)}{}
-\tadOperacion{categoriasHijas}{abCat \ a , nombre \ n}{conj(nombre)}{nombreEnArbol(a, n)}
+\tadOperacion{categoriasHijas}{abCat\ a , nombre\ n}{conj(nombre)}{nombreEnArbol(a, n)}
 \tadOperacion{sacarArboles}{conj (abCat), nombre}{conj(nombre)}{}
-\tadOperacion{nombreEnArbol}{abCat , nombre}{bool}{}
+\tadOperacion{nombreEnArbol}{abCat, nombre}{bool}{}
 
 \tadAxiomas[$\forall$ a: abCat, $\forall$ n,n': nombre, $\forall$ ca: conj(abCat)]
 \tadAlinearAxiomas{todasLasCategorias(nodo(n, ca))}
@@ -123,7 +123,7 @@
 
 \tadIgualdadObservacional{s_1}{s_2}{sistema}{(arbol($s_1$) \igobs arbol($s_2$)) $\land$ (todosLosLinks($s_1$) \igobs todosLosLinks($s_2$)) $\land_L$
  (($\forall$ l:link $\in$ todosLosLinks($s_1$)) visitasDeHoy(l, $s_1$) \igobs visitasDeHoy(l, $s_2$) $\land$ visitasDeAyer(l, $s_1$) \igobs visitasDeAyer(l, $s_2$) $\land$ visitasDeAntesdeayer(l, $s_1$) \igobs visitasDeAntesdeayer(l, $s_2$)) $\land_L$
-(($\forall$ l:link $\in$ todosLosLinks($s_1$))categoria(l, $s_1$) \igobs categoria(l, $s_2$))}
+(($\forall$ l:link $\in$ todosLosLinks($s_1$)) categoria(l, $s_1$) \igobs categoria(l, $s_2$))}
 
 
 \tadObservadores
@@ -154,7 +154,7 @@
 
 
 \tadAxiomas[$\forall$ a: abCat, $\forall$ f: fecha, $\forall$ l,l': link, $\forall$ s,s': sist, $\forall$ n,n': nombre] 
-\tadAlinearAxiomas{visitasDeAntesdeayer(l, registrarAcceso(f, l', s), s')}
+\tadAlinearAxiomas{nombreEnSist(n, registrarAcceso(f, l, s))}
 \tadAxioma{todosLosLinks(inicio(a))}{$\emptyset$}
 \tadAxioma{todosLosLinks(registrarAcceso(f, l, s))}{todosLosLinks(s)}
 \tadAxioma{todosLosLinks(registrarLink(l, n, s))}{Ag(l, todosLosLinks(s))}
@@ -164,7 +164,7 @@
 \tadAxioma{visitasDeHoy(l, s)}{visitas(l, s, ultimoAcceso(s))}
 \tadAxioma{visitasDeAyer(l, s)}{visitas(l, s, (ultimoAcceso(s) - 1))}
 \tadAxioma{visitasDeAntesdeayer(l, s)}{visitas(l, s, (ultimoAcceso(s) - 2))}
-\tadAxioma{categoria(l, registrarAcceso(f, l', s))}{categoria (l, s)}
+\tadAxioma{categoria(l, registrarAcceso(f, l', s))}{categoria(l, s)}
 \tadAxioma{categoria(l, registrarLink(l', n, s))}{\IF (l = l') THEN n ELSE categoria (l, s) FI}
 \tadAxioma{arbol(inicio(a))}{a}
 \tadAxioma{arbol(registrarAcceso(f, l, s))}{arbol(s)}

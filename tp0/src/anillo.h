@@ -155,7 +155,10 @@ Anillo<T>::Anillo(const Anillo<T>& otro) {
 
 template<typename T>
 Anillo<T>::~Anillo() {
-
+	while (total-- > 0) {
+		delete este->anterior;
+		este = este->siguiente;
+	}
 }
 
 
@@ -198,6 +201,7 @@ void Anillo<T>::agregar(const T& nuevoValor) {
 	if (total > 0) {
 		nuevoNodo->siguiente = este;
 		nuevoNodo->anterior = este->anterior;
+		este->anterior->siguiente = nuevoNodo;
 		este->anterior = nuevoNodo;
 	} else {
 		nuevoNodo->siguiente = nuevoNodo->anterior = nuevoNodo;
@@ -214,6 +218,11 @@ void Anillo<T>::eliminar(const T& valorAEliminar) {
 	Nodo *elem = este;
 	while (i-- > 0) {
 		if (*elem->valor == valorAEliminar) {
+
+			if (seleccion == elem) {
+				seleccion = NULL;
+			}
+
 			elem->anterior->siguiente = elem->siguiente;
 			elem->siguiente->anterior = elem->anterior;
 			delete elem;
@@ -266,7 +275,6 @@ ostream& Anillo<T>::mostrarAnillo(ostream &out) const {
 
 			elem = elem->siguiente;
 		}
-		elem = elem->siguiente;
 
 		mostrarNodo(out, elem);
 	}

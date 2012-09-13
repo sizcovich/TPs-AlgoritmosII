@@ -177,9 +177,9 @@ Anillo<T>::Anillo(const Anillo<T>& otro) {
 
 template<typename T>
 Anillo<T>::~Anillo() {
-	while (total-- > 0) {
-		delete este->anterior;
-		este = este->siguiente;
+	int i = total;
+	while (i-- > 0) {
+		eliminar(*este->valor);
 	}
 }
 
@@ -253,6 +253,10 @@ void Anillo<T>::eliminar(const T& valorAEliminar) {
 
 			if (seleccion == elem) {
 				seleccion = NULL;
+			}
+
+			if (este == elem) {
+				este = elem->siguiente;
 			}
 
 			elem->anterior->siguiente = elem->siguiente;

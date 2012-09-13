@@ -145,7 +145,7 @@ Anillo<T>::Anillo() {
 
 
 template<typename T>
-Anillo<T>::Anillo(const Anillo<T>& otro) {/*
+Anillo<T>::Anillo(const Anillo<T>& otro) {
 	int i = otro.total;
 	este = NULL;
 	total = 0;
@@ -159,19 +159,19 @@ Anillo<T>::Anillo(const Anillo<T>& otro) {/*
 		{
 			seleccion = este;
 		}
-		sig = otro.este -> siguiente;
+		sig = otro.este ->anterior;
 		while (i-- > 1) {
 			agregar(*sig ->valor);
 			if(otro.seleccion == sig)
 			{
 				seleccion = este;
 			}
-			sig = sig -> siguiente;
+			sig = sig -> anterior;
 		}
 
-		este = sig -> siguiente;
+		este = este -> anterior;
 
-	}*/
+	}
 }
 
 
@@ -186,16 +186,17 @@ Anillo<T>::~Anillo() {
 
 template<typename T>
 bool Anillo<T>::operator==(const Anillo<T>& otro) const {
-	bool retorno1 = (*este == *otro -> este) && (total == otro -> total) && (seleccion == otro.seleccion || *seleccion == *otro -> seleccion);
+	//bool retorno1 = (*este == *otro -> este) && (total == otro -> total) && (seleccion == otro.seleccion || *seleccion == *otro -> seleccion);
 	bool retorno2 = true;
 	int i = total;
 	while(i-- > 0)
 	{
-		otro.siguiente();
-		retorno2 == retorno2 && (*este == *otro -> este);
+		//otro.siguiente();
+		//retorno2 == retorno2 && (*este == *otro -> este);
 	}
 
-	return retorno1 && retorno2;
+	//return retorno1 && retorno2;
+	return false;
 }
 
 

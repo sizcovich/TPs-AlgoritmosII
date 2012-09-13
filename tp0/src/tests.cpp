@@ -49,7 +49,8 @@ void MostrarAnilloConDosElementosYUnoMarcado() {
 	a->agregar(5);
 	a->marcar();
 	a->agregar(6);
-	ASSERT_EQ(to_s(a), "[6, 5*, 4]");
+	a->siguiente();
+	ASSERT_EQ(to_s(a), "[5*, 4, 6]");
 	delete a;
 }
 

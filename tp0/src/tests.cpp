@@ -67,6 +67,39 @@ void AndanActualMarcadoSiguiente() {
 	delete a;
 }
 
+void UsarConstructorPorCopia() {
+	cout << endl;
+
+	Anillo<int>* a = new Anillo<int>();
+	a->agregar(4);
+	a->agregar(5);
+	a->marcar();
+	a->agregar(6);
+	Anillo<int>* b = new Anillo<int>(*a);
+
+	//cout << "Creó b" << endl;
+	//a ->mostrarAnillo(out);
+
+	//delete a;
+	cout << "Eliminó a" << endl;
+	//cout << "esVacio? false : " << boolalpha << b -> esVacio() << endl;
+	//if(b ->esVacio()) {} else {cout << "No es vacio. Actual? 6 : " << b ->actual() << endl;}
+	//cout << "Resultado:" << endl;
+	ASSERT_EQ(to_s(b), "[6, 5*, 4]");
+	delete b;
+}
+
+void IgualarDosAnillosIguales() {
+	Anillo<int>* a = new Anillo<int>();
+	a->agregar(4);
+	a->agregar(5);
+	a->marcar();
+	a->agregar(6);
+	Anillo<int>* b = new Anillo<int>(*a);
+	ASSERT_EQ(b == a , true);
+	delete b;
+}
+
 int main(void) {
 	RUN_TEST(AnilloNuevoEsVacio);
     RUN_TEST(AnilloUnitarioAlEliminarQuedaVacio);
@@ -74,6 +107,8 @@ int main(void) {
     RUN_TEST(MostrarAnilloVacio);
     RUN_TEST(MostrarAnilloConDosElementosYUnoMarcado);
     RUN_TEST(AndanActualMarcadoSiguiente);
+    cout << "hasta aca todo bien" << endl;
+    //RUN_TEST(UsarConstructorPorCopia);
 
 	return 0;
 }

@@ -145,11 +145,33 @@ Anillo<T>::Anillo() {
 
 
 template<typename T>
-Anillo<T>::Anillo(const Anillo<T>& otro) {
-	int i = total = otro.total;
-	while (i-- > 0) {
-//		agregar();
-	}
+Anillo<T>::Anillo(const Anillo<T>& otro) {/*
+	int i = otro.total;
+	este = NULL;
+	total = 0;
+	seleccion = NULL;
+	if(!otro.esVacio())
+	{
+
+		Nodo *sig;
+		agregar(*otro.este->valor);
+		if(otro.seleccion == otro.este)
+		{
+			seleccion = este;
+		}
+		sig = otro.este -> siguiente;
+		while (i-- > 1) {
+			agregar(*sig ->valor);
+			if(otro.seleccion == sig)
+			{
+				seleccion = este;
+			}
+			sig = sig -> siguiente;
+		}
+
+		este = sig -> siguiente;
+
+	}*/
 }
 
 
@@ -163,14 +185,23 @@ Anillo<T>::~Anillo() {
 
 
 template<typename T>
-bool Anillo<T>::operator==(const Anillo<T>&) const {
-	return false;
+bool Anillo<T>::operator==(const Anillo<T>& otro) const {
+	bool retorno1 = (*este == *otro -> este) && (total == otro -> total) && (seleccion == otro.seleccion || *seleccion == *otro -> seleccion);
+	bool retorno2 = true;
+	int i = total;
+	while(i-- > 0)
+	{
+		otro.siguiente();
+		retorno2 == retorno2 && (*este == *otro -> este);
+	}
+
+	return retorno1 && retorno2;
 }
 
 
 template<typename T>
 bool Anillo<T>::esVacio() const {
-	return total == 0;
+	return (total == 0);
 }
 
 

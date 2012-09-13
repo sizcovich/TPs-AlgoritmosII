@@ -177,8 +177,7 @@ Anillo<T>::Anillo(const Anillo<T>& otro) {
 
 template<typename T>
 Anillo<T>::~Anillo() {
-	int i = total;
-	while (i-- > 0) {
+	while (total > 0) {
 		eliminar(*este->valor);
 	}
 }

@@ -220,7 +220,7 @@ const T& Anillo<T>::actual() const {
 template<typename T>
 const T& Anillo<T>::siguiente() {
 	este = este->siguiente;
-	return *este->anterior->valor;
+	return *este->valor;
 }
 
 

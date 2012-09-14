@@ -43,6 +43,17 @@ void MostrarAnilloVacio() {
 	delete a;
 }
 
+void MasNuevosQuedanPrimeros() {
+   Anillo<int>* a = new Anillo<int>();
+   a->agregar(42);
+   a->agregar(20);
+   a->agregar(10);
+   ASSERT_EQ(a->actual(), 10);
+   ASSERT_EQ(a->siguiente(), 20);
+   ASSERT_EQ(a->siguiente(), 42);
+   delete a;
+}
+
 void MostrarAnilloConDosElementosYUnoMarcado() {
 	Anillo<int>* a = new Anillo<int>();
 	a->agregar(4);
@@ -62,8 +73,8 @@ void AndanActualMarcadoSiguiente() {
 	a->agregar(6);
 	ASSERT_EQ(a->actual(), 6);
 	ASSERT_EQ(a->marcado(), 5);
-	ASSERT_EQ(a->siguiente(), 6);
-	ASSERT_EQ(a->actual(), 5);
+	a->retroceder();
+	ASSERT_EQ(a->actual(), 4);
 	delete a;
 }
 
@@ -96,6 +107,7 @@ int main(void) {
     RUN_TEST(AnilloUnitarioAlEliminarQuedaVacio);
 	RUN_TEST(AnilloUnitarioDaSiguiente);
     RUN_TEST(MostrarAnilloVacio);
+    RUN_TEST(MasNuevosQuedanPrimeros);
     RUN_TEST(MostrarAnilloConDosElementosYUnoMarcado);
     RUN_TEST(AndanActualMarcadoSiguiente);
     RUN_TEST(UsarConstructorPorCopia);

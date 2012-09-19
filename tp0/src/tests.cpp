@@ -87,6 +87,8 @@ void UsarConstructorPorCopia() {
 	Anillo<int>* b = new Anillo<int>(*a);
 	delete a;
 	ASSERT_EQ(to_s(b), "[6, 5*, 4]");
+	b->siguiente();
+	ASSERT_EQ(to_s(b), "[5*, 4, 6]");
 	delete b;
 }
 
@@ -102,6 +104,25 @@ void IgualarDosAnillosIguales() {
 	delete b;
 }
 
+void IgualarDosAnillosDiferentes() {
+	Anillo<int>* a = new Anillo<int>();
+	a->agregar(4);
+	a->agregar(5);
+	a->agregar(6);
+	Anillo<int>* b = new Anillo<int>(*a);
+	a->marcar();
+	ASSERT_EQ(*b == *a , false);
+	b->marcar();
+	ASSERT(*b == *a);
+	b->siguiente();
+	ASSERT_EQ(*b == *a , false);
+	b->marcar();
+	b->retroceder();
+	ASSERT_EQ(*b == *a , false);
+	delete a;
+	delete b;
+}
+
 int main(void) {
 	RUN_TEST(AnilloNuevoEsVacio);
     RUN_TEST(AnilloUnitarioAlEliminarQuedaVacio);
@@ -111,7 +132,8 @@ int main(void) {
     RUN_TEST(MostrarAnilloConDosElementosYUnoMarcado);
     RUN_TEST(AndanActualMarcadoSiguiente);
     RUN_TEST(UsarConstructorPorCopia);
-    //RUN_TEST(IgualarDosAnillosIguales);
+    RUN_TEST(IgualarDosAnillosIguales);
+    RUN_TEST(IgualarDosAnillosDiferentes);
 	return 0;
 }
 

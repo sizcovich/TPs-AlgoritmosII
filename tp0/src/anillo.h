@@ -184,18 +184,19 @@ Anillo<T>::~Anillo() {
 
 
 template<typename T>
-bool Anillo<T>::operator==(const Anillo<T>& otro) const {
-	//bool retorno1 = (*este == *otro -> este) && (total == otro -> total) && (seleccion == otro.seleccion || *seleccion == *otro -> seleccion);
-	bool retorno2 = true;
+bool Anillo<T>::operator==(const Anillo<T>& otro) const {/*
+	bool retorno = true;
 	int i = total;
+	Nodo* a = este;
+	Nodo* b = otro.este;
 	while(i-- > 0)
 	{
-		//otro.siguiente();
-		//retorno2 == retorno2 && (*este == *otro -> este);
-	}
+		retorno == retorno && (*a->valor == *b->valor);
+		a = a->siguiente;
+		b = b->siguiente;
 
-	//return retorno1 && retorno2;
-	return false;
+	}
+	return retorno;*/return false;
 }
 
 

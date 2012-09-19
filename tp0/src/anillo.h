@@ -115,7 +115,7 @@ private:
 
 	// Acá va la implementación del nodo.
 	struct Nodo {
-		const T *valor;
+		T * valor;
 		Nodo *siguiente;
 		Nodo *anterior;
 	};
@@ -183,23 +183,12 @@ Anillo<T>::~Anillo() {
 
 template<typename T>
 bool Anillo<T>::operator==(const Anillo<T>& otro) const {
-	bool retorno1 = (total == otro.total);
-
-	if((este != NULL) && (otro.este != NULL))
-	{
-		retorno1 = retorno1 && (*este ->valor == *otro.este ->valor);
-	}
-	else
-		if((este != NULL) || (otro.este != NULL))
-			return false;
+	bool retorno1 = (total == otro.total) && ((seleccion == NULL) == (otro.seleccion == NULL));
 
 	if((seleccion != NULL) && (otro.seleccion != NULL))
 	{
 		retorno1 = retorno1 && (*seleccion ->valor == *otro.seleccion ->valor);
 	}
-	else
-		if((este != NULL) || (otro.este != NULL))
-			return false;
 
 	if(!retorno1)
 	{return false;}
@@ -207,10 +196,26 @@ bool Anillo<T>::operator==(const Anillo<T>& otro) const {
 	int i = total;
 	Nodo *sig1;
 	Nodo *sig2;
-	while(i-- > 0)
+	while(retorno2 && i-- > 0)
 	{
 		sig1 = este ->siguiente;
 		sig2 = otro.este ->siguiente;
+
+		if(sig2 == otro.seleccion)
+		{
+			if(sig1 != seleccion)
+			{
+				return false;
+			}
+		}
+
+		if(sig1 == otro.seleccion)
+		{
+			if(sig2 != seleccion)
+			{
+				return false;
+			}
+		}
 
 		retorno2 = retorno2 && (*sig1 ->valor == *sig2 ->valor);
 	}
@@ -245,7 +250,8 @@ const T& Anillo<T>::siguiente() {
 template<typename T>
 void Anillo<T>::agregar(const T& nuevoValor) {
 	Nodo *nuevoNodo = new Nodo();
-	nuevoNodo->valor = &nuevoValor;
+	T * valor = new T(nuevoValor);
+	nuevoNodo->valor = valor;
 
 	if (total > 0) {
 		nuevoNodo->siguiente = este;
@@ -278,6 +284,7 @@ void Anillo<T>::eliminar(const T& valorAEliminar) {
 
 			elem->anterior->siguiente = elem->siguiente;
 			elem->siguiente->anterior = elem->anterior;
+			delete elem->valor;
 			delete elem;
 
 			total--;

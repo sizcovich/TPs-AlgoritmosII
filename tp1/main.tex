@@ -86,21 +86,21 @@
 
 \tadOtrasOperaciones
 \tadOperacion{nombreUnico}{nombre,conj(abCat)}{bool}{}
-\tadOperacion{sacarNombres}{conj(abCat)}{conj(nombre)}{}
+\tadOperacion{agarrarNombres}{conj(abCat)}{conj(nombre)}{}
 \tadOperacion{todasLasCategorias}{abCat}{conj(nombre)}{}
 \tadOperacion{categoriasHijas}{abCat\ a , nombre\ n}{conj(nombre)}{nombreEnArbol(a, n)}
-\tadOperacion{sacarArboles}{conj (abCat), nombre}{conj(nombre)}{}
+\tadOperacion{agarrarArboles}{conj (abCat), nombre}{conj(nombre)}{}
 \tadOperacion{nombreEnArbol}{abCat, nombre}{bool}{}
 
 \tadAxiomas[$\forall$ a: abCat, $\forall$ n,n': nombre, $\forall$ ca: conj(abCat)]
 \tadAlinearAxiomas{todasLasCategorias(nodo(n, ca))}
 \tadAxioma{categoria(nodo(n, conj(a)))}{n}
 \tadAxioma{subcategorias(nodo(n, conj(a)))}{conj(a)}
-\tadAxioma{nombreUnico(n, ca)}{$\neg$(n $\in$ sacarNombres(ca))}
-\tadAxioma{sacarNombres(ca)}{\IF $\emptyset$?(ca) THEN $\emptyset$ ELSE todasLasCategorias(dameUno(ca)) $\cup$ sacarNombres(sinUno(ca)) FI}
-\tadAxioma{todasLasCategorias(nodo(n, ca))}{Ag(n, sacarNombres (ca))}
-\tadAxioma{categoriasHijas(nodo(n, ca), n')}{\IF n = n' THEN todasLasCategorias(nodo(n, ca)) ELSE sacarArboles(ca, n) FI}
-\tadAxioma{sacarArboles(ca, n)}{\IF $\emptyset$?(ca) THEN $\emptyset$ ELSE categoriasHijas(dameUno(ca), n) $\cup$ sacarArboles(sinUno(ca), n) FI}
+\tadAxioma{nombreUnico(n, ca)}{$\neg$(n $\in$ agarrarNombres(ca))}
+\tadAxioma{agarrarNombres(ca)}{\IF $\emptyset$?(ca) THEN $\emptyset$ ELSE todasLasCategorias(dameUno(ca)) $\cup$ agarrarNombres(sinUno(ca)) FI}
+\tadAxioma{todasLasCategorias(nodo(n, ca))}{Ag(n, agarrarNombres (ca))}
+\tadAxioma{categoriasHijas(nodo(n, ca), n')}{\IF n = n' THEN todasLasCategorias(nodo(n, ca)) ELSE agarrarArboles(ca, n) FI}
+\tadAxioma{agarrarArboles(ca, n)}{\IF $\emptyset$?(ca) THEN $\emptyset$ ELSE categoriasHijas(dameUno(ca), n) $\cup$ agarrarArboles(sinUno(ca), n) FI}
 \tadAxioma{nombreEnArbol(a, n)}{n $\in$ todasLasCategorias(a)}
 
 \end{tad}

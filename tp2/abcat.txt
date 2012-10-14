@@ -1,0 +1,29 @@
+abcat es tupla< todos: lista(categorias), categorias: string, trie: trie(tupla<id,itlista(categoria),itlistalista(lista(categoria))>), raiz: nombre, hijos: lista(lista(categoria)), id: nat>
+
+icrearArbol(in r: categorias) -> a: abcat
+agregarAtras(todos, r)                                                O(|r|)
+itlista(categorias) it <- ultimo(todos)                               O(1)
+id <- 1                                                               O(1)
+agregarAtras(hijos)                                                   O(1) // crea una lista vacia al final
+itlistalista(lista(lista(categoria))) itlista <- ultimo(hijos)        O(1) // es un it a la lista
+crearTrie(r, <id, it, itlista>)                                       O(|r|)
+raiz <- r                                                             O(|r|)
+
+iagregarHijo(in h:categorias, in p:categorias, in/out: a:abcat)
+agregarAtras(todos, h)                                                O(|h|)
+itlista(categorias) it <- ultimo(todos)                               O(1)
+id++                                                                  O(1)
+agregarAtras(hijos)                                                   O(1)
+itlistalista(lista(lista(categoria))) itlista <- ultimo(hijos)        O(1)
+agregarTrie(a.trie, h, <id,it, itlista>)                              O(|h|)
+itlistalista(lista(lista(categoria))) itlistahijos                    O(1)
+itlistahijos <- buscarListaHijos(a.trie, p)                           O(|p|)
+agregarAtras(actual(itlistahijos), h)                                 O(|h|)
+
+ibuscarHijos(in p:categoria, in a:abcat) -> it: itlista(categorias)
+itlistalista(lista(lista(categoria))) itlistahijos                    O(1)
+itlistahijos <- buscarListaHijos(a.trie, p)                           O(|p|) // me da el it a la lista donde estan sus hijos
+itlista(categorias) it <- actual(itlistahijos)                        O(1)
+
+idarID(in: c:categoria, a:abcat) -> id: id
+id <- buscarid(a.trie, c)                                             O(|c|)

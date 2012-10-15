@@ -1,29 +1,29 @@
-abcat es tupla< todos: lista(categorias), categorias: string, trie: trie(tupla<id,itlista(categoria),itlistalista(lista(categoria))>), raiz: nombre, hijos: lista(lista(categoria)), id: nat>
+abcat es tupla< todos: lista(categorias), categorias: string, trie: trie(tupla<id,itlista(categoria),itlistalista(lista(categoria))>), raiz: categoria, hijos: lista(lista(categoria)), id: nat>
 
-icrearArbol(in r: categorias) -> a: abcat
+icrearArbol(in r: categoria) -> a: abcat
 agregarAtras(todos, r)                                                O(|r|)
-itlista(categorias) it <- ultimo(todos)                               O(1)
+itlista(categoria) it <- ultimo(todos)                               O(1) //iterador a raiz
 id <- 1                                                               O(1)
-agregarAtras(hijos)                                                   O(1) // crea una lista vacia al final
-itlistalista(lista(lista(categoria))) itlista <- ultimo(hijos)        O(1) // es un it a la lista
-crearTrie(r, <id, it, itlista>)                                       O(|r|)
-raiz <- r                                                             O(|r|)
+agregarListaVacia(hijos)                                              O(1) // crea una lista vacia al final
+itlistalista(lista(lista(categoria))) itlista <- ultimo(hijos)        O(1) // es un it a la ultima lista agregada 
+crearTrie(r, <id, it, itlista>)                                       O(|r|) //it es iterador del ultimo e itLista es el de hijos
+raiz <- r                                                             O(|r|) //a la variable raiz le asigno la categoria
 
-iagregarHijo(in h:categorias, in p:categorias, in/out: a:abcat)
+iagregarHijo(in h:categoria, in p:categoria, in/out: a:abcat)
 agregarAtras(todos, h)                                                O(|h|)
-itlista(categorias) it <- ultimo(todos)                               O(1)
+itlista(categoria) it <- ultimo(todos)                                O(1)
 id++                                                                  O(1)
 agregarAtras(hijos)                                                   O(1)
 itlistalista(lista(lista(categoria))) itlista <- ultimo(hijos)        O(1)
-agregarTrie(a.trie, h, <id,it, itlista>)                              O(|h|)
-itlistalista(lista(lista(categoria))) itlistahijos                    O(1)
-itlistahijos <- buscarListaHijos(a.trie, p)                           O(|p|)
-agregarAtras(actual(itlistahijos), h)                                 O(|h|)
+agregarTrie(a.trie, h, <id ,it, itlista>)                             O(|h|) //ver si la tupla es lo mas facil de pasar y orden
+itlistalista(lista(lista(categoria))) itlistahijos                    O(1) //crea iterador vacio
+itlistahijos <- buscarListaHijos(a.trie, p)                           O(|p|) //recorre el trie buscando al padre, llega al nodo y devuelve el iterador a la lista de hijos (buscarListaHijos(in trie, in categoria) -> it listalistaCategoria)
+agregarAtras(actual(itlistahijos), h)                                 O(|h|) //a la lista de hijos le agregas el hijo que queres agregar
 
-ibuscarHijos(in p:categoria, in a:abcat) -> it: itlista(categorias)
+ibuscarHijos(in p:categoria, in a:abcat) -> it: itlista(categoria)
 itlistalista(lista(lista(categoria))) itlistahijos                    O(1)
 itlistahijos <- buscarListaHijos(a.trie, p)                           O(|p|) // me da el it a la lista donde estan sus hijos
-itlista(categorias) it <- actual(itlistahijos)                        O(1)
+itlista(categoria) it <- actual(itlistahijos)                         O(1) // me da el primer elemento de la lista de hijos de un padre. Preguntar!!!
 
-idarID(in: c:categoria, a:abcat) -> id: id
+idarID(in c:categoria, a:abcat) -> id: id
 id <- buscarid(a.trie, c)                                             O(|c|)

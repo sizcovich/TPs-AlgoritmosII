@@ -167,6 +167,76 @@
 
 \maketitle
 
+\section{M\'odulo ArbolCategorias}
+\begin{Interfaz}
+
+	\Titulo{Operaciones b\'asicas}
+	
+	\InterfazFuncion{nuevoAC}{\In{raiz}{categoria}}{abCat}
+	  {$res \igobs nuevo(raiz)$}
+	  [$\Theta(|raiz|)$]
+	  [crea un \'arbol con categor\'ia \emph{raiz}.]
+	
+	\InterfazFuncion{raiz}{\In{ac}{abCat}}{categoria}
+	  {$res \igobs raiz(ac)$}
+	  [$\Theta(1)$]
+	  [obtiene el nombre de la categor\'ia raiz.]
+	
+	\InterfazFuncion{agregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}{categoria}
+	  [est\'a?(padre, ac) $\land$ $\neg$vac\'ia?(hija) $\land$ $\neg$est\'a?(hija, ac)]
+	  {$ac \igobs agregar(ac_0, padre, hija)$}
+	  [$\Theta(|padre| + |hija|)$]
+	  [agrega la categor\'ia hija a padre.]
+	
+	\InterfazFuncion{hijas}{\In{ac}{abCat}, \In{padre}{categoria}}{itCategorias}
+	  [est\'a?(padre, ac)]
+	  {$res \igobs crearIteradorHijasDe(ac, padre)$}
+	  [$\Theta(|padre|)$]
+	  [devuelve un iterador que proyecta las hijas del padre.]
+
+	\InterfazFuncion{id}{\In{ac}{abCat}, \In{c}{categoria}}{Nat}
+	  [est\'a?(c, ac)]
+	  {$res \igobs id(ac, c)$}
+	  [$\Theta(|c|)$]
+	  [devuelve el id de la categoria dada.]
+	
+\end{Interfaz}
+
+
+\section{M\'odulo LinkLinkIt}
+
+\begin{Interfaz}
+	
+	\InterfazFuncion{crearLinkLinkIt}{\In{ac}{abCat}}{LinkLinkIt}
+	  {$res \igobs iniciar(ac)$}
+	  [$\Theta(\#categorias(ac))$]
+	  [crea un sistema LinkLinkIt.]
+
+	\InterfazFuncion{agregarLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria}}{LinkLinkIt}
+	  [$l \notin$ links($s$) $\land$ est\'a?($c$, categorias($s$)) $\land$ $s \igobs s_0$]
+	  {$s \igobs nuevoLink(s_0, l, c)$}
+	  [$\Theta(|l| + |c| + h)$]
+	  [agrega un link a la categor\'ia se\~{n}alada.]
+
+	\InterfazFuncion{accederLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha}}{LinkLinkIt}
+	  [$l \in$ links($s$) $\land$ $f \geq$ fechaActual($s$)]
+	  {$s \igobs$ nuevoLink($s_0$, $l$, $c$)}
+	  [$\Theta(|l| + |c| + h)$]
+	  [registra un acceso al link provisto.]
+
+	\InterfazFuncion{cantLinks}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{Nat}
+	  {$res \igobs$ cantLinks($s$, $c$)}
+	  [$\Theta(|c|)$]
+	  [devuelve la cantidad de links que tiene una categor\'ia.]
+
+	\InterfazFuncion{linksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
+	  [est\'a?($c$, categorias($s$))]
+	  {$res \igobs$ crearIteradorLinksOrdenadosPorAccesos($s$, $c$)}
+	  [$\Theta(|c| + n^2)$]
+	  [devuelve la cantidad de links que tiene una categor\'ia.]
+
+\end{Interfaz}
+
 \section{Módulo Lista Enlazada($\alpha$)}
 
 

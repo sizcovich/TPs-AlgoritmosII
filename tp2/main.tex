@@ -10,6 +10,7 @@
 \usepackage{ifthen}
 \usepackage{libs/caratula}
 \usepackage{libs/aed2-symb,libs/aed2-itef,libs/aed2-tad}
+\usepackage{algpseudocode}
 \usepackage[colorlinks=true, linkcolor=blue]{hyperref}
 \usepackage{calc}
 
@@ -206,20 +207,58 @@
 
 \begin{Representacion}
 
-	\begin{Estructura}{abCat}[estr]
-	    \begin{Tupla}[estr]
-	      \tupItem{categorias}{DiccTrie(categoria, nodo)}
+	\begin{Estructura}{abCat}
+	    \begin{Tupla}
+	      \tupItem{categorias}{DiccTrie(categoria, Nodo)}
 	      \tupItem{raiz}{categoria}
 	      \tupItem{ultID}{nat}
 	    \end{Tupla}
 
-	    \begin{Tupla}[nodo]
+	    \begin{Tupla}[Nodo]
 	      \tupItem{id}{nat}
 	      \tupItem{hijas}{secu(categoria)}
 	    \end{Tupla}
 	\end{Estructura}
 
 \end{Representacion}
+
+\begin{Algoritmos}
+
+Todos los pasos que no tengan especificados sus complejidades se suponen realizables en tiempos acotables por una constante.\\ 
+
+\algdef{SL}{var}{0}[2]{$#1$ \textbf{es} \TipoVariable{#2}}
+
+
+\begin{algorithmic}[1]
+\Procedure{iNuevoAC}{\In{raiz}{categoria}}{ $\DRef res$ : \TipoVariable{abCat}}
+	\var{tupla}{Nodo}
+	\State $tupla.id \gets res.ultId$
+	\State $tupla.hijas \gets $Vacia()
+	\State $res.ultID\gets 1$
+	\State $res.raiz\gets raiz$
+	\State $res.categorias\gets $Definir(Vacio(), $r$, $tupla$)\Comment{O(|$raiz$|)}
+\EndProcedure
+\end{algorithmic}
+
+
+\begin{algorithmic}[1]
+\Procedure{iRaiz}{\In{ac}{abCat}}{ $\DRef res$ : \TipoVariable{categoria}}
+	\State $res \gets ac.raiz$
+\EndProcedure
+\end{algorithmic}
+
+
+\begin{algorithmic}[1]
+\Procedure{iAgregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}
+	\State $ac.ultID \gets ac.ultID + 1$
+	\var{tupla}{Nodo}
+	\State $tupla.id \gets a.ultID$
+	\State $tupla.hijas \gets $Vacia()
+	\State Definir($ac.categorias$, $hija$, $tupla$)\Comment{O(|$hija$|)}
+\EndProcedure
+\end{algorithmic}
+
+\end{Algoritmos}
 
 
 \section{M\'odulo LinkLinkIt}

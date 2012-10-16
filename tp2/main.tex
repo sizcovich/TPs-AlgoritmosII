@@ -68,7 +68,7 @@
 }{}
 
 
-\newcommand{\Titulo}[1]{
+\newcommand{\modTitulo}[1]{
   \vspace*{1ex}\par\noindent\textbf{\large #1}\par
 }
 
@@ -153,7 +153,7 @@
 \begin{document}
 
 \materia{Algoritmos y Estructuras de Datos II}
-\submateria{Trabajo Pr\'actico de Diseño}
+\submateria{Trabajo Pr\'actico de Dise\~no}
 \titulo{LinkLinkIt}
 \subtitulo{Cat\'alogo de rutas en internet}
 \grupo{3}
@@ -170,7 +170,7 @@
 \section{M\'odulo ArbolCategorias}
 \begin{Interfaz}
 
-	\Titulo{Operaciones b\'asicas}
+	\modTitulo{Operaciones b\'asicas}
 	
 	\InterfazFuncion{nuevoAC}{\In{raiz}{categoria}}{abCat}
 	  {$res \igobs nuevo(raiz)$}
@@ -255,7 +255,7 @@
 
   \textbf{géneros}: \TipoVariable{lista$(\alpha)$}, \TipoVariable{itLista($\alpha$)}.
 
-  \Titulo{Operaciones básicas de lista}
+  \modTitulo{Operaciones básicas de lista}
 
   \InterfazFuncion{Vacía}{}{lista$(\alpha)$}%
   {$res \igobs \secuencia{}$}%
@@ -270,7 +270,7 @@
   [el elemento $a$ agrega por copia. El iterador se invalida si y sólo si se elimina el elemento siguiente del iterador sin utilizar la función \NombreFuncion{EliminarSiguiente}.]
 
  
-  \Titulo{Operaciones del iterador}
+  \modTitulo{Operaciones del iterador}
 
   \InterfazFuncion{CrearIt}{\In{l}{lista($\alpha$)}}{itLista($\alpha$)}
   {$res$ $\igobs$ crearItBi(\secuencia{}, $l$) $\land$ alias(SecuSuby($it$) $=$ $l$)}
@@ -288,7 +288,7 @@
 
 \begin{Representacion}
   
-  \Titulo{Representación de la lista}
+  \modTitulo{Representación de la lista}
 
   \begin{Estructura}{lista$(\alpha)$}[lst]
     \begin{Tupla}[lst]
@@ -327,7 +327,7 @@
  
   \AbsFc[lst]{secu($\alpha$)}[l]{\IF $l$.longitud $=$ $0$ THEN \secuencia{} ELSE \secuencia{$l$.primero\DRef dato}[Abs(FinLst($l$))] FI}
 
-  \Titulo{Representación del iterador}
+  \modTitulo{Representación del iterador}
 
   \begin{Estructura}{itLista($\alpha$)}[iter]
     \begin{Tupla}[iter]

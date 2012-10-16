@@ -208,14 +208,14 @@
 
 	\begin{Estructura}{abCat}[estr]
 	    \begin{Tupla}[estr]
-	      \tupItem{categorias}{DiccTrie(categoria, hijas)}
+	      \tupItem{categorias}{DiccTrie(categoria, nodo)}
 	      \tupItem{raiz}{categoria}
 	      \tupItem{ultID}{nat}
 	    \end{Tupla}
-	    
-	    \begin{Tupla}[hijas]
-	      \tupItem{hijas}{secu(categoria)}
+
+	    \begin{Tupla}[nodo]
 	      \tupItem{id}{nat}
+	      \tupItem{hijas}{secu(categoria)}
 	    \end{Tupla}
 	\end{Estructura}
 

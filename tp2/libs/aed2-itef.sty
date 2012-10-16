@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 
-\ProvidesPackage{aed2-itef}[2010/03/16 - if-then-else-fi en lenguaje de TADs.]
+\ProvidesPackage{libs/aed2-itef}[2010/03/16 - if-then-else-fi en lenguaje de TADs.]
 \RequirePackage{ifthen}%ifthenelse.
 
 % Imprimir un mensajito al procesar un .tex que use este package
@@ -9,7 +9,7 @@
 % parametros modificables
 \newlength{\itefIndentacion}\setlength{\itefIndentacion}{5mm}
 
-% Los símbolos a utilizar
+% Los sï¿½mbolos a utilizar
 \newcommand{\LIF}{\textrm{\textbf{if}}}
 \newcommand{\LTHEN}{\textrm{\textbf{then}}}
 \newcommand{\LELSE}{\textrm{\textbf{else}}}
@@ -26,7 +26,7 @@
     }%
 }
 
-% if then else fi, en una línea.
+% if then else fi, en una lï¿½nea.
 \def\IFL#1THEN#2ELSE#3FI{\LIF\ #1~\LTHEN\ #2~\LELSE\ #3~\LFI}
 
 \newlength{\itef@linewidth}

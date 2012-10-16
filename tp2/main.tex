@@ -57,7 +57,7 @@
 
 \newenvironment{Representacion}{%
   \vspace*{2ex}%
-  \noindent\textbf{\Large Representación}%
+  \noindent\textbf{\Large Representaci\'on}%
   \vspace*{2ex}%
 }{}
 
@@ -170,6 +170,8 @@
 \section{M\'odulo ArbolCategorias}
 \begin{Interfaz}
 
+	\textbf{g\'eneros}: \TipoVariable{abCat}, \TipoVariable{itCategorias}.
+
 	\modTitulo{Operaciones b\'asicas}
 	
 	\InterfazFuncion{nuevoAC}{\In{raiz}{categoria}}{abCat}
@@ -201,6 +203,23 @@
 	  [devuelve el id de la categoria dada.]
 	
 \end{Interfaz}
+
+\begin{Representacion}
+
+	\begin{Estructura}{abCat}[estr]
+	    \begin{Tupla}[estr]
+	      \tupItem{categorias}{DiccTrie(categoria, hijas)}
+	      \tupItem{raiz}{categoria}
+	      \tupItem{ultID}{nat}
+	    \end{Tupla}
+	    
+	    \begin{Tupla}[hijas]
+	      \tupItem{hijas}{secu(categoria)}
+	      \tupItem{id}{nat}
+	    \end{Tupla}
+	\end{Estructura}
+
+\end{Representacion}
 
 
 \section{M\'odulo LinkLinkIt}

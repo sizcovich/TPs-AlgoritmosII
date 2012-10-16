@@ -1,29 +1,66 @@
-abcat es tupla< todos: lista(categorias), categorias: string, trie: trie(tupla<id,itlista(categoria),itlistalista(lista(categoria))>), raiz: categoria, hijos: lista(lista(categoria)), id: nat>
+abCat se representa con abcat
+donde abcat es tupla(dicc: DiccTrie(categoria,hijos), raiz: categoria, ultID: nat) 
+donde hijos es tupla(id: nat, lista(categoria))
+donde categoria es string
+Algoritmos
 
-icrearArbol(in r: categoria) -> a: abcat
-agregarAtras(todos, r)                                                O(|r|)
-itlista(categoria) it <- ultimo(todos)                               O(1) //iterador a raiz
-id <- 1                                                               O(1)
-agregarListaVacia(hijos)                                              O(1) // crea una lista vacia al final
-itlistalista(lista(lista(categoria))) itlista <- ultimo(hijos)        O(1) // es un it a la ultima lista agregada 
-crearTrie(r, <id, it, itlista>)                                       O(|r|) //it es iterador del ultimo e itLista es el de hijos
-raiz <- r                                                             O(|r|) //a la variable raiz le asigno la categoria
+inuevoAC(in r: categoria) -> a: abcat
+var  DiccTrie: DiccTrie(categoria,hijos)
+     list: lista(categoria)                                           // creo las variables
+DiccTrie <- Vacio()                                                   O(1)     // creo el diccionario vacio
+list <- Vacia()                                                       O(1)     // creo una lista vacia
+a.ultID <- 1                                                          O(1)     // seteo el id en 1
+a.raiz <- r                                                           O(|r|)   // guardo la raiz
+a.dicc <- definir(DiccTrie, r, tupla(ultID, list))                    O(|r|)   //creo el trie
 
-iagregarHijo(in h:categoria, in p:categoria, in/out: a:abcat)
-agregarAtras(todos, h)                                                O(|h|)
-itlista(categoria) it <- ultimo(todos)                                O(1)
-id++                                                                  O(1)
-agregarAtras(hijos)                                                   O(1)
-itlistalista(lista(lista(categoria))) itlista <- ultimo(hijos)        O(1)
-agregarTrie(a.trie, h, <id ,it, itlista>)                             O(|h|) //ver si la tupla es lo mas facil de pasar y orden
-itlistalista(lista(lista(categoria))) itlistahijos                    O(1) //crea iterador vacio
-itlistahijos <- buscarListaHijos(a.trie, p)                           O(|p|) //recorre el trie buscando al padre, llega al nodo y devuelve el iterador a la lista de hijos (buscarListaHijos(in trie, in categoria) -> it listalistaCategoria)
-agregarAtras(actual(itlistahijos), h)                                 O(|h|) //a la lista de hijos le agregas el hijo que queres agregar
+iraiz(in ac:abCat) -> res: categoria
+res <- ac.raiz                                                        O(1)   
+                                      
+iagregar(in/out: a:abCat, in padre:categoria, in hija:categoria)
+var  list, list2: lista(categoria)
+     hijo: tupla(id: nat, lista(categoria)) 
+     it: itLista(categoria)                                           // creo las variables
+list<- Vacia()                                                        O(1)     // creo una lista vacia
+it <- crearIt(list)                                                   O(1)      // creo el it
+a.ultID++                                                             O(1)
+definir(a.dicc, hija, tupla(a.ultID, list))                           O(|hija|)// agrego a la hija al trie
+hijo <- significado(a.dicc, padre)                                    O(|padre|)//agarro el significado de padre
+list2 <- hijo.PI2                                                     O(1)      // agarrola lista por referencia
+it <- agregarAdelante(list2, hija)                                    O(|hija|) //agrego hija a padre
 
-ibuscarHijos(in p:categoria, in a:abcat) -> it: itlista(categoria)
-itlistalista(lista(lista(categoria))) itlistahijos                    O(1)
-itlistahijos <- buscarListaHijos(a.trie, p)                           O(|p|) // me da el it a la lista donde estan sus hijos
-itlista(categoria) it <- actual(itlistahijos)                         O(1) // me da el primer elemento de la lista de hijos de un padre. Preguntar!!!
+ihijas(in a:abCat, in p:categoria) -> it: itlista(categoria)
+var  list: lista(categoria)
+     hijo: tupla(id: nat, lista(categoria))                           // creo las variables
+hijo <- significado(a.dicc, p)                                        O(|p|)    //agarro el significado de padre
+list <- hijo.PI2                                                      O(1)      // agarrola lista por referencia
+it <- crearIt(list)                                                   O(1)      // creo el it
 
-idarID(in c:categoria, a:abcat) -> id: id
-id <- buscarid(a.trie, c)                                             O(|c|)
+iID(in a:abCat, in c:categoria) -> res: nat
+var  list: lista(categoria)
+     hijo: tupla(id: nat, lista(categoria))                           // creo las variables
+hijo <- significado(a.dicc, c)                                        O(|c|)    //agarro el nodo
+res <- hijo.PI1                                                       O(1)      // agarro el id por referencia 
+
+servicios usados
+
+lista(alfa)
+
+la función Vacia debe tener complejidad O(1)
+la función agregarAdelante debe tener complejidad O(|k|), donde k es el string que se va a colocar en la lista.
+
+itlista(alfa)
+
+la función crearit debe tener complejidad O(1) // crea un it al ultimo valor ingresado a la lista y lo coloca como actual
+
+DiccString(alfa)
+
+la función Vacio debe tener complejidad O(1) 
+la función definir debe tener complejidad O(|k|) donde k es el string que se va a colocar como definicion. //el significado se pasa por referencia, es por esto que si dicho signicado es modicado desde afuera del módulo entonces también se modicará en el
+diccionario. 
+la función significado debe tener complejidad O(|k|) donde k es la clave //el significado se pasa por referencia, es por esto que si dicho signicado es modicado desde afuera del módulo entonces también se modicará en el
+diccionario. 
+
+tupla(alfa)
+
+la función PI1 debe tener complejidad O(1) //devuelve el primer elemento por referencia
+la función PI2 debe tener complejidad O(1) //devuelve el segundo elemento por referencia

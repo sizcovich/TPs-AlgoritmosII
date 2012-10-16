@@ -25,21 +25,21 @@ it <- crearIt(list)                                                   O(1)      
 a.ultID++                                                             O(1)
 definir(a.categorias, hija, tupla(a.ultID, list))                           O(|hija|)// agrego a la hija al trie
 hijo <- significado(a.categorias, padre)                                    O(|padre|)//agarro el significado de padre
-list2 <- hijo.PI2                                                     O(1)      // agarrola lista por referencia
+list2 <- hijo.hijas                                                     O(1)      // agarrola lista por referencia
 it <- agregarAdelante(list2, hija)                                    O(|hija|) //agrego hija a padre
 
 ihijas(in a:abCat, in p:categoria) -> it: itlista(categoria)
 var  list: lista(categoria)
      hijo: tupla(id: nat, lista(categoria))                           // creo las variables
 hijo <- significado(a.categorias, p)                                        O(|p|)    //agarro el significado de padre
-list <- hijo.PI2                                                      O(1)      // agarrola lista por referencia
+list <- hijo.hijas                                                      O(1)      // agarrola lista por referencia
 it <- crearIt(list)                                                   O(1)      // creo el it
 
 iID(in a:abCat, in c:categoria) -> res: nat
 var  list: lista(categoria)
      hijo: tupla(id: nat, lista(categoria))                           // creo las variables
 hijo <- significado(a.categorias, c)                                        O(|c|)    //agarro el nodo
-res <- hijo.PI1                                                       O(1)      // agarro el id por referencia 
+res <- hijo.id                                                       O(1)      // agarro el id por referencia 
 
 servicios usados
 
@@ -59,8 +59,3 @@ la función definir debe tener complejidad O(|k|) donde k es el string que se va 
 diccionario. 
 la función significado debe tener complejidad O(|k|) donde k es la clave //el significado se pasa por referencia, es por esto que si dicho signicado es modicado desde afuera del módulo entonces también se modicará en el
 diccionario. 
-
-tupla(alfa)
-
-la función PI1 debe tener complejidad O(1) //devuelve el primer elemento por referencia
-la función PI2 debe tener complejidad O(1) //devuelve el segundo elemento por referencia

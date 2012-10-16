@@ -1,17 +1,17 @@
 abCat se representa con abcat
-donde abcat es tupla(dicc: DiccTrie(categoria,hijos), raiz: categoria, ultID: nat) 
-donde hijos es tupla(id: nat, lista(categoria))
+donde abcat es tupla(categorias: DiccTrie(categoria,nodo), raiz: categoria, ultID: nat) 
+donde nodo es tupla(id: nat, hijas:lista(categoria))
 donde categoria es string
 Algoritmos
 
 inuevoAC(in r: categoria) -> a: abcat
-var  DiccTrie: DiccTrie(categoria,hijos)
+var  Dicc: DiccTrie(categoria,hijos)
      list: lista(categoria)                                           // creo las variables
-DiccTrie <- Vacio()                                                   O(1)     // creo el diccionario vacio
+Dicc <- Vacio()                                                   O(1)     // creo el diccionario vacio
 list <- Vacia()                                                       O(1)     // creo una lista vacia
 a.ultID <- 1                                                          O(1)     // seteo el id en 1
 a.raiz <- r                                                           O(|r|)   // guardo la raiz
-a.dicc <- definir(DiccTrie, r, tupla(ultID, list))                    O(|r|)   //creo el trie
+a.categorias <- definir(Dicc, r, tupla(ultID, list))                    O(|r|)   //creo el trie
 
 iraiz(in ac:abCat) -> res: categoria
 res <- ac.raiz                                                        O(1)   
@@ -23,22 +23,22 @@ var  list, list2: lista(categoria)
 list<- Vacia()                                                        O(1)     // creo una lista vacia
 it <- crearIt(list)                                                   O(1)      // creo el it
 a.ultID++                                                             O(1)
-definir(a.dicc, hija, tupla(a.ultID, list))                           O(|hija|)// agrego a la hija al trie
-hijo <- significado(a.dicc, padre)                                    O(|padre|)//agarro el significado de padre
+definir(a.categorias, hija, tupla(a.ultID, list))                           O(|hija|)// agrego a la hija al trie
+hijo <- significado(a.categorias, padre)                                    O(|padre|)//agarro el significado de padre
 list2 <- hijo.PI2                                                     O(1)      // agarrola lista por referencia
 it <- agregarAdelante(list2, hija)                                    O(|hija|) //agrego hija a padre
 
 ihijas(in a:abCat, in p:categoria) -> it: itlista(categoria)
 var  list: lista(categoria)
      hijo: tupla(id: nat, lista(categoria))                           // creo las variables
-hijo <- significado(a.dicc, p)                                        O(|p|)    //agarro el significado de padre
+hijo <- significado(a.categorias, p)                                        O(|p|)    //agarro el significado de padre
 list <- hijo.PI2                                                      O(1)      // agarrola lista por referencia
 it <- crearIt(list)                                                   O(1)      // creo el it
 
 iID(in a:abCat, in c:categoria) -> res: nat
 var  list: lista(categoria)
      hijo: tupla(id: nat, lista(categoria))                           // creo las variables
-hijo <- significado(a.dicc, c)                                        O(|c|)    //agarro el nodo
+hijo <- significado(a.categorias, c)                                        O(|c|)    //agarro el nodo
 res <- hijo.PI1                                                       O(1)      // agarro el id por referencia 
 
 servicios usados

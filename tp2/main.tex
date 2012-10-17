@@ -168,6 +168,46 @@
 
 \maketitle
 
+\section{M\'odulo DiccTrie}
+\begin{Interfaz}
+
+	\textbf{usa}: \TipoVariable{Bool, String}.
+
+	\textbf{se explica con}: \TipoVariable{Diccionario(String, $alpha$)}.
+
+	\textbf{g\'eneros}: \TipoVariable{diccTrie}.
+
+	\modTitulo{Operaciones b\'asicas}
+
+	\InterfazFuncion{Vacio}{}{diccTrie($\alpha$)}
+	  {$res \igobs vacio()$}
+	  [O(1)]
+	  [genera un diccionario vac\'io.]
+
+	\InterfazFuncion{Definir}{\Inout{d}{diccTrie}, \In{k}{string}, \In{s}{$\alpha$}}{}
+	  [$d \igobs d_0$]
+	  {$d \igobs definir(d_0, k, s)$}
+	  [O(|$k$|)]
+	  [define la clave $k$ con el significado $s$ en el diccionario.]
+	  [la clave se guarda por copia y el significado por referencia.]
+
+	\InterfazFuncion{Definido?}{\Inout{d}{diccTrie}, \In{k}{string}}{Bool}
+	  {$res \igobs def?(d, k)$}
+	  [O(|$clave$|)]
+	  [devuelve \TipoVariable{True} si y s\'olo si $k$ est\'a definido en el diccionario.]
+
+	\InterfazFuncion{Significado}{\Inout{d}{diccTrie}, \In{k}{string}}{$\alpha$}
+	  [$def?(d, clave)$]
+	  {$alias(res \igobs significado(d, k))$}
+	  [O(|$clave$|)]
+	  [devuelve el significado por referencia de la clave $k$ en $d$.]
+
+\end{Interfaz}
+
+\begin{Representacion}
+
+\end{Representacion}
+
 \section{M\'odulo ArbolCategorias}
 \begin{Interfaz}
 
@@ -210,12 +250,12 @@
 
 	\begin{Estructura}{abCat}
 	    \begin{Tupla}
-	      \tupItem{categorias}{DiccTrie(categoria, Nodo)}
+	      \tupItem{categorias}{DiccTrie(categoria, catInfo)}
 	      \tupItem{raiz}{categoria}
 	      \tupItem{ultID}{nat}
 	    \end{Tupla}
 
-	    \begin{Tupla}[Nodo]
+	    \begin{Tupla}[catInfo]
 	      \tupItem{id}{nat}
 	      \tupItem{hijas}{secu(categoria)}
 	    \end{Tupla}
@@ -232,13 +272,14 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 
 \begin{algorithmic}[1]
 \Procedure{iNuevoAC}{\In{raiz}{categoria}}{ $\DRef res$ : \TipoVariable{abCat}}
-	\var{nodoRaiz}{Nodo}
-	\State $nodoRaiz.id \gets 1$
-	\State $nodoRaiz.hijas \gets$ Vacia()
 	\State $res.categorias \gets $Vacio()
-	\State Definir($res.categorias$, $raiz$, $nodoRaiz$)\Comment{O(|$raiz$|)}
-	\State $res.ultID\gets 1$
 	\State $res.raiz\gets raiz$\Comment{O(|$raiz$|)}
+	\State $res.ultID\gets 1$
+	\\
+	\var{infoRaiz}{catInfo}
+	\State $infoRaiz.id \gets res.ultID$
+	\State $infoRaiz.hijas \gets$ Vacia()
+	\State Definir($res.categorias$, $raiz$, $infoRaiz$)\Comment{O(|$raiz$|)}
 \EndProcedure
 \end{algorithmic}
 
@@ -252,13 +293,13 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 \Procedure{iAgregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}
 	\State $ac.ultID \gets ac.ultID + 1$
 	\\
-	\var{nodoHija}{Nodo}
-	\State $nodoHija.id \gets ac.ultID$
-	\State $nodoHija.hijas \gets$ Vacia()
-	\State Definir($ac.categorias$, $hija$, $nodoHija$)\Comment{O(|$hija$|)}
+	\var{infoHija}{catInfo}
+	\State $infoHija.id \gets ac.ultID$
+	\State $infoHija.hijas \gets$ Vacia()
+	\State Definir($ac.categorias$, $hija$, $infoHija$)\Comment{O(|$hija$|)}
 	\\
-	\State $nodoPadre \gets$ significado($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
-	\State agregarAtras($nodoPadre.hijas$, $hija$)\Comment{O(|$hija$|)}
+	\State $infoPadre \gets$ Significado($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
+	\State AgregarAtras($infoPadre.hijas$, $hija$)\Comment{O(|$hija$|)}
 \EndProcedure
 \end{algorithmic}
 

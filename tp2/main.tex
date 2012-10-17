@@ -231,12 +231,12 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 
 \begin{algorithmic}[1]
 \Procedure{iNuevoAC}{\In{raiz}{categoria}}{ $\DRef res$ : \TipoVariable{abCat}}
-	\var{tupla}{Nodo}
+	\var{nodoRaiz}{Nodo}
+	\State $nodoRaiz.id \gets 1$
+	\State $nodoRaiz.hijas \gets$ Vacia()
+	\State $res.categorias\gets$ Definir(Vacio(), $raiz$, $nodoRaiz$)\Comment{O(|$raiz$|)}
 	\State $res.ultID\gets 1$
 	\State $res.raiz\gets raiz$\Comment{O(|$raiz$|)}
-	\State $tupla.id \gets res.ultID$
-	\State $tupla.hijas \gets $Vacia()
-	\State $res.categorias\gets $Definir(Vacio(), $r$, $tupla$)\Comment{O(|$raiz$|)}
 \EndProcedure
 \end{algorithmic}
 
@@ -250,18 +250,15 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 
 \begin{algorithmic}[1]
 \Procedure{iAgregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}
-	\var{tupla}{Nodo}
-	\var{hijo}{Nodo}
-	\var{it}{itLista(categoria)}
-	\var{list}{lista(categoria)}
 	\State $ac.ultID \gets ac.ultID + 1$
-	\State $tupla.id \gets ac.ultID$
-	\State $tupla.hijas \gets $Vacia()
-	\State Definir($ac.categorias$, $hija$, $tupla$)\Comment{O(|$hija$|)}
-	\State $hijo \gets $significado($ac.categorias, padre$)\Comment{O(|$padre$|)}
-	\State $list \gets hijo.hijas$
-	\State $it \gets $agregarAtras($list, hija$)\Comment{O(|$hija$|)}
-	  
+	\\
+	\var{nodoHija}{Nodo}
+	\State $nodoHija.id \gets ac.ultID$
+	\State $nodoHija.hijas \gets$ Vacia()
+	\State Definir($ac.categorias$, $hija$, $nodoHija$)\Comment{O(|$hija$|)}
+	\\
+	\State $nodoPadre \gets$ significado($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
+	\State agregarAtras($nodoPadre.hijas$, $hija$)\Comment{O(|$hija$|)}
 \EndProcedure
 \end{algorithmic}
 

@@ -178,30 +178,30 @@
 	\InterfazFuncion{nuevoAC}{\In{raiz}{categoria}}{abCat}
 	  {$res \igobs nuevo(raiz)$}
 	  [$\Theta(|raiz|)$]
-	  [crea un \'arbol con categor\'ia \emph{raiz}.]
+	  [Crea un \'arbol con categor\'ia \emph{raiz}.]
 	
 	\InterfazFuncion{raiz}{\In{ac}{abCat}}{categoria}
 	  {$res \igobs raiz(ac)$}
 	  [$\Theta(1)$]
-	  [obtiene el nombre de la categor\'ia raiz.]
+	  [Devuelve el nombre de la categor\'ia raiz por referencia, con lo cual, si esta es modificada posteriormente desde afuera, se modificara tambien adentro del \'arbol de categor\'ias.]
 	
 	\InterfazFuncion{agregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}{categoria}
-	  [est\'a?(padre, ac) $\land$ $\neg$vac\'ia?(hija) $\land$ $\neg$est\'a?(hija, ac)]
+	  [$ac$ \igobs $ac_0$ $\land$ est\'a?(padre, ac) $\land$ $\neg$vac\'ia?(hija) $\land$ $\neg$est\'a?(hija, ac)]
 	  {$ac \igobs agregar(ac_0, padre, hija)$}
 	  [$\Theta(|padre| + |hija|)$]
-	  [agrega la categor\'ia hija a padre.]
+	  [Agrega la categor\'ia hija a padre.]
 	
 	\InterfazFuncion{hijas}{\In{ac}{abCat}, \In{padre}{categoria}}{itCategorias}
 	  [est\'a?(padre, ac)]
 	  {$res \igobs crearIteradorHijasDe(ac, padre)$}
 	  [$\Theta(|padre|)$]
-	  [devuelve un iterador que proyecta las hijas del padre.]
+	  [Devuelve un iterador que proyecta las hijas del padre.]
 
 	\InterfazFuncion{id}{\In{ac}{abCat}, \In{c}{categoria}}{Nat}
 	  [est\'a?(c, ac)]
 	  {$res \igobs id(ac, c)$}
 	  [$\Theta(|c|)$]
-	  [devuelve el id de la categoria dada.]
+	  [Devuelve el id de la categoria dada.]
 	
 \end{Interfaz}
 
@@ -232,10 +232,10 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 \begin{algorithmic}[1]
 \Procedure{iNuevoAC}{\In{raiz}{categoria}}{ $\DRef res$ : \TipoVariable{abCat}}
 	\var{tupla}{Nodo}
-	\State $tupla.id \gets res.ultId$
-	\State $tupla.hijas \gets $Vacia()
 	\State $res.ultID\gets 1$
-	\State $res.raiz\gets raiz$
+	\State $res.raiz\gets raiz$\Comment{O(|$raiz$|)}
+	\State $tupla.id \gets res.ultID$
+	\State $tupla.hijas \gets $Vacia()
 	\State $res.categorias\gets $Definir(Vacio(), $r$, $tupla$)\Comment{O(|$raiz$|)}
 \EndProcedure
 \end{algorithmic}
@@ -250,11 +250,18 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 
 \begin{algorithmic}[1]
 \Procedure{iAgregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}
-	\State $ac.ultID \gets ac.ultID + 1$
 	\var{tupla}{Nodo}
-	\State $tupla.id \gets a.ultID$
+	\var{hijo}{Nodo}
+	\var{it}{itLista(categoria)}
+	\var{list}{lista(categoria)}
+	\State $ac.ultID \gets ac.ultID + 1$
+	\State $tupla.id \gets ac.ultID$
 	\State $tupla.hijas \gets $Vacia()
 	\State Definir($ac.categorias$, $hija$, $tupla$)\Comment{O(|$hija$|)}
+	\State $hijo \gets $significado($ac.categorias, padre$)\Comment{O(|$padre$|)}
+	\State $list \gets hijo.hijas$
+	\State $it \gets $agregarAtras($list, hija$)\Comment{O(|$hija$|)}
+	  
 \EndProcedure
 \end{algorithmic}
 

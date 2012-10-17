@@ -18,12 +18,12 @@ res <- ac.raiz                                                        O(1)
                                       
 iagregar(in/out: a:abCat, in padre:categoria, in hija:categoria)
 var  list, list2: lista(categoria)
-     hijo: tupla(id: nat, lista(categoria)) 
-     it: itLista(categoria)                                           // creo las variables
-list<- Vacia()                                                        O(1)     // creo una lista vacia
-it <- crearIt(list)                                                   O(1)      // creo el it
-a.ultID++                                                             O(1)
-definir(a.categorias, hija, tupla(a.ultID, list))                           O(|hija|)// agrego a la hija al trie
+    * hijo: tupla(id: nat, lista(categoria)) 
+     *it: itLista(categoria)                                           // creo las variables
+*list<- Vacia()                                                        O(1)     // creo una lista vacia
+*it <- crearIt(list)                                                   O(1)      // creo el it
+*a.ultID++                                                             O(1)
+*definir(a.categorias, hija, tupla(a.ultID, list))                           O(|hija|)// agrego a la hija al trie
 hijo <- significado(a.categorias, padre)                                    O(|padre|)//agarro el significado de padre
 list2 <- hijo.hijas                                                     O(1)      // agarrola lista por referencia
 it <- agregarAdelante(list2, hija)                                    O(|hija|) //agrego hija a padre
@@ -46,7 +46,7 @@ servicios usados
 lista(alfa)
 
 la función Vacia debe tener complejidad O(1)
-la función agregarAdelante debe tener complejidad O(|k|), donde k es el string que se va a colocar en la lista.
+la función agregarAtras debe tener complejidad O(|k|), donde k es el string que se va a colocar en la lista.
 
 itlista(alfa)
 

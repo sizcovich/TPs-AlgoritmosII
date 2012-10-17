@@ -234,7 +234,8 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 	\var{nodoRaiz}{Nodo}
 	\State $nodoRaiz.id \gets 1$
 	\State $nodoRaiz.hijas \gets$ Vacia()
-	\State $res.categorias\gets$ Definir(Vacio(), $raiz$, $nodoRaiz$)\Comment{O(|$raiz$|)}
+	\State $res.categorias \gets $Vacio()
+	\State Definir($res.categorias$, $raiz$, $nodoRaiz$)\Comment{O(|$raiz$|)}
 	\State $res.ultID\gets 1$
 	\State $res.raiz\gets raiz$\Comment{O(|$raiz$|)}
 \EndProcedure

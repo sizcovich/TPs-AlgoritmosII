@@ -50,7 +50,8 @@ la función agregarAtras debe tener complejidad O(|k|), donde k es el string que 
 
 itlista(alfa)
 
-la función crearit debe tener complejidad O(1) // crea un it al ultimo valor ingresado a la lista y lo coloca como actual
+la función crearit debe tener complejidad O(1) // crea un it al primer valor ingresado a la lista y lo coloca como actual
+tiene que haber un eliminar siguiente
 
 DiccString(alfa)
 

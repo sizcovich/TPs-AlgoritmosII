@@ -195,7 +195,8 @@
 	  [est\'a?(padre, ac)]
 	  {$res \igobs crearIteradorHijasDe(ac, padre)$}
 	  [$\Theta(|padre|)$]
-	  [Devuelve un iterador que proyecta las hijas del padre.]
+	  [Devuelve un iterador que proyecta las hijas del padre de forma tal que al pedir actual, el iterador devuelve el primer elemento de la lista.]
+	  [El iterador se invalida si y solo si se elimina el elemento siguiente del iterador sin utilizar la funcion EliminarSiguiente]
 
 	\InterfazFuncion{id}{\In{ac}{abCat}, \In{c}{categoria}}{Nat}
 	  [est\'a?(c, ac)]
@@ -241,13 +242,11 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 \EndProcedure
 \end{algorithmic}
 
-
 \begin{algorithmic}[1]
 \Procedure{iRaiz}{\In{ac}{abCat}}{ $\DRef res$ : \TipoVariable{categoria}}
 	\State $res \gets ac.raiz$
 \EndProcedure
 \end{algorithmic}
-
 
 \begin{algorithmic}[1]
 \Procedure{iAgregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}
@@ -260,6 +259,20 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 	\\
 	\State $nodoPadre \gets$ significado($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
 	\State agregarAtras($nodoPadre.hijas$, $hija$)\Comment{O(|$hija$|)}
+\EndProcedure
+\end{algorithmic}
+
+\begin{algorithmic}[1]
+\Procedure{iHijas}{\In{ac}{abCat}, \In{padre}{categoria}}{ $\DRef res$ : \TipoVariable{itCategorias}}
+	\State $nodoHijo \gets$ significado($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
+	\State $res \gets$ crearIt($nodoHijo.hijas$)
+\EndProcedure
+\end{algorithmic}
+
+\begin{algorithmic}[1]
+\Procedure{iID}{\In{ac}{abCat}, \In{c}{categoria}}{ $\DRef res$ : \TipoVariable{Nat}}
+	\State $nodoHijo \gets$ significado($ac.categorias$, $c$)\Comment{O(|$c$|)}
+	\State $res \gets$ $nodoHijo.id$
 \EndProcedure
 \end{algorithmic}
 

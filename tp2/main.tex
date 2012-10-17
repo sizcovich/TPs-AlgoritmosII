@@ -193,13 +193,13 @@
 
 	\InterfazFuncion{Definido?}{\Inout{d}{diccTrie}, \In{k}{string}}{Bool}
 	  {$res \igobs def?(d, k)$}
-	  [O(|$clave$|)]
+	  [O(|$k$|)]
 	  [devuelve \TipoVariable{True} si y s\'olo si $k$ est\'a definido en el diccionario.]
 
 	\InterfazFuncion{Significado}{\Inout{d}{diccTrie}, \In{k}{string}}{$\alpha$}
-	  [$def?(d, clave)$]
+	  [$def?(d, k)$]
 	  {$alias(res \igobs significado(d, k))$}
-	  [O(|$clave$|)]
+	  [O(|$k$|)]
 	  [devuelve el significado por referencia de la clave $k$ en $d$.]
 
 \end{Interfaz}

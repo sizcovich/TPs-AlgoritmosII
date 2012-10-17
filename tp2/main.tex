@@ -211,7 +211,7 @@
 \section{M\'odulo ArbolCategorias}
 \begin{Interfaz}
 
-	\textbf{g\'eneros}: \TipoVariable{abCat}, \TipoVariable{itCategorias}.
+	\textbf{g\'eneros}: \TipoVariable{abCat} %, \TipoVariable{itCategorias}.
 
 	\modTitulo{Operaciones b\'asicas}
 	
@@ -353,6 +353,22 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 	  [devuelve la cantidad de links que tiene una categor\'ia.]
 
 \end{Interfaz}
+
+\begin{Representacion}
+
+	\begin{Estructura}{LinkLinkIt}
+	    \begin{Tupla}
+	      \tupItem{aCategorias}{abcat}%
+	      \tupItem{linksPorCat}{vector(conj(link))}%
+	      \tupItem{\\ infoLinks}{DiccTrie(link,tupla<categoria, secu(accesos)>)}%
+	    \end{Tupla}
+
+	\end{Estructura}
+
+\end{Representacion}
+%LinkLinkIt se representa con
+%tupla<abcat, vector(conj(link)), DiccTrie(link,tupla<categoria,
+% secu(accesos)>)>
 
 \section{Módulo Lista Enlazada($\alpha$)}
 

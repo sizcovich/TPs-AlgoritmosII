@@ -366,9 +366,66 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 	\end{Estructura}
 
 \end{Representacion}
-%LinkLinkIt se representa con
-%tupla<abcat, vector(conj(link)), DiccTrie(link,tupla<categoria,
-% secu(accesos)>)>
+
+REP Y ABS
+
+\begin{Algoritmos}
+
+Todos los pasos que no tengan especificados sus complejidades se suponen realizables en tiempos acotables por una constante.\\ 
+
+\algdef{SL}{var}{0}[2]{$#1$ \textbf{es} \TipoVariable{#2}}
+
+
+\begin{algorithmic}[1]
+\Procedure{iCrearLinkLinkIt}{\In{ac}{abCat}}{LinkLinkIt}
+%	\State $res.categorias \gets $Vacio()
+%	\State $res.raiz\gets raiz$\Comment{O(|$raiz$|)}
+%	\State $res.ultID\gets 1$
+%	\\
+%	\var{infoRaiz}{catInfo}
+%	\State $infoRaiz.id \gets res.ultID$
+%	\State $infoRaiz.hijas \gets$ Vacia()
+%	\State Definir($res.categorias$, $raiz$, $infoRaiz$)\Comment{O(|$raiz$|)}
+\EndProcedure
+\end{algorithmic}
+
+\begin{algorithmic}[1]
+\Procedure{iAgregarLink}{\Inout{s}{LinkLinkIt}, \In{l}{link},
+\In{c}{categoria}}{LinkLinkIt}
+%	\State $res \gets ac.raiz$
+\EndProcedure
+\end{algorithmic}
+
+\begin{algorithmic}[1]
+\Procedure{iAccederLink}{\Inout{s}{LinkLinkIt}, \In{l}{link},
+\In{f}{fecha}}{LinkLinkIt}
+%	\\
+%	\var{infoHija}{catInfo}
+%	\State $infoHija.id \gets ac.ultID$
+%	\State $infoHija.hijas \gets$ Vacia()
+%	\State Definir($ac.categorias$, $hija$, $infoHija$)\Comment{O(|$hija$|)}
+%	\\
+%	\State $infoPadre \gets$ Significado($ac.categorias$,
+%	% $padre$)\Comment{O(|$padre$|)} \State AgregarAtras($infoPadre.hijas$,
+	% $hija$)\Comment{O(|$hija$|)}
+\EndProcedure
+\end{algorithmic}
+
+\begin{algorithmic}[1]
+\Procedure{iCantLinks}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{Nat}
+%	\State $res \gets$ crearIt($nodoHijo.hijas$)
+\EndProcedure
+\end{algorithmic}
+
+\begin{algorithmic}[1]
+\Procedure{iLinksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt},
+\In{c}{categoria}}{itLinks}
+%	\State $res \gets$ $nodoHijo.id$
+\EndProcedure
+\end{algorithmic}
+
+\end{Algoritmos}
+
 
 \section{Módulo Lista Enlazada($\alpha$)}
 

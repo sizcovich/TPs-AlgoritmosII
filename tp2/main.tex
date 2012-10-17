@@ -332,13 +332,13 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 	\InterfazFuncion{agregarLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria}}{LinkLinkIt}
 	  [$l \notin$ links($s$) $\land$ est\'a?($c$, categorias($s$)) $\land$ $s \igobs s_0$]
 	  {$s \igobs nuevoLink(s_0, l, c)$}
-	  [$\Theta(|l| + |c| + h)$]
+	  [$\Theta(|l| + |c|)$]
 	  [agrega un link a la categor\'ia se\~{n}alada.]
 
 	\InterfazFuncion{accederLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha}}{LinkLinkIt}
 	  [$l \in$ links($s$) $\land$ $f \geq$ fechaActual($s$)]
 	  {$s \igobs$ nuevoLink($s_0$, $l$, $c$)}
-	  [$\Theta(|l| + |c| + h)$]
+	  [$\Theta(|l| + |c|)$]
 	  [registra un acceso al link provisto.]
 
 	\InterfazFuncion{cantLinks}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{Nat}

@@ -171,7 +171,7 @@
 \section{M\'odulo DiccTrie($\alpha$)}
 \begin{Interfaz}
 
-	\textbf{par\'ametros formales}: \TipoVariable{$\alpha$}.
+	\textbf{par\'ametro formal}: \TipoVariable{$\alpha$}.
 
 	\textbf{usa}: \TipoVariable{Bool, String}.
 
@@ -182,7 +182,7 @@
 	\modTitulo{Operaciones b\'asicas}
 
 	\InterfazFuncion{Vacio}{}{diccTrie($\alpha$)}
-	  {$res \igobs vac\'io()$}
+	  {$res \igobs vacio()$}
 	  [O(1)]
 	  [Genera un diccionario vac\'io.]
 
@@ -237,7 +237,7 @@
 	  [$\Theta(|padre| + |hija|)$]
 	  [Agrega la categor\'ia hija a padre.]
 
-	\InterfazFuncion{hijas}{\In{ac}{abCat}, \In{padre}{categoria}}{itCategorias}
+	\InterfazFuncion{hijas}{\In{ac}{abCat}, \In{padre}{categoria}}{iteradorUni(categoria)}
 	  [est\'a?(padre, ac)]
 	  {$res \igobs crearItUni(conjuntoASecuencia(hijos(ac, padre)))$}
 	  [$\Theta(|padre|)$]
@@ -272,7 +272,7 @@
 
 	    \begin{Tupla}[catInfo]
 	      \tupItem{id}{nat}
-	      \tupItem{hijas}{secu(categoria)}
+	      \tupItem{hijas}{lista(categoria)}
 	    \end{Tupla}
 	\end{Estructura}
 
@@ -331,9 +331,9 @@ C\'alculo de complejidad:
 \\O(|$hija$| + |$padre$|)
 \\
 \begin{algorithmic}[1]
-\Procedure{iHijas}{\In{ac}{abCat}, \In{padre}{categoria}}{ $\DRef res$ : \TipoVariable{itCategorias}}
+\Procedure{iHijas}{\In{ac}{abCat}, \In{padre}{categoria}}{ $\DRef res$ : \TipoVariable{iteradorUni(categoria)}}
 	\State $nodoHijo \gets$ Obtener($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
-	\State $res \gets$ crearIt($nodoHijo.hijas$)\Comment{O(1)}
+	\State $res \gets$ crearIterador($nodoHijo.hijas$)\Comment{O(1)}
 \EndProcedure
 \end{algorithmic}
 C\'alculo de complejidad:
@@ -442,15 +442,13 @@ REP Y ABS
 \end{algorithmic}
 
 \begin{algorithmic}[1]
-\Procedure{iAgregarLink}{\Inout{s}{LinkLinkIt}, \In{l}{link},
-\In{c}{categoria}}{LinkLinkIt}
+\Procedure{iAgregarLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria}}{LinkLinkIt}
 %	\State $res \gets ac.raiz$
 \EndProcedure
 \end{algorithmic}
 
 \begin{algorithmic}[1]
-\Procedure{iAccederLink}{\Inout{s}{LinkLinkIt}, \In{l}{link},
-\In{f}{fecha}}{LinkLinkIt}
+\Procedure{iAccederLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha}}{LinkLinkIt}
 %	\\
 %	\var{infoHija}{catInfo}
 %	\State $infoHija.id \gets ac.ultID$
@@ -478,6 +476,63 @@ REP Y ABS
 
 \end{Algoritmos}
 
+
+\section{M\'odulo Iterador Unidireccional($\alpha$)}
+
+\begin{Interfaz}
+
+	\textbf{par\'ametro formal}: \TipoVariable{$\alpha$}.
+
+	\textbf{usa}: \TipoVariable{Bool}.
+
+	\textbf{se explica con}: \TipoVariable{Iterador Unidireccional($\alpha$)}.
+
+	\textbf{g\'eneros}: \TipoVariable{iteradorUni($\alpha$)}
+
+	\InterfazFuncion{crearIterador}{\In{l}{lista($\alpha$)}}{iteradorUni($\alpha$)}
+	  {$res \igobs crearItUni(l)$}
+
+	\InterfazFuncion{HayMas?}{\In{it}{iteradorUni($\alpha$)}}{Bool}
+	  {$res \igobs HayMas?(it)$}
+
+	\InterfazFuncion{Siguiente}{\Inout{it}{iteradorUni($\alpha$)}}{$\alpha$}
+	  [$hayMas?(it) \land it \igobs it_0$]
+	  {$it \igobs Avanzar(it_0) \land res \igobs Actual(it)$}
+
+\end{Interfaz}
+
+\begin{Representacion}
+
+	\begin{Estructura}{iteradorUni($\alpha$)}
+		\begin{Tupla}
+			\tupItem{lista}{lista($\alpha$)}
+		\end{Tupla}
+	\end{Estructura}
+
+\end{Representacion}
+
+\begin{Algoritmos}
+
+\begin{algorithmic}[1]
+\Procedure{crearIterador}{\In{l}{lista($\alpha$)}}{ $\DRef res$ : \TipoVariable{iteradorUni($\alpha$)}}
+	\State $res.lista \gets l$\Comment{O(1)}
+\EndProcedure
+\end{algorithmic}
+
+\begin{algorithmic}[1]
+\Procedure{HayMas?}{\In{it}{iteradorUni($\alpha$)}}{ $\DRef res$ : \TipoVariable{Bool}}
+	\State $res \gets \neg $EsVac\'ia?($it.lista$)\Comment{$\Theta(1)$}
+\EndProcedure
+\end{algorithmic}
+
+\begin{algorithmic}[1]
+\Procedure{Siguiente}{\Inout{it}{iteradorUni($\alpha$)}}{ $\DRef res$ : \TipoVariable{$\alpha$}}
+	\State $it.lista \gets$ Fin($it.lista$)\Comment{$\Theta(1)$}
+	\State $res \gets$ Actual($it.lista$)\Comment{$\Theta(1)$}
+\EndProcedure
+\end{algorithmic}
+
+\end{Algoritmos}
 
 \section{Módulo Lista Enlazada($\alpha$)}
 

@@ -46,7 +46,7 @@ servicios usados
 lista(alfa)
 
 la función Vacia debe tener complejidad O(1)
-la función agregarAtras debe tener complejidad O(|k|), donde k es el string que se va a colocar en la lista.
+la función agregarAtras debe tener complejidad O(copy(a)), donde a es el tipo del elemento que se va a colocar en la lista.
 
 itlista(alfa)
 

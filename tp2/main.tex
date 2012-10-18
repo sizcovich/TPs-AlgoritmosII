@@ -229,7 +229,7 @@
 	\InterfazFuncion{raiz}{\In{ac}{abCat}}{categoria}
 	  {$res \igobs raiz(ac)$}
 	  [$\Theta(1)$]
-	  [Devuelve el nombre de la categor\'ia raiz por referencia, con lo cual, si esta es modificada posteriormente desde afuera, se modificara tambien adentro del \'arbol de categor\'ias.]
+	  [Devuelve el nombre de la categor\'ia raiz por referencia, con lo cual, si \'este valor es modificado, se romper\'a el Rep, invalidando todo el \'arbol.]
 	
 	\InterfazFuncion{agregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}{categoria}
 	  [$ac$ \igobs $ac_0$ $\land$ est\'a?(padre, ac) $\land$ $\neg$vac\'ia?(hija) $\land$ $\neg$est\'a?(hija, ac)]

@@ -171,7 +171,7 @@
 \section{M\'odulo DiccTrie($\alpha$)}
 \begin{Interfaz}
 
-	\textbf{parámetros formales}: \TipoVariable{$\alpha$}.
+	\textbf{par\'ametros formales}: \TipoVariable{$\alpha$}.
 
 	\textbf{usa}: \TipoVariable{Bool, String}.
 
@@ -198,9 +198,9 @@
 	  [O(|$k$|)]
 	  [Devuelve \TipoVariable{True} si y s\'olo si $k$ est\'a definido en el diccionario.]
 
-	\InterfazFuncion{Significado}{\Inout{d}{diccTrie}, \In{k}{string}}{$\alpha$}
+	\InterfazFuncion{Obtener}{\Inout{d}{diccTrie}, \In{k}{string}}{$\alpha$}
 	  [$def?(d, k)$]
-	  {$alias(res \igobs significado(d, k))$}
+	  {$alias(res \igobs obtener(d, k))$}
 	  [O(|$k$|)]
 	  [Devuelve el significado por referencia de la clave $k$ en $d$.]
 
@@ -304,21 +304,21 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 	\State $infoHija.hijas \gets$ Vacia()
 	\State Definir($ac.categorias$, $hija$, $infoHija$)\Comment{O(|$hija$|)}
 	\\
-	\State $infoPadre \gets$ Significado($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
+	\State $infoPadre \gets$ Obtener($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
 	\State AgregarAtras($infoPadre.hijas$, $hija$)\Comment{O(|$hija$|)}
 \EndProcedure
 \end{algorithmic}
 
 \begin{algorithmic}[1]
 \Procedure{iHijas}{\In{ac}{abCat}, \In{padre}{categoria}}{ $\DRef res$ : \TipoVariable{itCategorias}}
-	\State $nodoHijo \gets$ significado($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
+	\State $nodoHijo \gets$ Obtener($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
 	\State $res \gets$ crearIt($nodoHijo.hijas$)
 \EndProcedure
 \end{algorithmic}
 
 \begin{algorithmic}[1]
 \Procedure{iID}{\In{ac}{abCat}, \In{c}{categoria}}{ $\DRef res$ : \TipoVariable{Nat}}
-	\State $nodoHijo \gets$ significado($ac.categorias$, $c$)\Comment{O(|$c$|)}
+	\State $nodoHijo \gets$ Obtener($ac.categorias$, $c$)\Comment{O(|$c$|)}
 	\State $res \gets$ $nodoHijo.id$
 \EndProcedure
 \end{algorithmic}
@@ -411,7 +411,7 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 %	\State $infoHija.hijas \gets$ Vacia()
 %	\State Definir($ac.categorias$, $hija$, $infoHija$)\Comment{O(|$hija$|)}
 %	\\
-%	\State $infoPadre \gets$ Significado($ac.categorias$,
+%	\State $infoPadre \gets$ Obtener($ac.categorias$,
 %	% $padre$)\Comment{O(|$padre$|)} \State AgregarAtras($infoPadre.hijas$,
 	% $hija$)\Comment{O(|$hija$|)}
 \EndProcedure

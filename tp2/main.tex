@@ -278,30 +278,30 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 
 \begin{algorithmic}[1]
 \Procedure{iNuevoAC}{\In{raiz}{categoria}}{ $\DRef res$ : \TipoVariable{abCat}}
-	\State $res.categorias \gets $Vacio()
+	\State $res.categorias \gets $Vacio()\Comment{O(1)}
 	\State $res.raiz\gets raiz$\Comment{O(|$raiz$|)}
-	\State $res.ultID\gets 1$
+	\State $res.ultID\gets 1$\Comment{O(1)}
 	\\
 	\var{infoRaiz}{catInfo}
-	\State $infoRaiz.id \gets res.ultID$
-	\State $infoRaiz.hijas \gets$ Vacia()
+	\State $infoRaiz.id \gets res.ultID$\Comment{O(1)}
+	\State $infoRaiz.hijas \gets$ Vacia()\Comment{O(1)}
 	\State Definir($res.categorias$, $raiz$, $infoRaiz$)\Comment{O(|$raiz$|)}
 \EndProcedure
 \end{algorithmic}
 
 \begin{algorithmic}[1]
 \Procedure{iRaiz}{\In{ac}{abCat}}{ $\DRef res$ : \TipoVariable{categoria}}
-	\State $res \gets ac.raiz$
+	\State $res \gets ac.raiz$\Comment{O(1)}
 \EndProcedure
 \end{algorithmic}
 
 \begin{algorithmic}[1]
 \Procedure{iAgregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}
-	\State $ac.ultID \gets ac.ultID + 1$
+	\State $ac.ultID \gets ac.ultID + 1$\Comment{O(1)}
 	\\
 	\var{infoHija}{catInfo}
-	\State $infoHija.id \gets ac.ultID$
-	\State $infoHija.hijas \gets$ Vacia()
+	\State $infoHija.id \gets ac.ultID$\Comment{O(1)}
+	\State $infoHija.hijas \gets$ Vacia()\Comment{O(1)}
 	\State Definir($ac.categorias$, $hija$, $infoHija$)\Comment{O(|$hija$|)}
 	\\
 	\State $infoPadre \gets$ Obtener($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
@@ -312,14 +312,14 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 \begin{algorithmic}[1]
 \Procedure{iHijas}{\In{ac}{abCat}, \In{padre}{categoria}}{ $\DRef res$ : \TipoVariable{itCategorias}}
 	\State $nodoHijo \gets$ Obtener($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
-	\State $res \gets$ crearIt($nodoHijo.hijas$)
+	\State $res \gets$ crearIt($nodoHijo.hijas$)\Comment{O(1)}
 \EndProcedure
 \end{algorithmic}
 
 \begin{algorithmic}[1]
 \Procedure{iID}{\In{ac}{abCat}, \In{c}{categoria}}{ $\DRef res$ : \TipoVariable{Nat}}
 	\State $nodoHijo \gets$ Obtener($ac.categorias$, $c$)\Comment{O(|$c$|)}
-	\State $res \gets$ $nodoHijo.id$
+	\State $res \gets$ $nodoHijo.id$\Comment{O(1)}
 \EndProcedure
 \end{algorithmic}
 

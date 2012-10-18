@@ -216,30 +216,30 @@
 	\textbf{usa}: \TipoVariable{Nat, String, diccTrie($\alpha$), lista($\alpha$), itLista($\alpha$)}.
 
 	\textbf{se explica con}: \TipoVariable{ArbolCategorias, Iterador Unidireccional($\alpha$)}.
-		
+
 	\textbf{g\'eneros}: \TipoVariable{abCat} %, \TipoVariable{itCategorias}.
 
 	\modTitulo{Operaciones b\'asicas}
-	
+
 	\InterfazFuncion{nuevoAC}{\In{raiz}{categoria}}{abCat}
 	  {$res \igobs nuevo(raiz)$}
 	  [$\Theta(|raiz|)$]
 	  [Crea un \'arbol con categor\'ia \emph{raiz}.]
-	
+
 	\InterfazFuncion{raiz}{\In{ac}{abCat}}{categoria}
 	  {$res \igobs raiz(ac)$}
 	  [$\Theta(1)$]
 	  [Devuelve el nombre de la categor\'ia raiz por referencia, con lo cual, si \'este valor es modificado, se romper\'a el Rep, invalidando todo el \'arbol.]
-	
+
 	\InterfazFuncion{agregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}{categoria}
 	  [$ac$ \igobs $ac_0$ $\land$ est\'a?(padre, ac) $\land$ $\neg$vac\'ia?(hija) $\land$ $\neg$est\'a?(hija, ac)]
 	  {$ac \igobs agregar(ac_0, padre, hija)$}
 	  [$\Theta(|padre| + |hija|)$]
 	  [Agrega la categor\'ia hija a padre.]
-	
+
 	\InterfazFuncion{hijas}{\In{ac}{abCat}, \In{padre}{categoria}}{itCategorias}
 	  [est\'a?(padre, ac)]
-	  {$res \igobs crearItUni(hijos(ac, padre))$}
+	  {$res \igobs crearItUni(conjuntoASecuencia(hijos(ac, padre)))$}
 	  [$\Theta(|padre|)$]
 	  [Devuelve un iterador que proyecta las hijas del padre de forma tal que al pedir actual, el iterador devuelve el primer elemento de la lista.]
 	  [El iterador se invalida si y solo si se elimina el elemento siguiente del iterador sin utilizar la funcion EliminarSiguiente]
@@ -249,8 +249,17 @@
 	  {$res \igobs id(ac, c)$}
 	  [$\Theta(|c|)$]
 	  [Devuelve el id de la categoria dada.]
-	
+
 \end{Interfaz}
+
+\begin{tad}{Extras}
+
+	\tadOperacion{conjuntoASecuencia}{Conjunto($\alpha$)}{Secuencia($\alpha$)}{}
+	\tadAlinearAxiomas{conjuntoASecuencia(Ag(a, as))}
+	\tadAxioma{conjuntoASecuencia($\emptyset$)}{<>}
+	\tadAxioma{conjuntoASecuencia(Ag($a$, $as$))}{dameUno(Ag($a$, $as$)) $\bullet$ conjuntoASecuencia(sinUno(Ag($a$, $as$)))}
+
+\end{tad}
 
 \begin{Representacion}
 

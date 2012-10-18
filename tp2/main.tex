@@ -168,39 +168,41 @@
 
 \maketitle
 
-\section{M\'odulo DiccTrie}
+\section{M\'odulo DiccTrie($\alpha$)}
 \begin{Interfaz}
+
+	\textbf{parámetros formales}: \TipoVariable{$\alpha$}.
 
 	\textbf{usa}: \TipoVariable{Bool, String}.
 
 	\textbf{se explica con}: \TipoVariable{Diccionario(String, $\alpha$)}.
 
-	\textbf{g\'eneros}: \TipoVariable{diccTrie}.
+	\textbf{g\'eneros}: \TipoVariable{diccTrie($\alpha$)}.
 
 	\modTitulo{Operaciones b\'asicas}
 
 	\InterfazFuncion{Vacio}{}{diccTrie($\alpha$)}
 	  {$res \igobs vacio()$}
 	  [O(1)]
-	  [genera un diccionario vac\'io.]
+	  [Genera un diccionario vac\'io.]
 
 	\InterfazFuncion{Definir}{\Inout{d}{diccTrie}, \In{k}{string}, \In{s}{$\alpha$}}{}
 	  [$d \igobs d_0$]
 	  {$d \igobs definir(d_0, k, s)$}
 	  [O(|$k$|)]
-	  [define la clave $k$ con el significado $s$ en el diccionario.]
-	  [la clave se guarda por copia y el significado por referencia.]
+	  [Define la clave $k$ con el significado $s$ en el diccionario.]
+	  [La clave se guarda por copia y el significado por referencia.]
 
 	\InterfazFuncion{Definido?}{\Inout{d}{diccTrie}, \In{k}{string}}{Bool}
 	  {$res \igobs def?(d, k)$}
 	  [O(|$k$|)]
-	  [devuelve \TipoVariable{True} si y s\'olo si $k$ est\'a definido en el diccionario.]
+	  [Devuelve \TipoVariable{True} si y s\'olo si $k$ est\'a definido en el diccionario.]
 
 	\InterfazFuncion{Significado}{\Inout{d}{diccTrie}, \In{k}{string}}{$\alpha$}
 	  [$def?(d, k)$]
 	  {$alias(res \igobs significado(d, k))$}
 	  [O(|$k$|)]
-	  [devuelve el significado por referencia de la clave $k$ en $d$.]
+	  [Devuelve el significado por referencia de la clave $k$ en $d$.]
 
 \end{Interfaz}
 
@@ -211,6 +213,10 @@
 \section{M\'odulo ArbolCategorias}
 \begin{Interfaz}
 
+	\textbf{usa}: \TipoVariable{Nat, String, diccTrie($\alpha$), lista($\alpha$), itLista($\alpha$)}.
+
+	\textbf{se explica con}: \TipoVariable{ArbolCategorias, Iterador Unidireccional($\alpha$)}.
+		
 	\textbf{g\'eneros}: \TipoVariable{abCat} %, \TipoVariable{itCategorias}.
 
 	\modTitulo{Operaciones b\'asicas}
@@ -233,7 +239,7 @@
 	
 	\InterfazFuncion{hijas}{\In{ac}{abCat}, \In{padre}{categoria}}{itCategorias}
 	  [est\'a?(padre, ac)]
-	  {$res \igobs crearIteradorHijasDe(ac, padre)$}
+	  {$res \igobs crearItUni(hijos(ac, padre))$}
 	  [$\Theta(|padre|)$]
 	  [Devuelve un iterador que proyecta las hijas del padre de forma tal que al pedir actual, el iterador devuelve el primer elemento de la lista.]
 	  [El iterador se invalida si y solo si se elimina el elemento siguiente del iterador sin utilizar la funcion EliminarSiguiente]
@@ -327,30 +333,30 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
 	\InterfazFuncion{crearLinkLinkIt}{\In{ac}{abCat}}{LinkLinkIt}
 	  {$res \igobs iniciar(ac)$}
 	  [$\Theta(\#categorias(ac))$]
-	  [crea un sistema LinkLinkIt.]
+	  [Crea un sistema LinkLinkIt.]
 
 	\InterfazFuncion{agregarLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria}}{LinkLinkIt}
 	  [$l \notin$ links($s$) $\land$ est\'a?($c$, categorias($s$)) $\land$ $s \igobs s_0$]
 	  {$s \igobs nuevoLink(s_0, l, c)$}
 	  [$\Theta(|l| + |c|)$]
-	  [agrega un link a la categor\'ia se\~{n}alada.]
+	  [Agrega un link a la categor\'ia se\~{n}alada.]
 
 	\InterfazFuncion{accederLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha}}{LinkLinkIt}
 	  [$l \in$ links($s$) $\land$ $f \geq$ fechaActual($s$)]
 	  {$s \igobs$ nuevoLink($s_0$, $l$, $c$)}
 	  [$\Theta(|l| + |c|)$]
-	  [registra un acceso al link provisto.]
+	  [Registra un acceso al link provisto.]
 
 	\InterfazFuncion{cantLinks}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{Nat}
 	  {$res \igobs$ cantLinks($s$, $c$)}
 	  [$\Theta(|c|)$]
-	  [devuelve la cantidad de links que tiene una categor\'ia.]
+	  [Devuelve la cantidad de links que tiene una categor\'ia.]
 
 	\InterfazFuncion{linksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
 	  [est\'a?($c$, categorias($s$))]
 	  {$res \igobs$ crearIteradorLinksOrdenadosPorAccesos($s$, $c$)}
 	  [$\Theta(|c| + n^2)$]
-	  [devuelve la cantidad de links que tiene una categor\'ia.]
+	  [Devuelve la cantidad de links que tiene una categor\'ia.]
 
 \end{Interfaz}
 
@@ -438,7 +444,7 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
     \InterfazFuncion{Copiar}{\In{a}{$\alpha$}}{$\alpha$}
     {$res \igobs a$}
     [$\Theta(copy(a))$]
-    [función de copia de $\alpha$'s]
+    [Función de copia de $\alpha$'s]
   }
 
   \textbf{se explica con}: \tadNombre{Secuencia$(\alpha)$}, \tadNombre{Iterador Bidireccional($\alpha$)}.
@@ -450,14 +456,14 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
   \InterfazFuncion{Vacía}{}{lista$(\alpha)$}%
   {$res \igobs \secuencia{}$}%
   [$\Theta(1)$]
-  [genera una lista vacía.]
+  [Genera una lista vacía.]
 
   \InterfazFuncion{AgregarAdelante}{\Inout{l}{lista($\alpha$)}, \In{a}{$\alpha$}}{itLista($\alpha$}
   [$l \igobs l_0$]
   {$l \igobs \secuencia{a}[l_0]$ $\land$ $res$ $=$ CrearItBi(\secuencia{}, $l$) $\land$ alias(SecuSuby($res$) $=$ $l$)}
   [$\Theta(copy(a))$]
-  [agrega el elemento $a$ como primer elemento de la lista.  Retorna un iterador a $l$, de forma tal que Siguiente devuelva $a$.]
-  [el elemento $a$ agrega por copia. El iterador se invalida si y sólo si se elimina el elemento siguiente del iterador sin utilizar la función \NombreFuncion{EliminarSiguiente}.]
+  [Agrega el elemento $a$ como primer elemento de la lista.  Retorna un iterador a $l$, de forma tal que Siguiente devuelva $a$.]
+  [El elemento $a$ agrega por copia. El iterador se invalida si y sólo si se elimina el elemento siguiente del iterador sin utilizar la función \NombreFuncion{EliminarSiguiente}.]
 
  
   \modTitulo{Operaciones del iterador}
@@ -465,14 +471,14 @@ Todos los pasos que no tengan especificados sus complejidades se suponen realiza
   \InterfazFuncion{CrearIt}{\In{l}{lista($\alpha$)}}{itLista($\alpha$)}
   {$res$ $\igobs$ crearItBi(\secuencia{}, $l$) $\land$ alias(SecuSuby($it$) $=$ $l$)}
   [$\Theta(1)$]
-  [crea un iterador bidireccional de la lista, de forma tal que al pedir \NombreFuncion{Siguiente} se obtenga el primer elemento de $l$.]
-  [el iterador se invalida si y sólo si se elimina el elemento siguiente del iterador sin utilizar la función \NombreFuncion{EliminarSiguiente}.]
+  [Crea un iterador bidireccional de la lista, de forma tal que al pedir \NombreFuncion{Siguiente} se obtenga el primer elemento de $l$.]
+  [El iterador se invalida si y sólo si se elimina el elemento siguiente del iterador sin utilizar la función \NombreFuncion{EliminarSiguiente}.]
 
   \InterfazFuncion{CrearItUlt}{\In{l}{lista($\alpha$)}}{itLista($\alpha$)}
   {$res$ $\igobs$ crearItBi($l$, \secuencia{}) $\land$ alias(SecuSuby($it$) $=$ $l$)}
   [$\Theta(1)$]
-  [crea un iterador bidireccional de la lista, de forma tal que al pedir \NombreFuncion{Anterior} se obtenga el último elemento de $l$.]  
-  [el iterador se invalida si y sólo si se elimina el elemento siguiente del iterador sin utilizar la función \NombreFuncion{EliminarSiguiente}.]
+  [Crea un iterador bidireccional de la lista, de forma tal que al pedir \NombreFuncion{Anterior} se obtenga el último elemento de $l$.]  
+  [El iterador se invalida si y sólo si se elimina el elemento siguiente del iterador sin utilizar la función \NombreFuncion{EliminarSiguiente}.]
 
 \end{Interfaz}
 

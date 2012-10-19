@@ -257,13 +257,13 @@
 	  {$res \igobs crearItUni(conjuntoASecuencia(hijos(ac, padre)))$}
 	  [$\Theta(|padre|)$]
 	  [Devuelve un iterador que proyecta las hijas del padre de forma tal que al pedir actual, el iterador devuelve el primer elemento de la lista.]
-	  [El iterador se invalida si y solo si se elimina el elemento siguiente del iterador sin utilizar la funcion EliminarSiguiente]
+	  [El iterador se invalida si y s\'olo si se elimina el elemento siguiente del iterador sin utilizar la funci\'on EliminarSiguiente]
 
 	\InterfazFuncion{id}{\In{ac}{abCat}, \In{c}{categoria}}{Nat}
 	  [est\'a?(c, ac)]
 	  {$res \igobs id(ac, c)$}
 	  [$\Theta(|c|)$]
-	  [Devuelve el id de la categoria dada.]
+	  [Devuelve el id de la categor\'ia dada.]
 
 \end{Interfaz}
 
@@ -393,26 +393,26 @@ la función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave
 	  [$\Theta(\#categorias(ac))$]
 	  [Crea un sistema LinkLinkIt.]
 
-	\InterfazFuncion{agregarLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria}}{LinkLinkIt}
-	  [$l \notin$ links($s$) $\land$ est\'a?($c$, categorias($s$)) $\land$ $s \igobs s_0$]
+	\InterfazFuncion{agregarLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria}}{}
+	  [$s \igobs s_0$ $\land$ $l \notin links(s)$ $\land$ \emph{est\'a}?$(c, categorias(s))$]
 	  {$s \igobs nuevoLink(s_0, l, c)$}
-	  [$\Theta(|l| + |c|)$]
+	  [$\Theta(|l| + |c| + h)$]
 	  [Agrega un link a la categor\'ia se\~{n}alada.]
 
-	\InterfazFuncion{accederLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha}}{LinkLinkIt}
-	  [$l \in$ links($s$) $\land$ $f \geq$ fechaActual($s$)]
-	  {$s \igobs$ nuevoLink($s_0$, $l$, $c$)}
-	  [$\Theta(|l| + |c|)$]
+	\InterfazFuncion{accederLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha}}{}
+	  [$s \igobs s_0$ $\land$ $l \in$ links($s$) $\land$ $f \geq$ fechaActual($s$)]
+	  {$s \igobs acceso(s_0, l, f)$}
+	  [$\Theta(|l|)$]
 	  [Registra un acceso al link provisto.]
 
 	\InterfazFuncion{cantLinks}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{Nat}
-	  {$res \igobs$ cantLinks($s$, $c$)}
+	  {$res \igobs cantLinks(s, c)$}
 	  [$\Theta(|c|)$]
 	  [Devuelve la cantidad de links que tiene una categor\'ia.]
 
 	\InterfazFuncion{linksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
-	  [est\'a?($c$, categorias($s$))]
-	  {$res \igobs$ crearIteradorLinksOrdenadosPorAccesos($s$, $c$)}
+	  [\emph{est\'a}?$(c, categorias(s))$]
+	  {$res \igobs crearIteradorLinksOrdenadosPorAccesos(s, c)$}
 	  [$\Theta(|c| + n^2)$]
 	  [Devuelve la cantidad de links que tiene una categor\'ia.]
 
@@ -422,11 +422,15 @@ la función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave
 
 	\begin{Estructura}{LinkLinkIt}
 	    \begin{Tupla}
-	      \tupItem{aCategorias}{abcat}%
-	      \tupItem{\\ linksPorCat}{vector(conj(link))}%
-	      \tupItem{\\ infoLinks}{DiccTrie(link,tupla<categoria, secu(accesos)>)}%
+	      \tupItem{aCategorias}{abcat}
+	      \tupItem{\\ linksPorCat}{vector(lista(link))}
+	      \tupItem{\\ infoLinks}{DiccTrie(link, infoLink)}
 	    \end{Tupla}
 
+		\begin{Tupla}[infoLink]
+			\tupItem{categoria}{categoria}
+			\tupItem{accesos}{lista(fecha)}
+		\end{Tupla}
 	\end{Estructura}
 
 \end{Representacion}
@@ -434,8 +438,6 @@ la función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave
 REP Y ABS
 
 \begin{Algoritmos}
-
-\algdef{SL}{var}{0}[2]{$#1$ \textbf{es} \TipoVariable{#2}}
 
 \begin{algorithm}[H]
 \caption*{iCrearLinkLinkIt(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{LinkLinkIt}}

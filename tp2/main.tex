@@ -63,12 +63,23 @@
   \vspace*{2ex}%
 }{}
 
+\newenvironment{Servicios Usados}{%
+  \vspace*{2ex}
+  \noindent\textbf{\Large Servicios Usados}%
+  \vspace*{2ex}
+}{}
+
 \newenvironment{Algoritmos}{%
   \vspace*{2ex}%
   \noindent\textbf{\Large Algoritmos}%
   \vspace*{2ex}%
 }{}
 
+\newenvironment{Justificaci\'on de la elecci\'on de la estructura}{%
+  \vspace*{2ex}%
+  \noindent\textbf{\Large Justificaci\'on de la elecci\'on de la estructura}%
+  \vspace*{2ex}%
+}{}
 
 \newcommand{\modTitulo}[1]{
   \vspace*{1ex}\par\noindent\textbf{\large #1}\par
@@ -279,6 +290,13 @@
 
 \end{Representacion}
 
+
+\begin{Justificaci\'on de la elecci\'on de la estructura}
+\\Para representar el árbol de categorías elegimos esta estructura por los siguientes motivos:
+\\En primer lugar, el Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloco en cada nodo una lista con los nombres de cada hijo. 
+\\En segundo lugar, esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|c|) donde c es el nombre de la categor\'ia.
+\end{Justificaci\'on de la elecci\'on de la estructura}
+
 \begin{Algoritmos}
 
 \algdef{SL}{var}{0}[2]{$#1$ \textbf{es} \TipoVariable{#2}}
@@ -342,7 +360,7 @@
 
 \end{Algoritmos}
 
-\modTitulo{Servicios Usados}
+\begin{Servicios Usados}
 
 \textbf{Los siguientes módulos deben cumplir los compromisos pedidos a continuación:}
 
@@ -360,6 +378,8 @@ la función crearIterador debe tener complejidad O(1)
 la función Vacio debe tener complejidad O(1) \\
 la función Definir debe tener complejidad O(|$k$|) donde $k$ es el string que se va a colocar como definicion. \\
 la función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave
+
+\end{Servicios Usados}
 
 \section{M\'odulo LinkLinkIt}
 

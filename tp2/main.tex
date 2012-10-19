@@ -10,8 +10,9 @@
 \usepackage{ifthen}
 \usepackage{libs/caratula}
 \usepackage{libs/aed2-symb,libs/aed2-itef,libs/aed2-tad}
-\usepackage{libs/algpseudocode}
-\usepackage{algorithm}
+\usepackage{caption}
+\usepackage{algpseudocode}
+\usepackage[section]{algorithm}
 \usepackage[colorlinks=true, linkcolor=blue]{hyperref}
 \usepackage{calc}
 
@@ -304,7 +305,7 @@
 \algdef{SL}{var}{0}[2]{$#1$ \textbf{es} \TipoVariable{#2}}
 
 \begin{algorithm}[H]
-\caption{iNuevoAC(\In{raiz}{categoria}) $\DRef res$ : \TipoVariable{abCat}}
+\caption*{iNuevoAC(\In{raiz}{categoria}) $\DRef res$ : \TipoVariable{abCat}}
 \begin{algorithmic}[1]
 	\State $res.categorias \gets $Vacio()\Comment{O(1)}
 	\State $res.raiz\gets raiz$\Comment{O(|$raiz$|)}
@@ -319,7 +320,7 @@
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption{iRaiz(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{categoria}}
+\caption*{iRaiz(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{categoria}}
 \begin{algorithmic}[1]
 	\State $res \gets ac.raiz$\Comment{O(1)}
 \end{algorithmic}
@@ -327,7 +328,7 @@
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption{iAgregar(\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria})}
+\caption*{iAgregar(\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria})}
 \begin{algorithmic}[1]
 	\State $ac.ultID \gets ac.ultID + 1$\Comment{O(1)}
 	\Statex
@@ -343,7 +344,7 @@
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption{iHijas(\In{ac}{abCat}, \In{padre}{categoria}) $\DRef res$ : \TipoVariable{iteradorUni(categoria)}}
+\caption*{iHijas(\In{ac}{abCat}, \In{padre}{categoria}) $\DRef res$ : \TipoVariable{iteradorUni(categoria)}}
 \begin{algorithmic}[1]
 	\State $nodoHijo \gets$ Obtener($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
 	\State $res \gets$ crearIterador($nodoHijo.hijas$)\Comment{O(1)}
@@ -352,7 +353,7 @@
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption{iID(\In{ac}{abCat}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
+\caption*{iID(\In{ac}{abCat}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
 	\State $nodoHijo \gets$ Obtener($ac.categorias$, $c$)\Comment{O(|$c$|)}
 	\State $res \gets$ $nodoHijo.id$\Comment{O(1)}
@@ -422,7 +423,7 @@ la función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave
 	\begin{Estructura}{LinkLinkIt}
 	    \begin{Tupla}
 	      \tupItem{aCategorias}{abcat}%
-	      \tupItem{linksPorCat}{vector(conj(link))}%
+	      \tupItem{\\ linksPorCat}{vector(conj(link))}%
 	      \tupItem{\\ infoLinks}{DiccTrie(link,tupla<categoria, secu(accesos)>)}%
 	    \end{Tupla}
 
@@ -437,35 +438,35 @@ REP Y ABS
 \algdef{SL}{var}{0}[2]{$#1$ \textbf{es} \TipoVariable{#2}}
 
 \begin{algorithm}[H]
-\caption{iCrearLinkLinkIt(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{LinkLinkIt}}
+\caption*{iCrearLinkLinkIt(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{LinkLinkIt}}
 \begin{algorithmic}[1]
 	\State $res$
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
+\caption*{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
 \begin{algorithmic}[1]
 	\State $res$
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption{iAccederLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha})}
+\caption*{iAccederLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha})}
 \begin{algorithmic}[1]
 	\State $res$
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption{iCantLinks(\Inout{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
+\caption*{iCantLinks(\Inout{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
 	\State $res$
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption{iLinksOrdenadosPorAccesos(\Inout{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{itLinks}}
+\caption*{iLinksOrdenadosPorAccesos(\Inout{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{itLinks}}
 \begin{algorithmic}[1]
 	\State $res$
 \end{algorithmic}
@@ -511,21 +512,21 @@ REP Y ABS
 \begin{Algoritmos}
 
 \begin{algorithm}[H]
-\caption{iCrearIterador(\In{l}{lista($\alpha$)}) $\DRef res$ : \TipoVariable{iteradorUni($\alpha$)}}
+\caption*{iCrearIterador(\In{l}{lista($\alpha$)}) $\DRef res$ : \TipoVariable{iteradorUni($\alpha$)}}
 \begin{algorithmic}[1]
 	\State $res.lista \gets l$\Comment{O(1)}
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption{iHayMas?(\In{it}{iteradorUni($\alpha$)}) $\DRef res$ : \TipoVariable{Bool}}
+\caption*{iHayMas?(\In{it}{iteradorUni($\alpha$)}) $\DRef res$ : \TipoVariable{Bool}}
 \begin{algorithmic}[1]
 	\State $res \gets \neg $EsVac\'ia?($it.lista$)\Comment{$\Theta(1)$}
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption{iSiguiente(\Inout{it}{iteradorUni($\alpha$)}) $\DRef res$ : \TipoVariable{$\alpha$}}
+\caption*{iSiguiente(\Inout{it}{iteradorUni($\alpha$)}) $\DRef res$ : \TipoVariable{$\alpha$}}
 \begin{algorithmic}[1]
 	\State $it.lista \gets$ Fin($it.lista$)\Comment{$\Theta(1)$}
 	\State $res \gets$ Actual($it.lista$)\Comment{$\Theta(1)$}

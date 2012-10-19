@@ -442,8 +442,11 @@ REP Y ABS
 \begin{algorithm}[H]
 \caption*{iCrearLinkLinkIt(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{LinkLinkIt}}
 \begin{algorithmic}[1]
-	\State $res$
+	\State $res.aCategorias \gets ac$\Comment{$\Theta$(1)}
+	\State $res.linksPorCat \gets Vacia()$\Comment{$\Theta$(1)}
+	\State $res.infoLinks \gets Vacio()$\Comment{$\Theta$(1)}
 \end{algorithmic}
+\textbf{C\'alculo de complejidad}: $3\Theta(1) = \Theta(1)$
 \end{algorithm}
 
 \begin{algorithm}[H]

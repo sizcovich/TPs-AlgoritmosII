@@ -18,6 +18,8 @@
 
 %%--- Nuevos comandos START
 
+\algdef{SL}{var}{0}[2]{$#1$ \textbf{es} \TipoVariable{#2}}
+
 \newcommand{\f}[1]{\text{#1}}
 \renewcommand{\paratodo}[2]{$\forall~#2$: #1}
 
@@ -302,8 +304,6 @@
 
 \begin{Algoritmos}
 
-\algdef{SL}{var}{0}[2]{$#1$ \textbf{es} \TipoVariable{#2}}
-
 \begin{algorithm}[H]
 \caption*{iNuevoAC(\In{raiz}{categoria}) $\DRef res$ : \TipoVariable{abCat}}
 \begin{algorithmic}[1]
@@ -443,8 +443,8 @@ REP Y ABS
 \caption*{iCrearLinkLinkIt(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{LinkLinkIt}}
 \begin{algorithmic}[1]
 	\State $res.aCategorias \gets ac$\Comment{$\Theta$(1)}
-	\State $res.linksPorCat \gets Vacia()$\Comment{$\Theta$(1)}
-	\State $res.infoLinks \gets Vacio()$\Comment{$\Theta$(1)}
+	\State $res.linksPorCat \gets$ Vacia()\Comment{$\Theta$(1)}
+	\State $res.infoLinks \gets$ Vacio()\Comment{$\Theta$(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $3\Theta(1) = \Theta(1)$
 \end{algorithm}
@@ -452,8 +452,15 @@ REP Y ABS
 \begin{algorithm}[H]
 \caption*{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
 \begin{algorithmic}[1]
-	\State $res$
+	\State $categoria \gets$ Obtener($res.aCategorias, c$)\Comment{O(|c|)}
+	\State AgregarAtras$(res.linksPorCat[categoria.id], l)$\Comment{2O(1) = O(1)}
+	\Statex
+	\var{info}{infoLink}
+	\State $info.categoria \gets c$\Comment{O(|c|)}
+	\State $info.accesos \gets $Vacia()\Comment{O(1)}
+	\State Definir$(res.infoLinks, l, info)$\Comment{O(|l|)}
 \end{algorithmic}
+\textbf{C\'alculo de complejidad}: $3O(1) + 2O(|c|) + O(|l|) = O(|c|) + O(|l|) = O(|c| + |l|)$
 \end{algorithm}
 
 \begin{algorithm}[H]

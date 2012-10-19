@@ -458,8 +458,8 @@ REP Y ABS
 \begin{algorithm}[H]
 \caption*{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
 \begin{algorithmic}[1]
-	\State $categoria \gets$ \Call{Obtener}{$s.aCategorias, c$}\Comment{O(|c|)}
-	\State \Call{AgregarAtras}{$s.linksPorCat[(categoria.id-1)], l$}\Comment{O(1) + O(|$l$|) = O(|$l$|)}
+	\State $categoriaId \gets$ \Call{id}{$s.aCategorias, c$}\Comment{O(|c|)}
+	\State \Call{AgregarAtras}{$s.linksPorCat[(categoriaId-1)], l$}\Comment{O(1) + O(|$l$|) = O(|$l$|)}
 	\Statex
 	\var{info}{infoLink}
 	\State $info.categoria \gets c$\Comment{O(|c|)}

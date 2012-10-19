@@ -391,7 +391,7 @@ la función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave
 	\InterfazFuncion{crearLinkLinkIt}{\In{ac}{abCat}}{LinkLinkIt}
 	  {$res \igobs iniciar(ac)$}
 	  [$\Theta(\#categorias(ac))$]
-	  [Crea un sistema LinkLinkIt.]
+	  [Crea un sistema LinkLinkIt. El arbol de categor\'ias se guarda por refencia.]
 
 	\InterfazFuncion{agregarLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria}}{}
 	  [$s \igobs s_0$ $\land$ $l \notin links(s)$ $\land$ \emph{est\'a}?$(c, categorias(s))$]
@@ -405,10 +405,10 @@ la función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave
 	  [$\Theta(|l|)$]
 	  [Registra un acceso al link provisto.]
 
-	\InterfazFuncion{cantLinks}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{Nat}
+	\InterfazFuncion{cantLinks}{\In{s}{LinkLinkIt}, \In{c}{categoria}}{Nat}
 	  {$res \igobs cantLinks(s, c)$}
 	  [$\Theta(|c|)$]
-	  [Devuelve la cantidad de links que tiene una categor\'ia.]
+	  [Devuelve la cantidad de links que tiene una categor\'ia y sus hijas]
 
 	\InterfazFuncion{linksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
 	  [\emph{est\'a}?$(c, categorias(s))$]
@@ -445,6 +445,8 @@ REP Y ABS
 	\State $res.aCategorias \gets ac$\Comment{$\Theta$(1)}
 	\State $res.linksPorCat \gets$ Vacia()\Comment{$\Theta$(1)}
 	\State $res.infoLinks \gets$ Vacio()\Comment{$\Theta$(1)}
+	\\
+	%\FOR[1][2][3] que carga al vector con listas vacias
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $3\Theta(1) = \Theta(1)$
 \end{algorithm}
@@ -453,27 +455,27 @@ REP Y ABS
 \caption*{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
 \begin{algorithmic}[1]
 	\State $categoria \gets$ Obtener($s.aCategorias, c$)\Comment{O(|c|)}
-	\State AgregarAtras$(s.linksPorCat[categoria.id], l)$\Comment{2O(1) = O(1)}
+	\State AgregarAtras$(s.linksPorCat[(categoria.id-1)], l)$\Comment{O(1) + O(|$l$|) = O(|$l$|)}
 	\Statex
 	\var{info}{infoLink}
 	\State $info.categoria \gets c$\Comment{O(|c|)}
 	\State $info.accesos \gets $Vacia()\Comment{O(1)}
-	\State Definir$(s.infoLinks, l, info)$\Comment{O(|l|)}
+	\State Definir$(s.infoLinks, l, info)$\Comment{O(|$l$|)}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $3O(1) + 2O(|c|) + O(|l|) = O(|c|) + O(|l|) = O(|c| + |l|)$
+\textbf{C\'alculo de complejidad}: $O(1) + 2O(|c|) + 2O(|l|) = O(|c|) + O(|l|) = O(|c| + |l|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
 \caption*{iAccederLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha})}
 \begin{algorithmic}[1]
-	\State $link \gets$ Obtener$(s.infoLinks, l)$\Comment{O(|l|)}
+	\State $link \gets$ Obtener$(s.infoLinks, l)$\Comment{O(|$l$|)}
 	\State AgregarAtras$(link.accesos, f)$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(1) + O(|l|) = O(|l|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iCantLinks(\Inout{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
+\caption*{iCantLinks(\In{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
 	\State $res$
 \end{algorithmic}

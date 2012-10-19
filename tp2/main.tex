@@ -503,13 +503,24 @@ REP Y ABS
 
 	\InterfazFuncion{crearIterador}{\In{l}{lista($\alpha$)}}{iteradorUni($\alpha$)}
 	  {$res \igobs crearItUni(l)$}
+	  [O(1)]
+	  [Crea un iterador unidireccional a la listade forma tal que al pedir siguiente se obtenga el primer elemento de l]
 
 	\InterfazFuncion{HayMas?}{\In{it}{iteradorUni($\alpha$)}}{Bool}
 	  {$res \igobs HayMas?(it)$}
+	  [O(1)]
+	  [Devuelve true si y solo si en el iterador todav\'ia quedan elementos para recorrer]
 
 	\InterfazFuncion{Siguiente}{\Inout{it}{iteradorUni($\alpha$)}}{$\alpha$}
 	  [$hayMas?(it) \land it \igobs it_0$]
 	  {$it \igobs Avanzar(it_0) \land res \igobs Actual(it)$}
+	  [O(1)]
+	  [Avanza al iterador a la posici\'on y la devuelve por referencia, pero dicho elemento no debe ser modificado ya que modificaria la lista y eso no esta permitido]
+	  
+	 \InterfazFuncion{Actual}{\In{it}{iteradorUni($\alpha$)}}{$\alpha$}
+	  {$res \igobs Actual(it)$}
+	  [O(1)]
+	  [Devuelve elemeno al que esta apuntando el iterador por referencia, dicho elemento no debe ser modificado ya que modificaria la lista y eso no esta permitido]
 
 \end{Interfaz}
 

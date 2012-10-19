@@ -10,6 +10,7 @@
 \usepackage{ifthen}
 \usepackage{libs/caratula}
 \usepackage{libs/aed2-symb,libs/aed2-itef,libs/aed2-tad}
+\usepackage{fixltx2e}
 \usepackage{caption}
 \usepackage{algpseudocode}
 \usepackage[section]{algorithm}
@@ -18,6 +19,7 @@
 
 %%--- Nuevos comandos START
 
+\MakeRobust{\Call}
 \algdef{SL}{var}{0}[2]{$#1$ \textbf{es} \TipoVariable{#2}}
 
 \newcommand{\f}[1]{\text{#1}}
@@ -307,14 +309,14 @@
 \begin{algorithm}[H]
 \caption*{iNuevoAC(\In{raiz}{categoria}) $\DRef res$ : \TipoVariable{abCat}}
 \begin{algorithmic}[1]
-	\State $res.categorias \gets $Vacio()\Comment{O(1)}
+	\State $res.categorias \gets$ \Call{Vacio}{\null}\Comment{O(1)}
 	\State $res.raiz\gets raiz$\Comment{O(|$raiz$|)}
 	\State $res.ultID\gets 1$\Comment{O(1)}
 	\Statex
 	\var{infoRaiz}{catInfo}
 	\State $infoRaiz.id \gets res.ultID$\Comment{O(1)}
-	\State $infoRaiz.hijas \gets$ Vacia()\Comment{O(1)}
-	\State Definir($res.categorias$, $raiz$, $infoRaiz$)\Comment{O(|$raiz$|)}
+	\State $infoRaiz.hijas \gets$ \Call{Vacia}{\null}\Comment{O(1)}
+	\State \Call{Definir}{$res.categorias, raiz, infoRaiz$}\Comment{O(|$raiz$|)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: 4O(1) + O(|$raiz$|) + O(|$raiz$|) = 2O(|$raiz$|) = O(|$raiz$|)
 \end{algorithm}
@@ -334,11 +336,11 @@
 	\Statex
 	\var{infoHija}{catInfo}
 	\State $infoHija.id \gets ac.ultID$\Comment{O(1)}
-	\State $infoHija.hijas \gets$ Vacia()\Comment{O(1)}
-	\State Definir($ac.categorias$, $hija$, $infoHija$)\Comment{O(|$hija$|)}
+	\State $infoHija.hijas \gets$ \Call{Vacia}{\null}\Comment{O(1)}
+	\State \Call{Definir}{$ac.categorias, hija, infoHija$}\Comment{O(|$hija$|)}
 	\Statex
-	\State $infoPadre \gets$ Obtener($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
-	\State AgregarAtras($infoPadre.hijas$, $hija$)\Comment{O(|$hija$|)}
+	\State $infoPadre \gets$ \Call{Obtener}{$ac.categorias, padre$}\Comment{O(|$padre$|)}
+	\State \Call{AgregarAtras}{$infoPadre.hijas, hija$}\Comment{O(|$hija$|)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: 3O(1) + O(|$hija$|) + O(|$padre$|) + O(|$hija$|) = 2O(|$hija$|) + O(|$padre$|) = O(|$hija$|) + O(|$padre$|) = O(|$hija$| + |$padre$|)
 \end{algorithm}
@@ -346,8 +348,8 @@
 \begin{algorithm}[H]
 \caption*{iHijas(\In{ac}{abCat}, \In{padre}{categoria}) $\DRef res$ : \TipoVariable{iteradorUni(categoria)}}
 \begin{algorithmic}[1]
-	\State $nodoHijo \gets$ Obtener($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
-	\State $res \gets$ crearIterador($nodoHijo.hijas$)\Comment{O(1)}
+	\State $nodoHijo \gets$ \Call{Obtener}{$ac.categorias, padre$}\Comment{O(|$padre$|)}
+	\State $res \gets$ \Call{crearIterador}{$nodoHijo.hijas$}\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: O(|$padre$|) + O(1) = O(|$padre$|)
 \end{algorithm}
@@ -355,7 +357,7 @@
 \begin{algorithm}[H]
 \caption*{iID(\In{ac}{abCat}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
-	\State $nodoHijo \gets$ Obtener($ac.categorias$, $c$)\Comment{O(|$c$|)}
+	\State $nodoHijo \gets$ \Call{Obtener}{$ac.categorias, c$}\Comment{O(|$c$|)}
 	\State $res \gets$ $nodoHijo.id$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: O(|$c$|) + O(1) = O(|$c$|)
@@ -443,27 +445,26 @@ REP Y ABS
 \caption*{iCrearLinkLinkIt(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{LinkLinkIt}}
 \begin{algorithmic}[1]
 	\State $res.aCategorias \gets ac$\Comment{$\Theta$(1)}
-	\State $res.linksPorCat \gets$ Vacia()\Comment{$\Theta$(1)}
-	\State $res.infoLinks \gets$ Vacio()\Comment{$\Theta$(1)}
-	\\
-	\For {$i=0$ to $(ac.ultID-1)$} \Comment{$n * \Theta$(1) = $\Theta$(n)}
-	\State AgregarAtras($res.lisnkPorCat$, Vacia()) \Comment{$\Theta$(1)}
+	\State $res.linksPorCat \gets$ \Call{Vacia}{\null}\Comment{$\Theta$(1)}
+	\State $res.infoLinks \gets$ \Call{Vacio}{\null}\Comment{$\Theta$(1)}
+	\Statex
+	\For {$i = 1 \to ac.ultID$} \Comment{$\#categorias(ac) * \Theta(1) = \Theta(\#categorias(ac))$}
+	\State \Call{AgregarAtras}{$res.linksPorCat, \Call{Vacia}{\null}$}\Comment{$\Theta$(1)}
 	\EndFor
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $3\Theta(1) + \Theta(n)= \Theta(n)$
-\\ donde n es la cantidad de categorias que tiene el ac
+\textbf{C\'alculo de complejidad}: $3\Theta(1) + \Theta(\#categorias(ac)) = \Theta(\#categorias(ac))$
 \end{algorithm}
 
 \begin{algorithm}[H]
 \caption*{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
 \begin{algorithmic}[1]
-	\State $categoria \gets$ Obtener($s.aCategorias, c$)\Comment{O(|c|)}
-	\State AgregarAtras$(s.linksPorCat[(categoria.id-1)], l)$\Comment{O(1) + O(|$l$|) = O(|$l$|)}
+	\State $categoria \gets$ \Call{Obtener}{$s.aCategorias, c$}\Comment{O(|c|)}
+	\State \Call{AgregarAtras}{$s.linksPorCat[(categoria.id-1)], l$}\Comment{O(1) + O(|$l$|) = O(|$l$|)}
 	\Statex
 	\var{info}{infoLink}
 	\State $info.categoria \gets c$\Comment{O(|c|)}
-	\State $info.accesos \gets $Vacia()\Comment{O(1)}
-	\State Definir$(s.infoLinks, l, info)$\Comment{O(|$l$|)}
+	\State $info.accesos \gets $\Call{Vacia}{\null}\Comment{O(1)}
+	\State \Call{Definir}{$s.infoLinks, l, info$}\Comment{O(|$l$|)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(1) + 2O(|c|) + 2O(|l|) = O(|c|) + O(|l|) = O(|c| + |l|)$
 \end{algorithm}
@@ -471,8 +472,8 @@ REP Y ABS
 \begin{algorithm}[H]
 \caption*{iAccederLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha})}
 \begin{algorithmic}[1]
-	\State $link \gets$ Obtener$(s.infoLinks, l)$\Comment{O(|$l$|)}
-	\State AgregarAtras$(link.accesos, f)$\Comment{O(1)}
+	\State $link \gets$ \Call{Obtener}{$s.infoLinks, l$}\Comment{O(|$l$|)}
+	\State \Call{AgregarAtras}{$link.accesos, f$}\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(1) + O(|l|) = O(|l|)$
 \end{algorithm}

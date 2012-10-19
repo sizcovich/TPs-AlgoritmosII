@@ -446,9 +446,12 @@ REP Y ABS
 	\State $res.linksPorCat \gets$ Vacia()\Comment{$\Theta$(1)}
 	\State $res.infoLinks \gets$ Vacio()\Comment{$\Theta$(1)}
 	\\
-	%\FOR[1][2][3] que carga al vector con listas vacias
+	\For {$i=0$ to $(ac.ultID-1)$} \Comment{$n * \Theta$(1) = $\Theta$(n)}
+	\State AgregarAtras($res.lisnkPorCat$, Vacia()) \Comment{$\Theta$(1)}
+	\EndFor
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $3\Theta(1) = \Theta(1)$
+\textbf{C\'alculo de complejidad}: $3\Theta(1) + \Theta(n)= \Theta(n)$
+\\ donde n es la cantidad de categorias que tiene el ac
 \end{algorithm}
 
 \begin{algorithm}[H]

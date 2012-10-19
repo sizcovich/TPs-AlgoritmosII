@@ -269,17 +269,20 @@
 	  [$\Theta(|c|)$]
 	  [Devuelve el id de la categor\'ia dada.]
 
+	\InterfazFuncion{cantCategorias}{\In{ac}{abCat}}{Nat}
+	  {$res \igobs \#categorias(ac)$}
+	  [$\Theta(1)$]
+	  [Devuelve la cantidad de categor\'ias existentes en el \'arbol.]
+
 	\textbf{HAY Q AGREGAR PADRE}
 \end{Interfaz}
 
-\begin{tad}{Extras}
+\modTitulo{Funciones auxiliares}
 
 	\tadOperacion{conjuntoASecuencia}{Conjunto($\alpha$)}{Secuencia($\alpha$)}{}
 	\tadAlinearAxiomas{conjuntoASecuencia(Ag(a, as))}
 	\tadAxioma{conjuntoASecuencia($\emptyset$)}{<>}
 	\tadAxioma{conjuntoASecuencia(Ag($a$, $as$))}{dameUno(Ag($a$, $as$)) $\bullet$ conjuntoASecuencia(sinUno(Ag($a$, $as$)))}
-
-\end{tad}
 
 \begin{Representacion}
 
@@ -366,9 +369,17 @@
 \caption*{iID(\In{ac}{abCat}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
 	\State $nodoHijo \gets$ \Call{Obtener}{$ac.categorias, c$}\Comment{O(|$c$|)}
-	\State $res \gets$ $nodoHijo.id$\Comment{O(1)}
+	\State $res \gets nodoHijo.id$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(|c|) + O(1) = O(|c|)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iCantCategorias(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{Nat}}
+\begin{algorithmic}[1]
+	\State $res \gets ac.ultId$\Comment{O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(1)$
 \end{algorithm}
 
 \textbf{FALTA IPADRE}
@@ -458,7 +469,7 @@ REP Y ABS
 	\State $res.linksPorCat \gets$ \Call{Vacia}{\null}\Comment{$\Theta$(1)}
 	\State $res.infoLinks \gets$ \Call{Vacio}{\null}\Comment{$\Theta$(1)}
 	\Statex
-	\For {$i = 1 \to ac.ultID$} \Comment{$\#categorias(ac) * \Theta(1) = \Theta(\#categorias(ac))$}
+	\For {$i = 1 \to \Call{cantCategorias}{ac}$} \Comment{$O(1) + \#categorias(ac) * \Theta(1) = \Theta(\#categorias(ac))$}
 	\State \Call{AgregarAtras}{$res.linksPorCat, \Call{Vacia}{\null}$}\Comment{$\Theta$(1)}
 	\EndFor
 \end{algorithmic}

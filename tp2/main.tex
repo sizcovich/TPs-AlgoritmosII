@@ -75,7 +75,7 @@
   \vspace*{2ex}%
 }{}
 
-\newenvironment{Justificaci\'on de la elecci\'on de la estructura}{%
+\newenvironment{Justificacion}{%
   \vspace*{2ex}%
   \noindent\textbf{\Large Justificaci\'on de la elecci\'on de la estructura}%
   \vspace*{2ex}%
@@ -179,6 +179,8 @@
 \thispagestyle{empty}
 
 \maketitle
+\tableofcontents
+\newpage
 
 \section{M\'odulo DiccTrie($\alpha$)}
 \begin{Interfaz}
@@ -291,11 +293,11 @@
 \end{Representacion}
 
 
-\begin{Justificaci\'on de la elecci\'on de la estructura}
+\begin{Justificacion}
 \\Para representar el árbol de categorías elegimos esta estructura por los siguientes motivos:
 \\En primer lugar, el Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloco en cada nodo una lista con los nombres de cada hijo. 
 \\En segundo lugar, esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|c|) donde c es el nombre de la categor\'ia.
-\end{Justificaci\'on de la elecci\'on de la estructura}
+\end{Justificacion}
 
 \begin{Algoritmos}
 
@@ -362,7 +364,7 @@
 
 \begin{Servicios Usados}
 
-\textbf{Los siguientes módulos deben cumplir los compromisos pedidos a continuación:}
+\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos a continuaci\'on:}
 
 \modTitulo{Lista Enlazada ($\alpha$)}
 

@@ -11,6 +11,7 @@
 \usepackage{libs/caratula}
 \usepackage{libs/aed2-symb,libs/aed2-itef,libs/aed2-tad}
 \usepackage{libs/algpseudocode}
+\usepackage{algorithm}
 \usepackage[colorlinks=true, linkcolor=blue]{hyperref}
 \usepackage{calc}
 
@@ -282,76 +283,62 @@
 
 \algdef{SL}{var}{0}[2]{$#1$ \textbf{es} \TipoVariable{#2}}
 
-
+\begin{algorithm}
+\caption{iNuevoAC(\In{raiz}{categoria}) $\DRef res$ : \TipoVariable{abCat}}
 \begin{algorithmic}[1]
-\Procedure{iNuevoAC}{\In{raiz}{categoria}}{ $\DRef res$ : \TipoVariable{abCat}}
 	\State $res.categorias \gets $Vacio()\Comment{O(1)}
 	\State $res.raiz\gets raiz$\Comment{O(|$raiz$|)}
 	\State $res.ultID\gets 1$\Comment{O(1)}
-	\\
+	\Statex
 	\var{infoRaiz}{catInfo}
 	\State $infoRaiz.id \gets res.ultID$\Comment{O(1)}
 	\State $infoRaiz.hijas \gets$ Vacia()\Comment{O(1)}
 	\State Definir($res.categorias$, $raiz$, $infoRaiz$)\Comment{O(|$raiz$|)}
-\EndProcedure
 \end{algorithmic}
-C\'alculo de complejidad:
-\\
-\\4O(1) + O(|$raiz$|) + O(|$raiz$|) =
-\\2O(|$raiz$|) =
-\\O(|$raiz$|)
-\\
+\textbf{C\'alculo de complejidad}: 4O(1) + O(|$raiz$|) + O(|$raiz$|) = 2O(|$raiz$|) = O(|$raiz$|)
+\end{algorithm}
+
+\begin{algorithm}
+\caption{iRaiz(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{categoria}}
 \begin{algorithmic}[1]
-\Procedure{iRaiz}{\In{ac}{abCat}}{ $\DRef res$ : \TipoVariable{categoria}}
 	\State $res \gets ac.raiz$\Comment{O(1)}
-\EndProcedure
 \end{algorithmic}
-C\'alculo de complejidad:
-\\
-\\O(1)
-\\
+\textbf{C\'alculo de complejidad}: O(1)
+\end{algorithm}
+
+\begin{algorithm}
+\caption{iAgregar(\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria})}
 \begin{algorithmic}[1]
-\Procedure{iAgregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}
 	\State $ac.ultID \gets ac.ultID + 1$\Comment{O(1)}
-	\\
+	\Statex
 	\var{infoHija}{catInfo}
 	\State $infoHija.id \gets ac.ultID$\Comment{O(1)}
 	\State $infoHija.hijas \gets$ Vacia()\Comment{O(1)}
 	\State Definir($ac.categorias$, $hija$, $infoHija$)\Comment{O(|$hija$|)}
-	\\
+	\Statex
 	\State $infoPadre \gets$ Obtener($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
 	\State AgregarAtras($infoPadre.hijas$, $hija$)\Comment{O(|$hija$|)}
-\EndProcedure
 \end{algorithmic}
-C\'alculo de complejidad:
-\\
-\\3O(1) + O(|$hija$|) + O(|$padre$|) + O(|$hija$|) =
-\\2O(|$hija$|) + O(|$padre$|) =
-\\O(|$hija$|) + O(|$padre$|) =
-\\O(|$hija$| + |$padre$|)
-\\
+\textbf{C\'alculo de complejidad}: 3O(1) + O(|$hija$|) + O(|$padre$|) + O(|$hija$|) = 2O(|$hija$|) + O(|$padre$|) = O(|$hija$|) + O(|$padre$|) = O(|$hija$| + |$padre$|)
+\end{algorithm}
+
+\begin{algorithm}
+\caption{iHijas(\In{ac}{abCat}, \In{padre}{categoria}) $\DRef res$ : \TipoVariable{iteradorUni(categoria)}}
 \begin{algorithmic}[1]
-\Procedure{iHijas}{\In{ac}{abCat}, \In{padre}{categoria}}{ $\DRef res$ : \TipoVariable{iteradorUni(categoria)}}
 	\State $nodoHijo \gets$ Obtener($ac.categorias$, $padre$)\Comment{O(|$padre$|)}
 	\State $res \gets$ crearIterador($nodoHijo.hijas$)\Comment{O(1)}
-\EndProcedure
 \end{algorithmic}
-C\'alculo de complejidad:
-\\
-\\O(|$padre$|) + O(1) =
-\\O(|$padre$|)
-\\
+\textbf{C\'alculo de complejidad}: O(|$padre$|) + O(1) = O(|$padre$|)
+\end{algorithm}
+
+\begin{algorithm}
+\caption{iID(\In{ac}{abCat}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
-\Procedure{iID}{\In{ac}{abCat}, \In{c}{categoria}}{ $\DRef res$ : \TipoVariable{Nat}}
 	\State $nodoHijo \gets$ Obtener($ac.categorias$, $c$)\Comment{O(|$c$|)}
 	\State $res \gets$ $nodoHijo.id$\Comment{O(1)}
-\EndProcedure
 \end{algorithmic}
-C\'alculo de complejidad:
-\\
-\\O(|$c$|) + O(1) =
-\\O(|$c$|)
-\\
+\textbf{C\'alculo de complejidad}: O(|$c$|) + O(1) = O(|$c$|)
+\end{algorithm}
 
 \end{Algoritmos}
 

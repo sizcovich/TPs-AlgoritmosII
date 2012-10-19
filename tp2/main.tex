@@ -269,6 +269,7 @@
 	  [$\Theta(|c|)$]
 	  [Devuelve el id de la categor\'ia dada.]
 
+	\textbf{HAY Q AGREGAR PADRE}
 \end{Interfaz}
 
 \begin{tad}{Extras}
@@ -291,6 +292,8 @@
 
 	    \begin{Tupla}[catInfo]
 	      \tupItem{id}{nat}
+	      \tupItem{padre}{itDiccTrie(categorias)} 	%el iterador tiene que permitir
+	      											% recorrer el arbol hacia arriba, como una lista
 	      \tupItem{hijas}{lista(categoria)}
 	    \end{Tupla}
 	\end{Estructura}
@@ -302,6 +305,7 @@
 \\Para representar el árbol de categorías elegimos esta estructura por los siguientes motivos:
 \\En primer lugar, el Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloco en cada nodo una lista con los nombres de cada hijo. 
 \\En segundo lugar, esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|c|) donde c es el nombre de la categor\'ia.
+\\El iterador que recorre el arbol hacia arriba será necesario en el LinkLinkIt
 \end{Justificacion}
 
 \begin{Algoritmos}
@@ -341,8 +345,12 @@
 	\Statex
 	\State $infoPadre \gets$ \Call{Obtener}{$ac.categorias, padre$}\Comment{O(|$padre$|)}
 	\State \Call{AgregarAtras}{$infoPadre.hijas, hija$}\Comment{O(|$hija$|)}
+	\Statex
+	\textbf{HAY Q AGREGAR EL PUNTERO AL PADRE, O UN ITERADOR UNIDIRECCIONAL QUE
+	RECORRA ESA RAMA}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $3O(1) + 2O(|hija|) + O(|padre|) = O(|hija|) + O(|padre|) = O(|hija| + |padre|)$
+\textbf{C\'alculo de complejidad}: $3O(1) + 2O(|hija|) + 2O(|padre|) = O(|hija|)
++ O(|padre|) = O(|hija| + |padre|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -362,6 +370,8 @@
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(|c|) + O(1) = O(|c|)$
 \end{algorithm}
+
+\textbf{FALTA IPADRE}
 
 \end{Algoritmos}
 
@@ -467,6 +477,9 @@ REP Y ABS
 	\State \Call{Definir}{$s.infoLinks, l, info$}\Comment{O(|$l$|)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(1) + 2O(|c|) + 2O(|l|) = O(|c|) + O(|l|) = O(|c| + |l|)$
+\textbf{\\ \\ Falta que agregue el link a las categorias superiores
+(padres) de ésta categoria. Para eso se le agrega esa info al arbol, y luego la complejidad va a
+quedar O(|c| + |l| + h) (Requerido par hacer iCantLinks)}
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -476,6 +489,9 @@ REP Y ABS
 	\State \Call{AgregarAtras}{$link.accesos, f$}\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(1) + O(|l|) = O(|l|)$
+\textbf{ \\ \\ Falta que agregue el acceso a las categorias superiores (padres)
+de ésta categoria. Para eso se le agrega esa info al arbol, y luego la complejidad va a
+quedar O(|l| + h) (Requerido par hacer iLinksOrdenadosPorAccesos)}
 \end{algorithm}
 
 \begin{algorithm}[H]

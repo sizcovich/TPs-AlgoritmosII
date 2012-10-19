@@ -318,7 +318,7 @@
 	\State $infoRaiz.hijas \gets$ \Call{Vacia}{\null}\Comment{O(1)}
 	\State \Call{Definir}{$res.categorias, raiz, infoRaiz$}\Comment{O(|$raiz$|)}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: 4O(1) + O(|$raiz$|) + O(|$raiz$|) = 2O(|$raiz$|) = O(|$raiz$|)
+\textbf{C\'alculo de complejidad}: $4O(1) + 2O(|raiz|) = O(|raiz|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -326,7 +326,7 @@
 \begin{algorithmic}[1]
 	\State $res \gets ac.raiz$\Comment{O(1)}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: O(1)
+\textbf{C\'alculo de complejidad}: $O(1)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -342,7 +342,7 @@
 	\State $infoPadre \gets$ \Call{Obtener}{$ac.categorias, padre$}\Comment{O(|$padre$|)}
 	\State \Call{AgregarAtras}{$infoPadre.hijas, hija$}\Comment{O(|$hija$|)}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: 3O(1) + O(|$hija$|) + O(|$padre$|) + O(|$hija$|) = 2O(|$hija$|) + O(|$padre$|) = O(|$hija$|) + O(|$padre$|) = O(|$hija$| + |$padre$|)
+\textbf{C\'alculo de complejidad}: $3O(1) + 2O(|hija|) + O(|padre|) = O(|hija|) + O(|padre|) = O(|hija| + |padre|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -351,7 +351,7 @@
 	\State $nodoHijo \gets$ \Call{Obtener}{$ac.categorias, padre$}\Comment{O(|$padre$|)}
 	\State $res \gets$ \Call{crearIterador}{$nodoHijo.hijas$}\Comment{O(1)}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: O(|$padre$|) + O(1) = O(|$padre$|)
+\textbf{C\'alculo de complejidad}: $O(|padre|) + O(1) = O(|padre|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -360,7 +360,7 @@
 	\State $nodoHijo \gets$ \Call{Obtener}{$ac.categorias, c$}\Comment{O(|$c$|)}
 	\State $res \gets$ $nodoHijo.id$\Comment{O(1)}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: O(|$c$|) + O(1) = O(|$c$|)
+\textbf{C\'alculo de complejidad}: $O(|c|) + O(1) = O(|c|)$
 \end{algorithm}
 
 \end{Algoritmos}

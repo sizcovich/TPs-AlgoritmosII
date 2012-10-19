@@ -452,13 +452,13 @@ REP Y ABS
 \begin{algorithm}[H]
 \caption*{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
 \begin{algorithmic}[1]
-	\State $categoria \gets$ Obtener($res.aCategorias, c$)\Comment{O(|c|)}
-	\State AgregarAtras$(res.linksPorCat[categoria.id], l)$\Comment{2O(1) = O(1)}
+	\State $categoria \gets$ Obtener($s.aCategorias, c$)\Comment{O(|c|)}
+	\State AgregarAtras$(s.linksPorCat[categoria.id], l)$\Comment{2O(1) = O(1)}
 	\Statex
 	\var{info}{infoLink}
 	\State $info.categoria \gets c$\Comment{O(|c|)}
 	\State $info.accesos \gets $Vacia()\Comment{O(1)}
-	\State Definir$(res.infoLinks, l, info)$\Comment{O(|l|)}
+	\State Definir$(s.infoLinks, l, info)$\Comment{O(|l|)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $3O(1) + 2O(|c|) + O(|l|) = O(|c|) + O(|l|) = O(|c| + |l|)$
 \end{algorithm}
@@ -466,8 +466,10 @@ REP Y ABS
 \begin{algorithm}[H]
 \caption*{iAccederLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha})}
 \begin{algorithmic}[1]
-	\State $res$
+	\State $link \gets$ Obtener$(s.infoLinks, l)$\Comment{O(|l|)}
+	\State AgregarAtras$(link.accesos, f)$\Comment{O(1)}
 \end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(1) + O(|l|) = O(|l|)$
 \end{algorithm}
 
 \begin{algorithm}[H]

@@ -528,31 +528,33 @@ quedar O(|l| + h) (Requerido par hacer iLinksOrdenadosPorAccesos)}
 
 	\textbf{par\'ametro formal}: \TipoVariable{$\alpha$}.
 
-	\textbf{usa}: \TipoVariable{Bool}.
+	\textbf{usa}: \TipoVariable{Bool, lista($\alpha$), itLista($\alpha$)}.
 
 	\textbf{se explica con}: \TipoVariable{Iterador Unidireccional($\alpha$)}.
 
 	\textbf{g\'eneros}: \TipoVariable{iteradorUni($\alpha$)}
+	
+	\modTitulo{Operaciones b\'asicas}
 
 	\InterfazFuncion{crearIterador}{\In{l}{lista($\alpha$)}}{iteradorUni($\alpha$)}
 	  {$res \igobs crearItUni(l)$}
-	  [O(1)]
-	  [Crea un iterador unidireccional a la listade forma tal que al pedir siguiente se obtenga el primer elemento de l]
+	  [$\Theta(1)$]
+	  [Crea un iterador unidireccional a la lista de forma tal que al pedir actual se obtenga el primer elemento de l]
 
 	\InterfazFuncion{HayMas?}{\In{it}{iteradorUni($\alpha$)}}{Bool}
 	  {$res \igobs HayMas?(it)$}
-	  [O(1)]
-	  [Devuelve true si y solo si en el iterador todav\'ia quedan elementos para recorrer]
+	  [$\Theta(1)$]
+	  [Devuelve true si y solo si en el iterador todav\'ia quedan elementos para iterar]
 
-	\InterfazFuncion{Siguiente}{\Inout{it}{iteradorUni($\alpha$)}}{$\alpha$}
+	\InterfazFuncion{Siguiente}{\Inout{it}{iteradorUni($\alpha$)}}{}
 	  [$hayMas?(it) \land it \igobs it_0$]
-	  {$it \igobs Avanzar(it_0) \land res \igobs Actual(it)$}
-	  [O(1)]
-	  [Avanza al iterador a la posici\'on y la devuelve por referencia, pero dicho elemento no debe ser modificado ya que modificaria la lista y eso no esta permitido]
+	  {$it \igobs Avanzar(it_0)$}
+	  [$\Theta(1)$]
+	  [Avanza al iterador a la siguiente posici\'on.]
 	  
 	 \InterfazFuncion{Actual}{\In{it}{iteradorUni($\alpha$)}}{$\alpha$}
 	  {$res \igobs Actual(it)$}
-	  [O(1)]
+	  [$\Theta(1)$]
 	  [Devuelve elemeno al que esta apuntando el iterador por referencia, dicho elemento no debe ser modificado ya que modificaria la lista y eso no esta permitido]
 
 \end{Interfaz}
@@ -561,36 +563,64 @@ quedar O(|l| + h) (Requerido par hacer iLinksOrdenadosPorAccesos)}
 
 	\begin{Estructura}{iteradorUni($\alpha$)}
 		\begin{Tupla}
-			\tupItem{lista}{lista($\alpha$)}
+			\tupItem{it}{itLista($\alpha$)}
 		\end{Tupla}
 	\end{Estructura}
 
 \end{Representacion}
+
+\begin{Justificacion}
+\\Para representar el iterador unidireccional de la lista decidimos usar el iterador bidireccional que nos provee la lista enlazada y obtener del iterador las operaciones que necesitabamos.
+
+\end{Justificacion}
 
 \begin{Algoritmos}
 
 \begin{algorithm}[H]
 \caption*{iCrearIterador(\In{l}{lista($\alpha$)}) $\DRef res$ : \TipoVariable{iteradorUni($\alpha$)}}
 \begin{algorithmic}[1]
-	\State $res.lista \gets l$\Comment{O(1)}
+	\State $res.it \gets crearIt(l)$\Comment{$\Theta(1)$}
 \end{algorithmic}
+	\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iHayMas?(\In{it}{iteradorUni($\alpha$)}) $\DRef res$ : \TipoVariable{Bool}}
+\caption*{iHayMas?(\In{iterador}{iteradorUni($\alpha$)}) $\DRef res$ : \TipoVariable{Bool}}
 \begin{algorithmic}[1]
-	\State $res \gets \neg $EsVac\'ia?($it.lista$)\Comment{$\Theta(1)$}
+	\State $res \gets haySiguiente(iterador.it)$ \Comment{$\Theta(1)$}
 \end{algorithmic}
+	\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iSiguiente(\Inout{it}{iteradorUni($\alpha$)}) $\DRef res$ : \TipoVariable{$\alpha$}}
+\caption*{iSiguiente(\Inout{iterador}{iteradorUni($\alpha$)}) $\DRef res$ : \TipoVariable{$\alpha$}}
 \begin{algorithmic}[1]
-	\State $it.lista \gets$ Fin($it.lista$)\Comment{$\Theta(1)$}
-	\State $res \gets$ Actual($it.lista$)\Comment{$\Theta(1)$}
+	\State Avanzar($iterador.it$)\Comment{$\Theta(1)$}
 \end{algorithmic}
+	\textbf{C\'alculo de complejidad}: $\Theta(1)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iActual(\In{iterador}{iteradorUni($\alpha$)}) $\DRef res$ : {$\alpha$}}
+\begin{algorithmic}[1]
+	\State siguiente(iterador.it)\Comment{$\Theta(1)$}
+\end{algorithmic}
+	\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}
 
 \end{Algoritmos}
+
+\begin{Servicios Usados}
+
+\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos a continuaci\'on:}
+
+\modTitulo{itLista($\alpha$)}
+
+La función crearIt debe tener complejidad O(1)\\
+La función haySiguiente? debe tener complejidad O(1)\\
+La función avanzar debe tener complejidad O(1)\\
+La función siguiente debe tener complejidad O(1)
+
+\end{Servicios Usados}
 
 \end{document}

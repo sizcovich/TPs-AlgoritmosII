@@ -579,23 +579,23 @@ quedar O(|l| + h) (Requerido par hacer iLinksOrdenadosPorAccesos)}
 \begin{algorithm}[H]
 \caption*{iCrearIterador(\In{l}{lista($\alpha$)}) $\DRef res$ : \TipoVariable{iteradorUni($\alpha$)}}
 \begin{algorithmic}[1]
-	\State $res.it \gets crearIt(l)$\Comment{$\Theta(1)$}
+	\State $res.it \gets$ \Call{CrearIt}{$l$}\Comment{$\Theta(1)$}
 \end{algorithmic}
-	\textbf{C\'alculo de complejidad}: $\Theta(1)$
+\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}
 
 \begin{algorithm}[H]
 \caption*{iHayMas?(\In{iterador}{iteradorUni($\alpha$)}) $\DRef res$ : \TipoVariable{Bool}}
 \begin{algorithmic}[1]
-	\State $res \gets haySiguiente(iterador.it)$ \Comment{$\Theta(1)$}
+	\State $res \gets$ \Call{HaySiguiente}{$iterador.it$}\Comment{$\Theta(1)$}
 \end{algorithmic}
 	\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iSiguiente(\Inout{iterador}{iteradorUni($\alpha$)}) $\DRef res$ : \TipoVariable{$\alpha$}}
+\caption*{iSiguiente(\Inout{iterador}{iteradorUni($\alpha$)})}
 \begin{algorithmic}[1]
-	\State Avanzar($iterador.it$)\Comment{$\Theta(1)$}
+	\State \Call{Avanzar}{$iterador.it$}\Comment{$\Theta(1)$}
 \end{algorithmic}
 	\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}
@@ -603,7 +603,7 @@ quedar O(|l| + h) (Requerido par hacer iLinksOrdenadosPorAccesos)}
 \begin{algorithm}[H]
 \caption*{iActual(\In{iterador}{iteradorUni($\alpha$)}) $\DRef res$ : {$\alpha$}}
 \begin{algorithmic}[1]
-	\State siguiente(iterador.it)\Comment{$\Theta(1)$}
+	\State $res \gets$ \Call{Siguiente}{$iterador.it$}\Comment{$\Theta(1)$}
 \end{algorithmic}
 	\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}

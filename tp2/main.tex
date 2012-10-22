@@ -480,14 +480,14 @@ REP Y ABS
 \caption*{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
 \begin{algorithmic}[1]
 	\State $categoriaId \gets$ \Call{id}{$s.aCategorias, c$}\Comment{O(|c|)}
-	\State \Call{AgregarAtras}{$s.linksPorCat[(ID(s.aCategorias,c)-1)], l$}\Comment{O(1) + O(|$c$|) + O(|$l$|) = O(|$l$| + |$c$|)}
+	\State \Call{AgregarAtras}{$s.linksPorCat[(categoriaId-1)], l$}\Comment{O(1) + O(|$l$|) = O(|$l$|)}
 	\Statex
 	\var{info}{infoLink}
 	\State $info.categoria \gets c$\Comment{O(|c|)}
 	\State $info.accesos \gets $\Call{Vacia}{\null}\Comment{O(1)}
 	\State \Call{Definir}{$s.infoLinks, l, info$}\Comment{O(|$l$|)}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $O(1) + O(|l| + |c|) + 2O(|c|) + O(|l|) = O(|c|) + O(|l|) + O(|l| + |c|) = 2O(|c| + |l|) = O(|c| + |l|)$
+\textbf{C\'alculo de complejidad}: $O(1) + 2O(|c|) + 2O(|l|) = O(|c|) + O(|l|) = O(|c| + |l|))$
 \textbf{\\ \\ Falta que agregue el link a las categorias superiores
 (padres) de ésta categoria. Para eso se le agrega esa info al arbol, y luego la complejidad va a
 quedar O(|c| + |l| + h) (Requerido par hacer iCantLinks)}

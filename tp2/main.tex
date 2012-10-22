@@ -250,11 +250,16 @@
 	  [$\Theta(1)$]
 	  [Devuelve el nombre de la categor\'ia raiz por referencia, con lo cual, si \'este valor es modificado, se romper\'a el Rep, invalidando todo el \'arbol.]
 
-	\InterfazFuncion{agregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}{categoria}
+	\InterfazFuncion{agregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}{}
 	  [$ac$ \igobs $ac_0$ $\land$ est\'a?(padre, ac) $\land$ $\neg$vac\'ia?(hija) $\land$ $\neg$est\'a?(hija, ac)]
 	  {$ac \igobs agregar(ac_0, padre, hija)$}
 	  [$\Theta(|padre| + |hija|)$]
 	  [Agrega la categor\'ia hija a padre.]
+
+	\InterfazFuncion{padreID}{\In{ac}{abCat}}{Nat}
+	  {$res \in \TipoVariable{Nat}$}
+	  [$\Theta(1)$]
+	  [Devuelve el id del padre de la \'ultima categoria a la cual se le pregunt\'o el id.]
 
 	\InterfazFuncion{hijas}{\In{ac}{abCat}, \In{padre}{categoria}}{iteradorUni(categoria)}
 	  [est\'a?(padre, ac)]
@@ -263,7 +268,7 @@
 	  [Devuelve un iterador que proyecta las hijas del padre de forma tal que al pedir actual, el iterador devuelve el primer elemento de la lista.]
 	  [El iterador se invalida si y s\'olo si se elimina el elemento siguiente del iterador sin utilizar la funci\'on EliminarSiguiente]
 
-	\InterfazFuncion{id}{\In{ac}{abCat}, \In{c}{categoria}}{Nat}
+	\InterfazFuncion{ID}{\In{ac}{abCat}, \In{c}{categoria}}{Nat}
 	  [est\'a?(c, ac)]
 	  {$res \igobs id(ac, c)$}
 	  [$\Theta(|c|)$]
@@ -274,7 +279,6 @@
 	  [$\Theta(1)$]
 	  [Devuelve la cantidad de categor\'ias existentes en el \'arbol.]
 
-	\textbf{HAY Q AGREGAR PADRE}
 \end{Interfaz}
 
 \modTitulo{Funciones auxiliares}
@@ -290,13 +294,13 @@
 	    \begin{Tupla}
 	      \tupItem{categorias}{DiccTrie(categoria, catInfo)}
 	      \tupItem{raiz}{categoria}
-	      \tupItem{ultID}{nat}
+	      \tupItem{ultID}{Nat}
+	      \tupItem{\\ ultCatAccedida}{puntero(catInfo)}
 	    \end{Tupla}
 
 	    \begin{Tupla}[catInfo]
-	      \tupItem{id}{nat}
-	      \tupItem{padre}{itDiccTrie(categorias)} 	%el iterador tiene que permitir
-	      											% recorrer el arbol hacia arriba, como una lista
+	      \tupItem{id}{Nat}
+	      \tupItem{padre}{puntero(catInfo)}
 	      \tupItem{hijas}{lista(categoria)}
 	    \end{Tupla}
 	\end{Estructura}
@@ -320,12 +324,18 @@
 	\State $res.raiz\gets raiz$\Comment{O(|$raiz$|)}
 	\State $res.ultID\gets 1$\Comment{O(1)}
 	\Statex
+	\var{infoPadre}{catInfo}
+	\State $infoPadre.id \gets 0$\Comment{O(1)}
+	\State $infoPadre.padre \gets \TipoVariable{NULL}$\Comment{O(1)}
+	\State $infoPadre.hijas \gets$ \Call{Vacia}{\null}\Comment{O(1)}
+	\Statex
 	\var{infoRaiz}{catInfo}
 	\State $infoRaiz.id \gets res.ultID$\Comment{O(1)}
+	\State $infoRaiz.padre \gets \&infoPadre$\Comment{O(1)}
 	\State $infoRaiz.hijas \gets$ \Call{Vacia}{\null}\Comment{O(1)}
 	\State \Call{Definir}{$res.categorias, raiz, infoRaiz$}\Comment{O(|$raiz$|)}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $4O(1) + 2O(|raiz|) = O(|raiz|)$
+\textbf{C\'alculo de complejidad}: $8O(1) + 2O(|raiz|) = O(|raiz|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -340,20 +350,26 @@
 \caption*{iAgregar(\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria})}
 \begin{algorithmic}[1]
 	\State $ac.ultID \gets ac.ultID + 1$\Comment{O(1)}
+	\State $infoPadre \gets$ \Call{Obtener}{$ac.categorias, padre$}\Comment{O(|$padre$|)}
 	\Statex
 	\var{infoHija}{catInfo}
 	\State $infoHija.id \gets ac.ultID$\Comment{O(1)}
+	\State $infoHija.padre \gets \&infoPadre$\Comment{O(1)}
 	\State $infoHija.hijas \gets$ \Call{Vacia}{\null}\Comment{O(1)}
 	\State \Call{Definir}{$ac.categorias, hija, infoHija$}\Comment{O(|$hija$|)}
 	\Statex
-	\State $infoPadre \gets$ \Call{Obtener}{$ac.categorias, padre$}\Comment{O(|$padre$|)}
 	\State \Call{AgregarAtras}{$infoPadre.hijas, hija$}\Comment{O(|$hija$|)}
-	\Statex
-	\textbf{HAY Q AGREGAR EL PUNTERO AL PADRE, O UN ITERADOR UNIDIRECCIONAL QUE
-	RECORRA ESA RAMA}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $3O(1) + 2O(|hija|) + 2O(|padre|) = O(|hija|)
-+ O(|padre|) = O(|hija| + |padre|)$
+\textbf{C\'alculo de complejidad}: $4O(1) + 2O(|hija|) + O(|padre|) = O(|hija|) + O(|padre|) = O(|hija| + |padre|)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iPadreID(\Inout{ac}{abCat}, \In{hija}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
+\begin{algorithmic}[1]
+	\State $res \gets (*ac.ultCatAccedida.padre).id$\Comment{O(1)}
+	\State $ac.ultCatAccedida \gets \&ac.ultCatAccedida.padre$\Comment{O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $2O(1) = O(1)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -366,10 +382,10 @@
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iID(\In{ac}{abCat}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
+\caption*{iID(\Inout{ac}{abCat}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
-	\State $nodoHijo \gets$ \Call{Obtener}{$ac.categorias, c$}\Comment{O(|$c$|)}
-	\State $res \gets nodoHijo.id$\Comment{O(1)}
+	\State $ac.ultCatAccedida \gets$ \Call{Obtener}{$ac.categorias, c$}\Comment{O(|$c$|)}
+	\State $res \gets ac.ultCatAccedida.id$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(|c|) + O(1) = O(|c|)$
 \end{algorithm}
@@ -381,8 +397,6 @@
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(1)$
 \end{algorithm}
-
-\textbf{FALTA IPADRE}
 
 \end{Algoritmos}
 
@@ -479,18 +493,19 @@ REP Y ABS
 \begin{algorithm}[H]
 \caption*{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
 \begin{algorithmic}[1]
-	\State $categoriaId \gets$ \Call{id}{$s.aCategorias, c$}\Comment{O(|c|)}
-	\State \Call{AgregarAtras}{$s.linksPorCat[(categoriaId-1)], l$}\Comment{O(1) + O(|$l$|) = O(|$l$|)}
+	\State $categoriaID \gets$ \Call{id}{$s.aCategorias, c$}\Comment{O(|c|)}
 	\Statex
 	\var{info}{infoLink}
 	\State $info.categoria \gets c$\Comment{O(|c|)}
 	\State $info.accesos \gets $\Call{Vacia}{\null}\Comment{O(1)}
 	\State \Call{Definir}{$s.infoLinks, l, info$}\Comment{O(|$l$|)}
+	\Statex
+	\While{$categoriaID > 0$}\Comment{$O(h) * 2O(1)$}
+		\State \Call{AgregarAtras}{$s.linksPorCat[categoriaID-1], l$}\Comment{O(1) ya que se est\'a pasando por referencia}
+    	\State $categoriaID \gets$ \Call{padreID}{s}\Comment{O(1)}
+	\EndWhile
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $O(1) + 2O(|c|) + 2O(|l|) = O(|c|) + O(|l|) = O(|c| + |l|))$
-\textbf{\\ \\ Falta que agregue el link a las categorias superiores
-(padres) de ésta categoria. Para eso se le agrega esa info al arbol, y luego la complejidad va a
-quedar O(|c| + |l| + h) (Requerido par hacer iCantLinks)}
+\textbf{C\'alculo de complejidad}: $O(1) + 2O(|c|) + 2O(|l|) + O(h) = O(|c|) + O(|l|) + O(h) = O(|c| + |l| + h))$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -508,8 +523,10 @@ quedar O(|l| + h) (Requerido par hacer iLinksOrdenadosPorAccesos)}
 \begin{algorithm}[H]
 \caption*{iCantLinks(\In{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
-	\State $res$
+	\State $categoriaID \gets$ \Call{ID}{$s.aCategorias, c$}\Comment{$O(|c|)$}
+	\State $res \gets \#s.linksPorCat[categoriaID]$\Comment{$2O(1) = O(1)$}
 \end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(|c|) + O(1) = O(|c|)$
 \end{algorithm}
 
 \begin{algorithm}[H]

@@ -299,36 +299,47 @@
 	    \end{Tupla}
 	\end{Estructura}
 
-
+\tadAlinearAxiomas{Rep[abcat]}
 \Rep[e][abcat]{1 $\yluego$ 2 $\land$ 3 $\yluego$ 4 $\yluego$ 5 $\yluego$ 6 $\yluego$ 7 $\yluego$ 8 $\yluego$ 9}\mbox{}
 
+$\bold{Donde:}$
 
-1- Coloquialmente: El id de la raíz del árbol es 1 (requerido por el enunciado del TP).\newline
-Formalmente: id(raiz) $=$ 1
+$\bf\underline{1 es:}$\newline
+$\bold{Coloquialmente:}$ El id de la raíz del árbol es 1 (requerido por el enunciado del TP).\newline
+$\bold{Formalmente:}$ id(raiz) $=$ 1
 	
-2- Coloquialmente: No existe ninguna categoría incluida en sus categorías hijas.\newline
-Formalmente: ($\forall$c:categoria)estaAbcat(c,e) $\Rightarrow$ (c $\neg\in$ hijos(c))
+$\bf\underline{2 es:}$\newline
+$\bold{Coloquialmente}$: No existe ninguna categoría incluida en sus categorías hijas.\newline
+$\bold{Formalmente:}$ ($\forall$c:categoria)estaAbcat(c,e) $\Rightarrow$ $\neg$(estaLista(c,hijas(c)))
 
-3- Coloquialmente: Todas las categorías tienen padre, excluyendo la raíz.\newline
-Formalmente: ($\forall$c:categoria)(estaAbcat(c,e) $\yluego$ (c $\not$= raiz)) $\Rightarrow$ ($\exists$t:categoria)(estaAbcat(t,e) $\yluego$ t$\not$=c) $\yluego$ c $\in$ hijos(t)    
+$\bf\underline{3 es:}$\newline
+$\bold{Coloquialmente:}$ Todas las categorías tienen padre, excluyendo la raíz.\newline
+$\bold{Formalmente:}$ ($\forall$c:categoria)(estaAbcat(c,e) $\land$ (c $\not$= raiz)) $\Rightarrow$ (($\exists$t:categoria)(estaAbcat(t,e) $\land$ t$\not$=c) $\yluego$ estaLista(c,hijas(t)))    
 
-4- Coloquialmente: Existe una categoría que no tiene padre y que es igual a raíz.\newline
-Formalmente: ($\exists$t:categoria)estaAbcat(t,e) $\yluego$ (($\neg\exists$c:categoria)estaAbcat(c,e) $\yluego$ $\Rightarrow$ raiz $\in$ hijos(c))
+$\bf\underline{4 es:}$\newline
+$\bold{Coloquialmente:}$ Existe una categoría que no tiene padre y que es igual a raíz.\newline
+$\bold{Formalmente:}$ ($\exists$t:categoria)((estaAbcat(t,e)) $\land$ (t = raiz)) $\yluego$ ($\neg$($\exists$c:categoria)estaAbcat(c,e) $\yluego$ estaLista(t,hijas(c)))
 
-5- Coloquialmente: Cada categoría tiene un único padre (este ítem (junto con el 4) garantiza que el árbol no sea cíclico).\newline
-Formalmente: ($\neg\exists$t,c:categoria)((estaAbcat(c,e)) $\yluego$ (estaAbcat(t,e)) (necesario???) $\yluego$ (t$\not$=c)) $\yluego$ ($\forall$k:categoria)estaAbcat(k,e) $\Rightarrow$ k $\in$ hijos(c) $\yluego$ k $\in$ hijos(t)
+$\bf\underline{5 es:}$\newline
+$\bold{Coloquialmente:}$ Cada categoría tiene un único padre (este ítem (junto con el 4) garantiza que el árbol no sea cíclico).\newline
+$\bold{Formalmente:}$ $\neg$($\exists$t,c:categoria)((estaAbcat(c,e)) $\yluego$ (estaAbcat(t,e)) (necesario???) $\yluego$ (t$\not$=c)) $\yluego$ (($\forall$k:categoria)estaAbcat(k,e) $\Rightarrow$ (estaLista(k,hijas(c)) $\yluego$ estaLista(k,hijas(t)))
 
-6- Coloquialmente: La cantidad de categorías totales es igual a UltId.\newline
-Formalmente: 
+$\bf\underline{6 es:}$\newline
+$\bold{Coloquialmente:}$ La cantidad de categorías totales es igual a UltId.\newline
+$\bold{Formalmente:} \#$conjuntoCats(e) = UltId  
 
-7- Coloquialmente: Las categorías hijas de cada categoría tienen un id mayor a ésta.\newline
-Formalmente:
+$\bf\underline{7 es:}$\newline
+$\bold{Coloquialmente:}$ Las categorías hijas de cada categoría tienen un id mayor a ésta.\newline
+$\bold{Formalmente:}$ (($\forall$c:categoria)estaAbcat(c,e)) $\Rightarrow$ (($\forall$t:categoria)(estaAbcat(c,e) $\yluego$ estaLista(t,hijas(c))) $\Rightarrow$ id(c) $<$ id(t))
 
-8- Coloquialmente: No existen dos id's iguales para categorías distintas.\newline
-Formalmente:
+$\bf\underline{8 es:}$\newline
+$\bold{Coloquialmente:}$ No existen dos id's iguales para categorías distintas.\newline
+$\bold{Formalmente:}$ ($\forall$c,t:categoria)(estaAbcat(c,e) $\land$ estaAbcat(t,e) $\land$ t$\not$=c) $\Rightarrow$ id(c)$\not$=id(t) 
 
-9- Coloquialmente: No existen dos categorías iguales en un mismo árbol.\newline
-Formalmente:
+$\bf\underline{9 es:}$\newline
+$\bold{Coloquialmente:}$ No existen dos categorías iguales en un mismo árbol.\newline
+$\bold{Formalmente:}$ ($\forall$c:categoria)estaAbcat(c,e) $\Rightarrow$ $\neg$($\exists$t:categoria)estaAbcat(t,e) (esto lo tengo que preguntar)
+
 
 \end{Representacion}
 
@@ -430,9 +441,9 @@ la función crearIterador debe tener complejidad O(1)
 
 \modTitulo{DiccTrie ($\alpha$)}
 
-la función Vacio debe tener complejidad O(1) \\
-la función Definir debe tener complejidad O(|$k$|) donde $k$ es el string que se va a colocar como definicion. \\
-la función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave
+La función Vacio debe tener complejidad O(1). \\
+La función Definir debe tener complejidad O(|$k$|) donde $k$ es el string que se va a colocar como definicion. \\
+La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 
 \end{Servicios Usados}
 

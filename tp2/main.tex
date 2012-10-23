@@ -256,6 +256,12 @@
 	  [$\Theta(|padre| + |hija|)$]
 	  [Agrega la categor\'ia hija a padre.]
 
+	\InterfazFuncion{padres}{\In{ac}{abCat}, \In{hija}{categoria}}{iteradorUni(Nat)}
+	  [est\'a?(hija, ac)]
+	  {$res \igobs crearItUni(padres(ac, hija))$}
+	  [$\Theta(|hija|)$]
+	  [Devuelve un iterador que proyecta los ids de los padres de forma tal que al pedir actual, el iterador devuelve el id de la hija. Lo bueno es que una vez creado, acceder al id del padre y subir es todo O(1)]
+
 	\InterfazFuncion{hijas}{\In{ac}{abCat}, \In{padre}{categoria}}{iteradorUni(categoria)}
 	  [est\'a?(padre, ac)]
 	  {$res \igobs crearItUni(conjuntoASecuencia(hijos(ac, padre)))$}
@@ -282,6 +288,10 @@
 	\tadAlinearAxiomas{conjuntoASecuencia(Ag(a, as))}
 	\tadAxioma{conjuntoASecuencia($\emptyset$)}{<>}
 	\tadAxioma{conjuntoASecuencia(Ag($a$, $as$))}{dameUno(Ag($a$, $as$)) $\bullet$ conjuntoASecuencia(sinUno(Ag($a$, $as$)))}
+
+	\tadOperacion{padres}{acat\ $ac$, categoria\ $hija$}{Secuencia(Nat)}{est\'a?(hija, ac)}
+	%\tadAlinearAxiomas{padres($ac$, $hija$)}
+	\tadAxioma{padres($ac$, $hija$)}{\IF $hija$ \igobs raiz($ac$) THEN 1 $\bullet$ <> ELSE id($ac$, $hija$) $\bullet$ padres($ac$, padre($ac$, $hija$)) FI}
 
 \begin{Representacion}
 
@@ -510,7 +520,7 @@ REP Y ABS
 	\State $res.infoLinks \gets$ \Call{Vacio}{\null}\Comment{$\Theta$(1)}
 	\Statex
 	\For {$i = 1 \to \Call{cantCategorias}{ac}$} \Comment{$O(1) + \#categorias(ac) * \Theta(1) = \Theta(\#categorias(ac))$}
-	\State \Call{AgregarAtras}{$res.linksPorCat, \Call{Vacia}{\null}$}\Comment{$\Theta$(1)}
+	\State \Call{AgregarAtras}{$res.linksPorCat, \Call{Vacia}{\null}$}\Comment{como son llamadas consecutivas, $\Theta$(1)}
 	\EndFor
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $3\Theta(1) + \Theta(\#categorias(ac)) = \Theta(\#categorias(ac))$
@@ -519,21 +529,22 @@ REP Y ABS
 \begin{algorithm}[H]
 \caption*{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
 \begin{algorithmic}[1]
-	\State $categoriaID \gets$ \Call{id}{$s.aCategorias, c$}\Comment{O(|c|)}
+	\State $categoriaID \gets$ \Call{ID}{$s.aCategorias, c$}\Comment{O(|c|)}
+	\State \Call{AgregarAtras}{$s.linksPorCat[categoriaID-1], l$}\Comment{$O(1)$ ya que se est\'a pasando por referencia}
 	\Statex
 	\var{info}{infoLink}
 	\State $info.categoria \gets c$\Comment{O(|c|)}
 	\State $info.accesos \gets$ \Call{Vacia}{\null}\Comment{O(1)}
 	\State \Call{Definir}{$s.infoLinks, l, info$}\Comment{O(|$l$|)}
 	\Statex
-	\State $it \gets$ \Call{CrearItPadres}{$s.aCategorias, c$}\Comment{O(|c|)}
-	\Repeat
-		\State \Call{AgregarAtras}{$s.linksPorCat[categoriaID-1], l$}\Comment{O(1) ya que se est\'a pasando por referencia}
+	\State $it \gets$ \Call{padres}{$s.aCategorias, c$}\Comment{O(|c|)}
+	\While{\Call{HayMas?}{$it$}}\Comment{$(O(h) + O(1)) * 3O(1) = O(h)$}
 		\State \Call{Subir}{$it$}\Comment{O(1)}
-    	\State $categoriaID \gets$ \Call{ActualID}{$s, categoriaID$}\Comment{O(1)}
-	\Until{$\neg\Call{HayMas?}{$it$}$}\Comment{$(O(h) + O(1)) * 3O(1) = O(h)$}
+    	\State $categoriaID \gets$ \Call{ActualID}{$it$}\Comment{O(1)}
+		\State \Call{AgregarAtras}{$s.linksPorCat[categoriaID-1], l$}\Comment{por ref. $\Rightarrow$ O(1)}
+	\EndWhile
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $O(1) + 3O(|c|) + O(|l|) + O(h) = O(|c|) + O(|l|) + O(h) = O(|c| + |l| + h)$
+\textbf{C\'alculo de complejidad}: $2O(1) + 3O(|c|) + O(|l|) + O(h) = O(|c|) + O(|l|) + O(h) = O(|c| + |l| + h)$
 \\ \tab El bucle tiene $h$ iteraciones ya que se comienza en un nodo y luego, en cada ciclo, se va subiendo hasta la raiz del \'arbol.
 \end{algorithm}
 
@@ -553,9 +564,9 @@ quedar O(|l| + h) (Requerido par hacer iLinksOrdenadosPorAccesos)}
 \caption*{iCantLinks(\In{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
 	\State $categoriaID \gets$ \Call{ID}{$s.aCategorias, c$}\Comment{$O(|c|)$}
-	\State $res \gets \#s.linksPorCat[categoriaID]$\Comment{$2O(1) = O(1)$}
+	\State $res \gets \Call{Longitud}{s.linksPorCat[categoriaID-1]}$\Comment{$2\Theta(1) = \Theta(1)$}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $O(|c|) + O(1) = O(|c|)$
+\textbf{C\'alculo de complejidad}: $O(|c|) + \Theta(1) = O(|c|)$
 \end{algorithm}
 
 \begin{algorithm}[H]

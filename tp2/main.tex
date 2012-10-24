@@ -1,5 +1,5 @@
 \documentclass[10pt, a4paper]{article}
-\usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=1.5cm, top=3.5cm]{geometry}
+\usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=1.5cm, top=3cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
@@ -232,11 +232,11 @@
 \section{M\'odulo ArbolCategorias}
 \begin{Interfaz}
 
-	\textbf{usa}: \TipoVariable{Nat, String, diccTrie($\alpha$), lista($\alpha$), itLista($\alpha$)}.
+	\textbf{usa}: \TipoVariable{Nat, String, diccTrie($\alpha$), lista($\alpha$), iteradorUni($\alpha$)}.
 
 	\textbf{se explica con}: \TipoVariable{ArbolCategorias, Iterador Unidireccional($\alpha$)}.
 
-	\textbf{g\'eneros}: \TipoVariable{abCat} %, \TipoVariable{itCategorias}.
+	\textbf{g\'eneros}: \TipoVariable{abCat}, \TipoVariable{itabCat}.
 
 	\modTitulo{Operaciones b\'asicas}
 
@@ -251,26 +251,26 @@
 	  [Devuelve el nombre de la categor\'ia raiz por referencia, con lo cual, si \'este valor es modificado, se romper\'a el Rep, invalidando todo el \'arbol.]
 
 	\InterfazFuncion{agregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}{}
-	  [$ac$ \igobs $ac_0$ $\land$ est\'a?(padre, ac) $\land$ $\neg$vac\'ia?(hija) $\land$ $\neg$est\'a?(hija, ac)]
+	  [$ac \igobs ac_0 \land \emph{est\'a}?(padre, ac) \land \neg\emph{vac\'ia}?(hija) \land \neg\emph{est\'a}?(hija, ac)$]
 	  {$ac \igobs agregar(ac_0, padre, hija)$}
 	  [$\Theta(|padre| + |hija|)$]
 	  [Agrega la categor\'ia hija a padre.]
 
-	\InterfazFuncion{padres}{\In{ac}{abCat}, \In{hija}{categoria}}{iteradorUni(Nat)}
-	  [est\'a?(hija, ac)]
+    \InterfazFuncion{padres}{\In{ac}{abCat}, \In{hija}{categoria}}{iteradorUniPadres}
+	  [$\emph{est\'a}?(hija, ac)$]
 	  {$res \igobs crearItUni(padres(ac, hija))$}
 	  [$\Theta(|hija|)$]
 	  [Devuelve un iterador que proyecta los ids de los padres de forma tal que al pedir actual, el iterador devuelve el id de la hija. Lo bueno es que una vez creado, acceder al id del padre y subir es todo O(1)]
 
 	\InterfazFuncion{hijas}{\In{ac}{abCat}, \In{padre}{categoria}}{iteradorUni(categoria)}
-	  [est\'a?(padre, ac)]
+	  [$\emph{est\'a}?(padre, ac)$]
 	  {$res \igobs crearItUni(conjuntoASecuencia(hijos(ac, padre)))$}
 	  [$\Theta(|padre|)$]
 	  [Devuelve un iterador que proyecta las hijas del padre de forma tal que al pedir actual, el iterador devuelve el primer elemento de la lista.]
 	  [El iterador se invalida si y s\'olo si se elimina el elemento siguiente del iterador sin utilizar la funci\'on EliminarSiguiente]
 
 	\InterfazFuncion{ID}{\In{ac}{abCat}, \In{c}{categoria}}{Nat}
-	  [est\'a?(c, ac)]
+	  [$\emph{est\'a}?(c, ac)$]
 	  {$res \igobs id(ac, c)$}
 	  [$\Theta(|c|)$]
 	  [Devuelve el id de la categor\'ia dada.]
@@ -280,18 +280,18 @@
 	  [$\Theta(1)$]
 	  [Devuelve la cantidad de categor\'ias existentes en el \'arbol.]
 
-\end{Interfaz}
 
 \modTitulo{Funciones auxiliares}
 
 	\tadOperacion{conjuntoASecuencia}{Conjunto($\alpha$)}{Secuencia($\alpha$)}{}
-	\tadAlinearAxiomas{conjuntoASecuencia(Ag(a, as))}
-	\tadAxioma{conjuntoASecuencia($\emptyset$)}{<>}
-	\tadAxioma{conjuntoASecuencia(Ag($a$, $as$))}{dameUno(Ag($a$, $as$)) $\bullet$ conjuntoASecuencia(sinUno(Ag($a$, $as$)))}
+	\tadAlinearAxiomas{conjuntoASecuencia(c)}
+    \tadAxioma{conjuntoASecuencia(c)}{\IF $\emptyset$?(c) THEN <> ELSE dameUno(c) $\bullet$ conjuntoASecuencia(sinUno(c)) FI}
 
-	\tadOperacion{padres}{acat\ $ac$, categoria\ $hija$}{Secuencia(Nat)}{est\'a?(hija, ac)}
+    \tadOperacion{padres}{acat\ $ac$, categoria\ $hija$}{Secuencia(Nat)}{est\'a?(hija, ac)}
 	%\tadAlinearAxiomas{padres($ac$, $hija$)}
 	\tadAxioma{padres($ac$, $hija$)}{\IF $hija$ \igobs raiz($ac$) THEN 1 $\bullet$ <> ELSE id($ac$, $hija$) $\bullet$ padres($ac$, padre($ac$, $hija$)) FI}
+
+\end{Interfaz}
 
 \begin{Representacion}
 
@@ -309,47 +309,41 @@
 	    \end{Tupla}
 	\end{Estructura}
 
-\tadAlinearAxiomas{Rep[abcat]}
-\Rep[e][abcat]{1 $\yluego$ 2 $\land$ 3 $\yluego$ 4 $\yluego$ 5 $\yluego$ 6 $\yluego$ 7 $\yluego$ 8 $\yluego$ 9}\mbox{}
+\tadAlinearAxiomas{Rep(e)}
+\Rep[abcat][e]{$1 \land 2 \yluego 3 \land 4 \yluego 5 \yluego 6 \land 7 \land 8 \land 9$}\mbox{}
 
-$\bold{Donde:}$
+{\bf Donde:}
 
-$\bf\underline{1 es:}$\newline
-$\bold{Coloquialmente:}$ El id de la raíz del árbol es 1 (requerido por el enunciado del TP).\newline
-$\bold{Formalmente:}$ id(raiz) $=$ 1
-	
-$\bf\underline{2 es:}$\newline
-$\bold{Coloquialmente}$: No existe ninguna categoría incluida en sus categorías hijas.\newline
-$\bold{Formalmente:}$ ($\forall$c:categoria)estaAbcat(c,e) $\Rightarrow$ $\neg$(estaLista(c,hijas(c)))
+\begin{enumerate}
+  \item El id de la ra\'iz del \'arbol es 1 (requerido por el enunciado del TP).\\
+        {\bf Formalmente:} $id(e.raiz) = 1$
 
-$\bf\underline{3 es:}$\newline
-$\bold{Coloquialmente:}$ Todas las categorías tienen padre, excluyendo la raíz.\newline
-$\bold{Formalmente:}$ ($\forall$c:categoria)(estaAbcat(c,e) $\land$ (c $\not$= raiz)) $\Rightarrow$ (($\exists$t:categoria)(estaAbcat(t,e) $\land$ t$\not$=c) $\yluego$ estaLista(c,hijas(t)))    
+  \item No existe ninguna categor\'ia incluida en sus categor\'ias hijas.\\
+        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \Rightarrow \neg(estaLista(c,hijas(c)))$
 
-$\bf\underline{4 es:}$\newline
-$\bold{Coloquialmente:}$ Existe una categoría que no tiene padre y que es igual a raíz.\newline
-$\bold{Formalmente:}$ ($\exists$t:categoria)((estaAbcat(t,e)) $\land$ (t = raiz)) $\yluego$ ($\neg$($\exists$c:categoria)estaAbcat(c,e) $\yluego$ estaLista(t,hijas(c)))
+  \item Todas las categor\'ias tienen padre, excluyendo la ra\'iz.\\
+        {\bf Formalmente:} $(\forall c:categoria)(esta?(c,e) \land (c \not= e.raiz)) \Rightarrow ((\exists t:categoria)(esta?(t,e) \land t\not=c) \yluego estaLista(c,hijas(t)))$
 
-$\bf\underline{5 es:}$\newline
-$\bold{Coloquialmente:}$ Cada categoría tiene un único padre (este ítem (junto con el 4) garantiza que el árbol no sea cíclico).\newline
-$\bold{Formalmente:}$ $\neg$($\exists$t,c:categoria)((estaAbcat(c,e)) $\yluego$ (estaAbcat(t,e)) (necesario???) $\yluego$ (t$\not$=c)) $\yluego$ (($\forall$k:categoria)estaAbcat(k,e) $\Rightarrow$ (estaLista(k,hijas(c)) $\yluego$ estaLista(k,hijas(t)))
-
-$\bf\underline{6 es:}$\newline
-$\bold{Coloquialmente:}$ La cantidad de categorías totales es igual a UltId.\newline
-$\bold{Formalmente:} \#$conjuntoCats(e) = UltId  
-
-$\bf\underline{7 es:}$\newline
-$\bold{Coloquialmente:}$ Las categorías hijas de cada categoría tienen un id mayor a ésta.\newline
-$\bold{Formalmente:}$ (($\forall$c:categoria)estaAbcat(c,e)) $\Rightarrow$ (($\forall$t:categoria)(estaAbcat(c,e) $\yluego$ estaLista(t,hijas(c))) $\Rightarrow$ id(c) $<$ id(t))
-
-$\bf\underline{8 es:}$\newline
-$\bold{Coloquialmente:}$ No existen dos id's iguales para categorías distintas.\newline
-$\bold{Formalmente:}$ ($\forall$c,t:categoria)(estaAbcat(c,e) $\land$ estaAbcat(t,e) $\land$ t$\not$=c) $\Rightarrow$ id(c)$\not$=id(t) 
-
-$\bf\underline{9 es:}$\newline
-$\bold{Coloquialmente:}$ No existen dos categorías iguales en un mismo árbol.\newline
-$\bold{Formalmente:}$ ($\forall$c:categoria)estaAbcat(c,e) $\Rightarrow$ $\neg$($\exists$t:categoria)estaAbcat(t,e) (esto lo tengo que preguntar)
-
+  \item Existe una categor\'ia que no tiene padre y que es igual a ra\'iz.\\
+        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \Rightarrow \neg(estaLista(c,hijas(c)))$
+  	     
+  \item No existen dos categor\'ias iguales en un mismo \'arbol.\\
+        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \Rightarrow \neg(\exists t:categoria)esta?(t,e) (esto lo tengo que preguntar)$
+  	     
+  \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 4) garantiza que el \'arbol no sea c\'iclico).\\
+        {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,e)) \yluego (esta?(t,e)) (necesario???) \yluego (t \not= c)) \yluego ((\forall k:categoria)esta?(k,e) \Rightarrow (estaLista(k,hijas(c)) \yluego estaLista(k,hijas(t)))$
+  
+  \item La cantidad de categor\'ias totales es igual a UltId.\\
+        {\bf Formalmente:} $\#conjuntoCats(e) = e.ultId$
+  
+  \item Las categor\'ias hijas de cada categor\'ia tienen un id mayor a \'esta.\\
+        {\bf Formalmente:} $((\forall c:categoria)esta?(c,e)) \Rightarrow ((\forall t:categoria)(esta?(c,e) \yluego estaLista(t,hijas(c))) \Rightarrow id(c) < id(t))$
+  
+  \item No existen dos IDs iguales para categor\'ias distintas.\\
+        {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,e) \land esta?(t,e) \land t \not= c) \Rightarrow id(c) \not =id(t)$
+  
+  
+\end{enumerate}
 
 \end{Representacion}
 
@@ -409,10 +403,19 @@ $\bold{Formalmente:}$ ($\forall$c:categoria)estaAbcat(c,e) $\Rightarrow$ $\neg$(
 \end{algorithm}
 
 \begin{algorithm}[H]
+\caption*{iPadres(\In{ac}{abCat}, \In{hija}{categoria}) $\DRef res$ : \TipoVariable{iteradorPadresUni(Nat)}}
+\begin{algorithmic}[1]
+    \State $nodoHija \gets \Call{Obtener}{ac.categorias, hija}$\Comment{O(|$hija$|)}
+	\State $res \gets \Call{crearIteradorPadres}{nodoHija}$\Comment{O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(|hija|) + O(1) = O(|hija|)$
+\end{algorithm}
+
+\begin{algorithm}[H]
 \caption*{iHijas(\In{ac}{abCat}, \In{padre}{categoria}) $\DRef res$ : \TipoVariable{iteradorUni(categoria)}}
 \begin{algorithmic}[1]
-	\State $nodoHijo \gets$ \Call{Obtener}{$ac.categorias, padre$}\Comment{O(|$padre$|)}
-	\State $res \gets$ \Call{crearIterador}{$nodoHijo.hijas$}\Comment{O(1)}
+    \State $nodoHijo \gets \Call{Obtener}{ac.categorias, padre}$\Comment{O(|$padre$|)}
+	\State $res \gets \Call{crearIterador}{nodoHijo.hijas}$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(|padre|) + O(1) = O(|padre|)$
 \end{algorithm}
@@ -429,7 +432,7 @@ $\bold{Formalmente:}$ ($\forall$c:categoria)estaAbcat(c,e) $\Rightarrow$ $\neg$(
 \begin{algorithm}[H]
 \caption*{iCantCategorias(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
-	\State $res \gets ac.ultId$\Comment{O(1)}
+	\State $res \gets ac.ultId$\Comment{$O(1)$}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(1)$
 \end{algorithm}
@@ -484,7 +487,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 	  [Devuelve la cantidad de links que tiene una categor\'ia y sus hijas]
 
 	\InterfazFuncion{linksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
-	  [\emph{est\'a}?$(c, categorias(s))$]
+	  [$\emph{est\'a}?(c, categorias(s))$]
 	  {$res \igobs crearIteradorLinksOrdenadosPorAccesos(s, c)$}
 	  [$\Theta(|c| + n^2)$]
 	  [Devuelve la cantidad de links que tiene una categor\'ia.]
@@ -502,13 +505,15 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 
 		\begin{Tupla}[infoLink]
 			\tupItem{categoria}{categoria}
-			\tupItem{accesos}{lista(fecha)}
+        	\tupItem{ultAcceso}{fecha}
+    		\tupItem{accesos}{vector(Nat)}
 		\end{Tupla}
 	\end{Estructura}
 
 \end{Representacion}
 
-REP Y ABS
+\tadAlinearAxiomas{Rep(e)}
+\Rep[linklinkit][e]{}\mbox{}
 
 \begin{Algoritmos}
 
@@ -520,7 +525,7 @@ REP Y ABS
 	\State $res.infoLinks \gets$ \Call{Vacio}{\null}\Comment{$\Theta$(1)}
 	\Statex
 	\For {$i = 1 \to \Call{cantCategorias}{ac}$} \Comment{$O(1) + \#categorias(ac) * \Theta(1) = \Theta(\#categorias(ac))$}
-	\State \Call{AgregarAtras}{$res.linksPorCat, \Call{Vacia}{\null}$}\Comment{como son llamadas consecutivas, $\Theta$(1)}
+	\State $\Call{AgregarAtras}{res.linksPorCat, \Call{Vacia}{\null}}$\Comment{$\Theta(1)$}
 	\EndFor
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $3\Theta(1) + \Theta(\#categorias(ac)) = \Theta(\#categorias(ac))$
@@ -529,44 +534,61 @@ REP Y ABS
 \begin{algorithm}[H]
 \caption*{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
 \begin{algorithmic}[1]
-	\State $categoriaID \gets$ \Call{ID}{$s.aCategorias, c$}\Comment{O(|c|)}
-	\State \Call{AgregarAtras}{$s.linksPorCat[categoriaID-1], l$}\Comment{$O(1)$ ya que se est\'a pasando por referencia}
+	\State $categoriaID \gets$ \Call{id}{$s.aCategorias, c$}\Comment{O(|c|)}
 	\Statex
 	\var{info}{infoLink}
 	\State $info.categoria \gets c$\Comment{O(|c|)}
-	\State $info.accesos \gets$ \Call{Vacia}{\null}\Comment{O(1)}
-	\State \Call{Definir}{$s.infoLinks, l, info$}\Comment{O(|$l$|)}
+    \State $info.ultAcceso \gets 0$
+    \For{$i = 1 \to 3$}\Comment{3O(1) = O(1)}
+        \State $\Call{AgregarAtras}{info.accesos, 0}$\Comment{O(1)}
+    \EndFor
+	\State $\Call{Definir}{s.infoLinks, l, info}$\Comment{O(|$l$|)}
+    \State $\Call{AgregarAtras}{s.linksPorCat[categoriaID-1], \&info}$\Comment{$O(1)$}
 	\Statex
-	\State $it \gets$ \Call{padres}{$s.aCategorias, c$}\Comment{O(|c|)}
-	\While{\Call{HayMas?}{$it$}}\Comment{$(O(h) + O(1)) * 3O(1) = O(h)$}
-		\State \Call{Subir}{$it$}\Comment{O(1)}
-    	\State $categoriaID \gets$ \Call{ActualID}{$it$}\Comment{O(1)}
-		\State \Call{AgregarAtras}{$s.linksPorCat[categoriaID-1], l$}\Comment{por ref. $\Rightarrow$ O(1)}
+	\State $it \gets \Call{padres}{s.aCategorias, c}$\Comment{O(|c|)}
+	\While{$\Call{HayMas?}{it}$}\Comment{$(O(h) + O(1)) * 3O(1) = O(h)$}
+    	\State $\Call{Subir}{it}$\Comment{O(1)}
+    	\State $categoriaID \gets \Call{ActualID}{s, categoriaID}$\Comment{$O(1)$}
+		\State $\Call{AgregarAtras}{s.linksPorCat[categoriaID-1], \&info}$\Comment{$O(1)$}
 	\EndWhile
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $2O(1) + 3O(|c|) + O(|l|) + O(h) = O(|c|) + O(|l|) + O(h) = O(|c| + |l| + h)$
+\textbf{C\'alculo de complejidad}: $O(1) + 3O(|c|) + O(|l|) + O(h) = O(|c|) + O(|l|) + O(h) = O(|c| + |l| + h)$
 \\ \tab El bucle tiene $h$ iteraciones ya que se comienza en un nodo y luego, en cada ciclo, se va subiendo hasta la raiz del \'arbol.
 \end{algorithm}
 
 \begin{algorithm}[H]
 \caption*{iAccederLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha})}
 \begin{algorithmic}[1]
-	\State $link \gets$ \Call{Obtener}{$s.infoLinks, l$}\Comment{O(|$l$|)}
-	\State \Call{AgregarAtras}{$link.accesos, f$}\Comment{O(1)}
+	\State $link \gets \Call{Obtener}{s.infoLinks, l}$\Comment{$O(|l|)$}
+    \State $diff \gets f - link.ultAcceso$\Comment{$O(1)$}
+    \Statex
+    \Statex // Muevo hacia atr\'as los d\'ias que pasaron
+    \State $i \gets 0$\Comment{$O(1)$}
+    \While{$i < 3 - diff$}\Comment{$3 * 2O(1) = O(1)$}
+        \State $link.accesos[i] \gets link.accesos[i + diff]$\Comment{$2O(1) = O(1)$}
+        \State $i \gets i + 1$\Comment{$O(1)$}
+    \EndWhile
+    \Statex
+    \Statex // Pongo en 0 los nuevos d\'ias que llegaron
+    \State $i \gets 0$\Comment{O(1)}
+    \While{$i < diff \land i < 3$}\Comment{$3 * 2O(1) = O(1)$}
+        \State $link.accesos[2 - i] \gets 0$\Comment{$O(1)$}
+        \State $i \gets i + 1$\Comment{$O(1)$}
+    \EndWhile
+    \Statex
+    \State $link.ultAcceso \gets f$\Comment{$O(1)$}
+    \State $link.accesos[2] \gets link.accesos[2] + 1$\Comment{$2O(1) = O(1)$}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $O(1) + O(|l|) = O(|l|)$
-\textbf{ \\ \\ Falta que agregue el acceso a las categorias superiores (padres)
-de ésta categoria. Para eso se le agrega esa info al arbol, y luego la complejidad va a
-quedar O(|l| + h) (Requerido par hacer iLinksOrdenadosPorAccesos)}
+\textbf{C\'alculo de complejidad}: $7O(1) + O(|l|) = O(|l|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
 \caption*{iCantLinks(\In{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
-	\State $categoriaID \gets$ \Call{ID}{$s.aCategorias, c$}\Comment{$O(|c|)$}
-	\State $res \gets \Call{Longitud}{s.linksPorCat[categoriaID-1]}$\Comment{$2\Theta(1) = \Theta(1)$}
+	\State $categoriaID \gets \Call{ID}{s.aCategorias, c}$\Comment{$O(|c|)$}
+	\State $res \gets \Call{Longitud}{s.linksPorCat[categoriaID-1]}$\Comment{$2O(1) = O(1)$}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $O(|c|) + \Theta(1) = O(|c|)$
+\textbf{C\'alculo de complejidad}: $O(|c|) + O(1) = O(|c|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -623,6 +645,9 @@ quedar O(|l| + h) (Requerido par hacer iLinksOrdenadosPorAccesos)}
 			\tupItem{it}{itLista($\alpha$)}
 		\end{Tupla}
 	\end{Estructura}
+    
+\tadAlinearAxiomas{Rep(e)}
+\Rep[it][e]{true}\mbox{}
 
 \end{Representacion}
 

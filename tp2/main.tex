@@ -198,7 +198,7 @@
 
 	\textbf{par\'ametro formal}: \TipoVariable{$\alpha$}.
 
-	\textbf{usa}: \TipoVariable{Bool, String}.
+	\textbf{usa}: \TipoVariable{Nat, Bool, String}.
 
 	\textbf{se explica con}: \TipoVariable{Diccionario(String, $\alpha$)}.
 
@@ -213,19 +213,19 @@
 
 	\InterfazFuncion{Definir}{\Inout{d}{diccTrie}, \In{k}{string}, \In{s}{$\alpha$}}{}
 	  [$d \igobs d_0$]
-	  {$d \igobs definir(d_0, k, s)$}
+	  {$d \igobs definir(k, s, d_0)$}
 	  [O(|$k$|)]
 	  [Define la clave $k$ con el significado $s$ en el diccionario.]
 	  [La clave se guarda por copia y el significado por referencia.]
 
 	\InterfazFuncion{Definido?}{\Inout{d}{diccTrie}, \In{k}{string}}{Bool}
-	  {$res \igobs def?(d, k)$}
+	  {$res \igobs def?(k, d)$}
 	  [O(|$k$|)]
 	  [Devuelve \TipoVariable{True} si y s\'olo si $k$ est\'a definido en el diccionario.]
 
 	\InterfazFuncion{Obtener}{\Inout{d}{diccTrie}, \In{k}{string}}{$\alpha$}
-	  [$def?(d, k)$]
-	  {$alias(res \igobs obtener(d, k))$}
+	  [$def?(k, d)$]
+	  {$alias(res \igobs obtener(k, d))$}
 	  [O(|$k$|)]
 	  [Devuelve el significado por referencia de la clave $k$ en $d$.]
 
@@ -233,7 +233,74 @@
 
 \begin{Representacion}
 
+	\begin{Estructura}{diccTrie($\alpha$)}
+	    \begin{Tupla}
+	      \tupItem{trie}{puntero(nodo)}
+	    \end{Tupla}
+
+	    \begin{Tupla}[nodo]
+	      \tupItem{hijo}{vector(puntero(nodo))}
+	      \tupItem{elem}{puntero($\alpha$)}
+	    \end{Tupla}
+	\end{Estructura}
+
+\tadAlinearAxiomas{Rep(e)}
+\Rep[diccTrie($\alpha$)][e]{}\mbox{}
+
 \end{Representacion}
+
+\begin{Justificacion}
+
+\end{Justificacion}
+
+\begin{Algoritmos}
+
+\begin{algorithm}[H]
+\caption*{iVacio() $\DRef res$ : \TipoVariable{diccTrie($\alpha$)}}
+\begin{algorithmic}[1]
+	\var{nodoVacio}{nodo}	
+	\State $nodoVacio.elem \gets NULL$ \Comment{O(1)}
+	\State $nodoVacio.hijo \gets$ \Call{vacia}{} \Comment{O(1)}
+	\State $i \gets 0$\Comment{O(1)}
+	\While{$i < 256$}\Comment{$O(256)* O(1) = O(256) = O(1)$}
+    	\State \Call{AgregarAtras}{$nodoVacio.hijo, NULL$}\Comment{O(1)}
+	\EndWhile
+	\State $res.trie \gets \&nodoVacio$ \Comment{O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $5O(1) = O(1)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iDefinir(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{categoria}}
+\begin{algorithmic}[1]
+	\State $COMPLETAR$ \Comment{O(1)}	
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: 
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iDefinido?(\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria})}
+\begin{algorithmic}[1]
+	\State $COMPLETAR$ \Comment{O(1)}	
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: 
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iObtener(\In{ac}{abCat}, \In{padre}{categoria}) $\DRef res$ : \TipoVariable{iteradorUni(categoria)}}
+\begin{algorithmic}[1]
+	\State $COMPLETAR$ \Comment{O(1)} 
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}:   
+\end{algorithm}
+ 
+\end{Algoritmos}
+
+\begin{Servicios Usados}
+
+\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos a continuaci\'on:}
+
+\end{Servicios Usados}
 
 \section{M\'odulo ArbolCategorias}
 \begin{Interfaz}

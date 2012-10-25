@@ -334,7 +334,7 @@
 	\end{Estructura}
 
 \tadAlinearAxiomas{Rep(e)}
-\Rep[abcat][e]{$1 \land 2 \yluego 3 \yluego 4 \yluego 5 \yluego 6 \land 7 \land 8 \land 9$}\mbox{}
+\Rep[abcat][e]{$1 \land 2 \yluego 3 \yluego 4 \yluego 5 \yluego 6 \land 7 \land 8 \land 9 \land 10$}\mbox{}
 
 {\bf Donde:}
 
@@ -355,7 +355,7 @@
   \item Existe una categor\'ia que no tiene padre y que es igual a ra\'iz.\\
         {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \Rightarrow \neg(estaLista(c,hijas(c)))$
   	     
-  \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 4) garantiza que el \'arbol no sea c\'iclico).\\
+  \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 4) garantiza que el \'arbol no sea c\'iclico). (esto supuestamente queda explicito pues el padre es un puntero)\\
         {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,e)) \yluego (esta?(t,e))$ (necesario???) $\yluego (t \not= c)) \yluego ((\forall k:categoria)esta?(k,e) \Rightarrow (estaLista(k,hijas(c)) \yluego estaLista(k,hijas(t)))$
   
   \item La cantidad de categor\'ias totales es igual a UltId.\\
@@ -366,6 +366,13 @@
   
   \item No existen dos IDs iguales para categor\'ias distintas.\\
         {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,e) \land esta?(t,e) \land t \not= c) \Rightarrow id(c) \not =id(t)$
+        
+  \item Ningún padre es Null salvo el de la raíz.
+  		{\bf Formalmente:}
+  		
+  \item El padre de la raíz es Null
+  
+  \item Ningún padre tiene más de dos hijos diferentes.
     
 \end{enumerate}
 

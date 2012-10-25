@@ -669,11 +669,12 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 	\begin{Estructura}{LinkLinkIt}
 	    \begin{Tupla}
 	      \tupItem{aCategorias}{abcat}
-	      \tupItem{\\ linksPorCat}{vector(lista(link))}
+	      \tupItem{\\ linksPorCat}{vector(lista(puntero(infoLink)))}
 	      \tupItem{\\ infoLinks}{DiccTrie(link, infoLink)}
 	    \end{Tupla}
 
 		\begin{Tupla}[infoLink]
+			\tupItem{link}{link}
 			\tupItem{categoria}{categoria}
         	\tupItem{ultAcceso}{fecha}
     		\tupItem{accesos}{vector(Nat)}
@@ -683,7 +684,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \end{Representacion}
 
 \tadAlinearAxiomas{Rep(e)}
-\Rep[linklinkit][e]{}\mbox{}
+\Rep[LinkLinkIt][e]{}\mbox{}
 
 \begin{Algoritmos}
 
@@ -707,6 +708,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 	\State $categoriaID \gets \Call{ID}{s.aCategorias, c}$\Comment{O(|c|)}
 	\Statex
 	\var{info}{infoLink}
+	\State $info.link \gets l$\Comment{O(|l|)}
 	\State $info.categoria \gets c$\Comment{O(|c|)}
     \State $info.ultAcceso \gets 0$\Comment{O(1)}
     \For{$i = 1 \to 3$}\Comment{3O(1) = O(1)}
@@ -722,7 +724,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 		\State $\Call{AgregarAtras}{s.linksPorCat[categoriaID-1], \&info}$\Comment{$O(1)$}
 	\EndWhile
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $O(1) + 3O(|c|) + O(|l|) + O(h) = O(|c|) + O(|l|) + O(h) = O(|c| + |l| + h)$
+\textbf{C\'alculo de complejidad}: $O(1) + 3O(|c|) + 2O(|l|) + O(h) = O(|c|) + O(|l|) + O(h) = O(|c| + |l| + h)$
 \\ \tab El bucle tiene $h$ iteraciones ya que se comienza en un nodo y luego, en cada ciclo, se va subiendo hasta la raiz del \'arbol.
 \end{algorithm}
 
@@ -767,23 +769,40 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
     \State $categoriaID \gets \Call{ID}{s.aCategorias, c}$\Comment{$O(1)$}
     \State $it \gets \Call{crearIt}{s.linksPorCat[categoriaID - 1]}$\Comment{$O(1)$}
     \Statex
+    \Statex // Encuentro la fecha m\'as alta de esta categor\'ia
     \State $f \gets 0$\Comment{$O(1)$}
     \While{$\Call{HaySiguiente}{it}$}\Comment{$nO(1) = O(n)$}
         \State $f \gets \Call{max}{\Call{Siguiente}{it}.ultAcceso, f}$\Comment{$O(1)$}
         \State $\Call{Avanzar}{it}$\Comment{$O(1)$}
     \EndWhile
     \Statex
-    \Statex // Ni idea, hay que ordenar, hoy es el taller de sorting, ya veremos\dots
-    \If{$\Call{HaySiguiente}{it}$}
-        \State $\Call{Avanzar}{it}$
-        \While{$\Call{HaySiguiente}{it}$}
-            \If{$\Call{puntajeDelLink}{\Call{Siguiente}{it}, f} > \Call{puntajeDelLink}{\Call{Anterior}{it}, f}$}
-            \Else
-            \EndIf
-           \Statex  //Aca hay q decir que si tiene puntaje 0 no aparece en el iterador.
-           \Statex // O de otra forma, guardar la ultima posicion dnd el puntaje es diferente a 0 y pasarle esa sub-lista al it
-        \EndWhile
-    \EndIf
+    \Statex // Filtro los que tienen que quedar (aquellos que tengan alg\'un acceso)
+    \State $itLinksEnCat \gets \Call{crearIt}{s.linksPorCat[categoriaID - 1]}$
+	\State $listaRes \gets \Call{Vacia}{\null}$
+	\State $itRes \gets \Call{crearIt}{listaRes}$
+	\While{$\Call{HaySiguiente}{itLinksEnCat}$}
+		\If{$\Call{puntajeDelLink}{\Call{Siguiente}{itLinksEnCat}, f} > 0$}
+			\State $\Call{AgregarComoAnterior}{itRes, \Call{Siguiente}{itLinksEnCat}}$
+		\EndIf
+	\EndWhile
+	\Statex
+	\Statex // Voy agregando el de m\'as accesos que encuentre
+	\State $listaResOrdenada \gets \Call{Vacia}{\null}$
+	\State $itResOrd \gets \Call{crearIt}{listaResOrdenada}$
+	\While{$\neg\Call{Vacia}{listaRes}$}
+		\State $itRes \gets \Call{crearIt}{listaRes}$
+		\State $itMaxAccesos \gets \Call{crearIt}{listaRes}$
+		\While{$\Call{HaySiguiente}{itRes}$}
+			\If{$\Call{puntajeDelLink}{\Call{Siguiente}{itRes}, f} > \Call{puntajeDelLink}{\Call{Siguiente}{itMaxAccesos}, f}$}
+				\State $itMaxAccesos \gets itRes$
+			\EndIf
+		\EndWhile
+		\Statex
+		\State $\Call{AgregarComoAnterior}{itResOrd, \Call{Siguiente}{itMaxAccesos}}$
+		\State $\Call{EliminarSiguiente}{itMaxAccesos}$
+	\EndWhile
+	\Statex
+	\State $res \gets \Call{crearItLinks}{listaResOrdenada}$
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(|c| + n^2)$
 \end{algorithm}

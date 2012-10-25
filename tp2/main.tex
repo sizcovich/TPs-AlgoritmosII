@@ -422,7 +422,8 @@
   \item Existe una categor\'ia que no tiene padre y que es igual a ra\'iz.\\
         {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \Rightarrow \neg(estaLista(c,hijas(c)))$
   	     
-  \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 4) garantiza que el \'arbol no sea c\'iclico). (esto supuestamente queda explicito pues el padre es un puntero)\\
+  \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 2,3 y
+  4) garantiza que el \'arbol no sea c\'iclico). (esto supuestamente queda explicito pues el padre es un puntero)\\
         {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,e)) \yluego (esta?(t,e))$ (necesario???) $\yluego (t \not= c)) \yluego ((\forall k:categoria)esta?(k,e) \Rightarrow (estaLista(k,hijas(c)) \yluego estaLista(k,hijas(t)))$
   
   \item La cantidad de categor\'ias totales es igual a UltId.\\
@@ -434,12 +435,12 @@
   \item No existen dos IDs iguales para categor\'ias distintas.\\
         {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,e) \land esta?(t,e) \land t \not= c) \Rightarrow id(c) \not =id(t)$
         
-  \item Ningún padre es Null salvo el de la raíz.
+  \item Ningún padre es Null salvo el de la raíz. \\
   		{\bf Formalmente:}
   		
-  \item El padre de la raíz es Null
+  \item El padre de la raíz es Null  \\
   
-  \item Ningún padre tiene más de dos hijos diferentes.
+  %\item Ningún padre tiene más de dos hijos diferentes. NO, NO ES BINARIO
     
 \end{enumerate}
 
@@ -462,7 +463,7 @@
 \\Para representar el árbol de categorías elegimos esta estructura por los siguientes motivos:
 \\En primer lugar, el Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloco en cada nodo una lista con los nombres de cada hijo. 
 \\En segundo lugar, esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|c|) donde c es el nombre de la categor\'ia.
-%\\El iterador que recorre el arbol hacia arriba será necesario en el LinkLinkIt
+\\El iterador que recorre el arbol hacia arriba será necesario en el LinkLinkIt
 \end{Justificacion}
 
 \begin{Representacion}

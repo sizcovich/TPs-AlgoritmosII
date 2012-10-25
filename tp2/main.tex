@@ -14,7 +14,7 @@
 \usepackage{caption}
 \usepackage{algpseudocode}
 \usepackage[section]{algorithm}
-\usepackage[colorlinks=true, linkcolor=blue]{hyperref}
+\usepackage[colorlinks=false, linkcolor=blue]{hyperref}
 \usepackage{calc}
 
 %%--- Nuevos comandos START
@@ -77,6 +77,12 @@
 \newenvironment{Algoritmos}{%
   \vspace*{2ex}%
   \noindent\textbf{\Large Algoritmos}%
+  \vspace*{2ex}%
+}{}
+
+\newenvironment{Algoritmos Del Iterador}{%
+  \vspace*{2ex}%
+  \noindent\textbf{\Large Algoritmos Del Iterador}%
   \vspace*{2ex}%
 }{}
 
@@ -232,7 +238,7 @@
 \section{M\'odulo ArbolCategorias}
 \begin{Interfaz}
 
-	\textbf{usa}: \TipoVariable{Nat, String, diccTrie($\alpha$), lista($\alpha$), iteradorUni($\alpha$)}.
+    \textbf{usa}: \TipoVariable{Nat, String, diccTrie($\alpha$), lista($\alpha$), iteradorUni($\alpha$)}.
 
 	\textbf{se explica con}: \TipoVariable{ArbolCategorias, Iterador Unidireccional($\alpha$)}.
 
@@ -256,18 +262,18 @@
 	  [$\Theta(|padre| + |hija|)$]
 	  [Agrega la categor\'ia hija a padre.]
 
-    \InterfazFuncion{padres}{\In{ac}{abCat}, \In{hija}{categoria}}{iteradorUniPadres}
-	  [$\emph{est\'a}?(hija, ac)$]
-	  {$res \igobs crearItUni(padres(ac, hija))$}
-	  [$\Theta(|hija|)$]
-	  [Devuelve un iterador que proyecta los ids de los padres de forma tal que al pedir actual, el iterador devuelve el id de la hija. Lo bueno es que una vez creado, acceder al id del padre y subir es todo O(1)]
-
 	\InterfazFuncion{hijas}{\In{ac}{abCat}, \In{padre}{categoria}}{iteradorUni(categoria)}
 	  [$\emph{est\'a}?(padre, ac)$]
 	  {$res \igobs crearItUni(conjuntoASecuencia(hijos(ac, padre)))$}
 	  [$\Theta(|padre|)$]
 	  [Devuelve un iterador que proyecta las hijas del padre de forma tal que al pedir actual, el iterador devuelve el primer elemento de la lista.]
-	  [El iterador se invalida si y s\'olo si se elimina el elemento siguiente del iterador sin utilizar la funci\'on EliminarSiguiente]
+	  [El iterador se invalida si y s\'olo si se elimina el elemento siguiente del iterador.]
+
+    \InterfazFuncion{padres}{\In{ac}{abCat}, \In{hija}{categoria}}{itabCat}
+      [$\emph{est\'a}?(hija, ac)$]
+	  {$res \igobs crearItUni(padres(ac, hija))$}
+	  [$\Theta(|hija|)$]
+	  [Devuelve un iterador que proyecta los IDs de los padres de forma tal que al pedir ActualID, el iterador devuelve el ID de la hija.]
 
 	\InterfazFuncion{ID}{\In{ac}{abCat}, \In{c}{categoria}}{Nat}
 	  [$\emph{est\'a}?(c, ac)$]
@@ -288,9 +294,27 @@
     \tadAxioma{conjuntoASecuencia(c)}{\IF $\emptyset$?(c) THEN <> ELSE dameUno(c) $\bullet$ conjuntoASecuencia(sinUno(c)) FI}
 
     \tadOperacion{padres}{acat\ $ac$, categoria\ $hija$}{Secuencia(Nat)}{est\'a?(hija, ac)}
-	%\tadAlinearAxiomas{padres($ac$, $hija$)}
+    %\tadAlinearAxiomas{padres($ac$, $hija$)}
 	\tadAxioma{padres($ac$, $hija$)}{\IF $hija$ \igobs raiz($ac$) THEN 1 $\bullet$ <> ELSE id($ac$, $hija$) $\bullet$ padres($ac$, padre($ac$, $hija$)) FI}
 
+\modTitulo{Operaciones del iterador}
+
+   	\InterfazFuncion{HayMasPadres?}{\In{it}{itabCat}}{Bool}
+	  {$res \igobs HayMas?(it)$}
+	  [$\Theta(1)$]
+	  [Devuelve true si y solo si en el iterador todav\'ia quedan elementos para iterar]
+
+	\InterfazFuncion{Subir}{\Inout{it}{itabCat}}{}
+	  [$hayMas?(it) \land it \igobs it_0$]
+	  {$it \igobs Avanzar(it_0)$}
+	  [$\Theta(1)$]
+	  [Avanza al iterador a la siguiente posici\'on.]
+	  
+	 \InterfazFuncion{ActualID}{\In{it}{itabCat}}{$Nat$}
+	  {$res \igobs Actual(it)$}
+	  [$\Theta(1)$]
+	  [Devuelve el ID del elemento al cual esta apuntando.]
+	
 \end{Interfaz}
 
 \begin{Representacion}
@@ -310,13 +334,17 @@
 	\end{Estructura}
 
 \tadAlinearAxiomas{Rep(e)}
-\Rep[abcat][e]{$1 \land 2 \yluego 3 \land 4 \yluego 5 \yluego 6 \land 7 \land 8 \land 9$}\mbox{}
+\Rep[abcat][e]{$1 \land 2 \yluego 3 \yluego 4 \yluego 5 \yluego 6 \land 7 \land 8 \land 9$}\mbox{}
 
 {\bf Donde:}
 
 \begin{enumerate}
   \item El id de la ra\'iz del \'arbol es 1 (requerido por el enunciado del TP).\\
         {\bf Formalmente:} $id(e.raiz) = 1$
+        
+\item No existen dos categor\'ias iguales en un mismo \'arbol.\\
+        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \Rightarrow \neg(\exists t:categoria)esta?(t,e)$ (esto lo tengo que preguntar)
+           
 
   \item No existe ninguna categor\'ia incluida en sus categor\'ias hijas.\\
         {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \Rightarrow \neg(estaLista(c,hijas(c)))$
@@ -327,11 +355,8 @@
   \item Existe una categor\'ia que no tiene padre y que es igual a ra\'iz.\\
         {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \Rightarrow \neg(estaLista(c,hijas(c)))$
   	     
-  \item No existen dos categor\'ias iguales en un mismo \'arbol.\\
-        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \Rightarrow \neg(\exists t:categoria)esta?(t,e) (esto lo tengo que preguntar)$
-  	     
   \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 4) garantiza que el \'arbol no sea c\'iclico).\\
-        {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,e)) \yluego (esta?(t,e)) (necesario???) \yluego (t \not= c)) \yluego ((\forall k:categoria)esta?(k,e) \Rightarrow (estaLista(k,hijas(c)) \yluego estaLista(k,hijas(t)))$
+        {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,e)) \yluego (esta?(t,e))$ (necesario???) $\yluego (t \not= c)) \yluego ((\forall k:categoria)esta?(k,e) \Rightarrow (estaLista(k,hijas(c)) \yluego estaLista(k,hijas(t)))$
   
   \item La cantidad de categor\'ias totales es igual a UltId.\\
         {\bf Formalmente:} $\#conjuntoCats(e) = e.ultId$
@@ -341,9 +366,21 @@
   
   \item No existen dos IDs iguales para categor\'ias distintas.\\
         {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,e) \land esta?(t,e) \land t \not= c) \Rightarrow id(c) \not =id(t)$
-  
-  
+    
 \end{enumerate}
+
+
+  \tadOperacion{estaLista}{lst}{bool}{} (no se como poner que me agregue un parametro mas de entrada)
+  \tadAxioma{}{}
+
+  ~
+
+  \tadOperacion{ConjuntoCats}{Lista(categoria)}{conj(categoria)}{}
+  \tadAxioma{}{}
+
+  ~
+ 
+  \AbsFc[estr]{abcat}{e.raiz = raiz(a) \land (\forall c:categoria)esta?(c,e) \impluego id(e,c) = id(c,a) \land (\forall c:categoria)esta?(c,e) \impluego  }
 
 \end{Representacion}
 
@@ -352,6 +389,29 @@
 \\En primer lugar, el Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloco en cada nodo una lista con los nombres de cada hijo. 
 \\En segundo lugar, esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|c|) donde c es el nombre de la categor\'ia.
 %\\El iterador que recorre el arbol hacia arriba será necesario en el LinkLinkIt
+\end{Justificacion}
+
+\begin{Representacion}
+
+	\begin{Estructura}{itabCat}
+	    \begin{Tupla}
+	      \tupItem{iterador}{puntero(Info)}
+	    \end{Tupla}
+
+	    \begin{Tupla}[Info]
+	      \tupItem{id}{Nat}
+	      \tupItem{padre}{puntero(catInfo)}
+	      \tupItem{hijas}{lista(categoria)}
+	    \end{Tupla}
+	\end{Estructura}
+
+\tadAlinearAxiomas{Rep(e)}
+\Rep[itabcat][e]{}\mbox{}
+
+\end{Representacion}
+
+\begin{Justificacion}
+
 \end{Justificacion}
 
 \begin{Algoritmos}
@@ -365,7 +425,7 @@
 	\Statex
 	\var{infoPadre}{catInfo}
 	\State $infoPadre.id \gets 0$\Comment{O(1)}
-	\State $infoPadre.padre \gets \&infoPadre$\Comment{O(1)}
+	\State $infoPadre.padre \gets NULL$\Comment{O(1)}
 	\State $infoPadre.hijas \gets$ \Call{Vacia}{\null}\Comment{O(1)}
 	\Statex
 	\var{infoRaiz}{catInfo}
@@ -403,21 +463,22 @@
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iPadres(\In{ac}{abCat}, \In{hija}{categoria}) $\DRef res$ : \TipoVariable{iteradorPadresUni(Nat)}}
-\begin{algorithmic}[1]
-    \State $nodoHija \gets \Call{Obtener}{ac.categorias, hija}$\Comment{O(|$hija$|)}
-	\State $res \gets \Call{crearIteradorPadres}{nodoHija}$\Comment{O(1)}
-\end{algorithmic}
-\textbf{C\'alculo de complejidad}: $O(|hija|) + O(1) = O(|hija|)$
-\end{algorithm}
-
-\begin{algorithm}[H]
 \caption*{iHijas(\In{ac}{abCat}, \In{padre}{categoria}) $\DRef res$ : \TipoVariable{iteradorUni(categoria)}}
 \begin{algorithmic}[1]
     \State $nodoHijo \gets \Call{Obtener}{ac.categorias, padre}$\Comment{O(|$padre$|)}
 	\State $res \gets \Call{crearIterador}{nodoHijo.hijas}$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(|padre|) + O(1) = O(|padre|)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iPadres(\In{ac}{abCat}, \In{hija}{categoria}) $\DRef res$ : \TipoVariable{itabCat}}
+\begin{algorithmic}[1]
+    \State $nodoHija \gets \Call{Obtener}{ac.categorias, hija}$\Comment{O(|$hija$|)}
+    \State $iterador \gets \&nodoHija$\Comment{O(1)}
+    \State $res \gets iterador$\Comment{O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(|hija|) + 2O(1) = O(|hija|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -438,6 +499,34 @@
 \end{algorithm}
 
 \end{Algoritmos}
+
+\begin{Algoritmos Del Iterador}
+
+\begin{algorithm}[H]
+\caption*{iHayMasPadres?(\In{it}{itabCat}) $\DRef res$ : \TipoVariable{Bool}}
+\begin{algorithmic}[1]
+	\State $res \gets it.padre \neq \TipoVariable{NULL}$\Comment{$\Theta(1)$}
+\end{algorithmic}
+	\textbf{C\'alculo de complejidad}: $\Theta(1)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iSubir(\Inout{it}{itabCat})}
+\begin{algorithmic}[1]
+	\State $it \gets \&it.padre$ \Comment{$\Theta(1)$}
+\end{algorithmic}
+	\textbf{C\'alculo de complejidad}: $\Theta(1)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iActualID(\In{it}{itabCat}) $\DRef res$ : {$Nat$}}
+\begin{algorithmic}[1]
+	\State $res \gets it.id$ \Comment{$\Theta(1)$}
+\end{algorithmic}
+	\textbf{C\'alculo de complejidad}: $\Theta(1)$
+\end{algorithm}
+
+\end{Algoritmos Del Iterador}
 
 \begin{Servicios Usados}
 
@@ -486,11 +575,17 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 	  [$\Theta(|c|)$]
 	  [Devuelve la cantidad de links que tiene una categor\'ia y sus hijas]
 
-	\InterfazFuncion{linksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
+    \InterfazFuncion{linksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
 	  [$\emph{est\'a}?(c, categorias(s))$]
 	  {$res \igobs crearIteradorLinksOrdenadosPorAccesos(s, c)$}
 	  [$\Theta(|c| + n^2)$]
 	  [Devuelve la cantidad de links que tiene una categor\'ia.]
+
+    \InterfazFuncion{puntajeDelLink}{\In{il}{infoLink}, \In{f}{fecha}}{Nat}
+	  [$il.ultAcceso \leq f$]
+	  {$res \igobs ???$}
+	  [$\Theta(1)$]be
+	  [Devuelve el puntaje del link. Esta funci\'on es privada, ya que reci] una estructura interna.
 
 \end{Interfaz}
 
@@ -521,8 +616,8 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \caption*{iCrearLinkLinkIt(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{LinkLinkIt}}
 \begin{algorithmic}[1]
 	\State $res.aCategorias \gets ac$\Comment{$\Theta$(1)}
-	\State $res.linksPorCat \gets$ \Call{Vacia}{\null}\Comment{$\Theta$(1)}
-	\State $res.infoLinks \gets$ \Call{Vacio}{\null}\Comment{$\Theta$(1)}
+	\State $res.linksPorCat \gets \Call{Vacia}{\null}$\Comment{$\Theta$(1)}
+	\State $res.infoLinks \gets \Call{Vacio}{\null}$\Comment{$\Theta$(1)}
 	\Statex
 	\For {$i = 1 \to \Call{cantCategorias}{ac}$} \Comment{$O(1) + \#categorias(ac) * \Theta(1) = \Theta(\#categorias(ac))$}
 	\State $\Call{AgregarAtras}{res.linksPorCat, \Call{Vacia}{\null}}$\Comment{$\Theta(1)$}
@@ -534,11 +629,11 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \begin{algorithm}[H]
 \caption*{iAgregarLink(\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria})}
 \begin{algorithmic}[1]
-	\State $categoriaID \gets$ \Call{id}{$s.aCategorias, c$}\Comment{O(|c|)}
+	\State $categoriaID \gets \Call{ID}{s.aCategorias, c}$\Comment{O(|c|)}
 	\Statex
 	\var{info}{infoLink}
 	\State $info.categoria \gets c$\Comment{O(|c|)}
-    \State $info.ultAcceso \gets 0$
+    \State $info.ultAcceso \gets 0$\Comment{O(1)}
     \For{$i = 1 \to 3$}\Comment{3O(1) = O(1)}
         \State $\Call{AgregarAtras}{info.accesos, 0}$\Comment{O(1)}
     \EndFor
@@ -546,7 +641,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
     \State $\Call{AgregarAtras}{s.linksPorCat[categoriaID-1], \&info}$\Comment{$O(1)$}
 	\Statex
 	\State $it \gets \Call{padres}{s.aCategorias, c}$\Comment{O(|c|)}
-	\While{$\Call{HayMas?}{it}$}\Comment{$(O(h) + O(1)) * 3O(1) = O(h)$}
+	\While{$\Call{HayMasPadres?}{it}$}\Comment{$(O(h) + O(1)) * 3O(1) = O(h)$}
     	\State $\Call{Subir}{it}$\Comment{O(1)}
     	\State $categoriaID \gets \Call{ActualID}{s, categoriaID}$\Comment{$O(1)$}
 		\State $\Call{AgregarAtras}{s.linksPorCat[categoriaID-1], \&info}$\Comment{$O(1)$}
@@ -594,8 +689,41 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \begin{algorithm}[H]
 \caption*{iLinksOrdenadosPorAccesos(\Inout{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{itLinks}}
 \begin{algorithmic}[1]
-	\State $res$
+    \State $categoriaID \gets \Call{ID}{s.aCategorias, c}$\Comment{$O(1)$}
+    \State $it \gets \Call{crearIt}{s.linksPorCat[categoriaID - 1]}$\Comment{$O(1)$}
+    \Statex
+    \State $f \gets 0$\Comment{$O(1)$}
+    \While{$\Call{HaySiguiente}{it}$}\Comment{$nO}1) = O(n)$
+        \State $f \gets \Call{max}{\Call{Siguiente}{it}.ultAcceso, f}$\Comment{$O(1)$}
+        \State $\Call{Avanzar}{it}$\Comment{$O(1)$}(
+    \EndWhile
+    \Statex
+    \Statex // Ni idea, hay que ordenar, hoy es el taller de sorting, ya veremos\dots
+    \If{$\Call{HaySiguiente}{it}$}
+        \State $\Call{Avanzar}{it}$
+        \While{$\Call{HaySiguiente}{it}$}
+            \If{$\Call{puntajeDelLink}{\Call{Siguiente}{it}, f} > \Call{puntajeDelLink}{\Call{Anterior}{it}, f}$}
+            \Else
+            \EndIf
+           \Statex  //Aca hay q decir que si tiene puntaje 0 no aparece en el iterador.
+           \Statex // O de otra forma, guardar la ultima posicion dnd el puntaje es diferente a 0 y pasarle esa sub-lista al it
+        \EndWhile
+    \EndIf
 \end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(|c| + n^2)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iPuntajeDelLink(\In{il}{infoLink}, \In{ultAccesoCat}{fecha}) $\DRef res$ : \TipoVariable{Nat}}
+\begin{algorithmic}[1]
+    \State{$res \gets 0$\Comment{$O(1)$}
+    \State{$i \gets 3$\Comment{$O(1)$}
+    \While{$f - il.ultAcceso < i$}\Comment{gracias a la Pre $(f - il.ultAcceso) > 0 \Rightarrow 3O(1) = O(1)$}
+        \State $i \gets i - 1$\Comment{$O(1)$}
+        \State $res \gets res + il.accesos[i]$\Comment{$O(1)$}
+    \EndWhile
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $3O(1) = O(1)$
 \end{algorithm}
 
 \end{Algoritmos}
@@ -661,7 +789,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \begin{algorithm}[H]
 \caption*{iCrearIterador(\In{l}{lista($\alpha$)}) $\DRef res$ : \TipoVariable{iteradorUni($\alpha$)}}
 \begin{algorithmic}[1]
-	\State $res.it \gets$ \Call{CrearIt}{$l$}\Comment{$\Theta(1)$}
+	\State $res.it \gets \Call{CrearIt}{l}$\Comment{$\Theta(1)$}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}
@@ -669,7 +797,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \begin{algorithm}[H]
 \caption*{iHayMas?(\In{iterador}{iteradorUni($\alpha$)}) $\DRef res$ : \TipoVariable{Bool}}
 \begin{algorithmic}[1]
-	\State $res \gets$ \Call{HaySiguiente}{$iterador.it$}\Comment{$\Theta(1)$}
+	\State $res \gets \Call{HaySiguiente}{iterador.it}$\Comment{$\Theta(1)$}
 \end{algorithmic}
 	\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}
@@ -677,7 +805,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \begin{algorithm}[H]
 \caption*{iSiguiente(\Inout{iterador}{iteradorUni($\alpha$)})}
 \begin{algorithmic}[1]
-	\State \Call{Avanzar}{$iterador.it$}\Comment{$\Theta(1)$}
+	\State $\Call{Avanzar}{iterador.it}$\Comment{$\Theta(1)$}
 \end{algorithmic}
 	\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}

@@ -700,9 +700,9 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
     \State $it \gets \Call{crearIt}{s.linksPorCat[categoriaID - 1]}$\Comment{$O(1)$}
     \Statex
     \State $f \gets 0$\Comment{$O(1)$}
-    \While{$\Call{HaySiguiente}{it}$}\Comment{$nO}1) = O(n)$
+    \While{$\Call{HaySiguiente}{it}$}\Comment{$nO(1) = O(n)$}
         \State $f \gets \Call{max}{\Call{Siguiente}{it}.ultAcceso, f}$\Comment{$O(1)$}
-        \State $\Call{Avanzar}{it}$\Comment{$O(1)$}(
+        \State $\Call{Avanzar}{it}$\Comment{$O(1)$}
     \EndWhile
     \Statex
     \Statex // Ni idea, hay que ordenar, hoy es el taller de sorting, ya veremos\dots
@@ -723,8 +723,8 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \begin{algorithm}[H]
 \caption*{iPuntajeDelLink(\In{il}{infoLink}, \In{ultAccesoCat}{fecha}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
-    \State{$res \gets 0$\Comment{$O(1)$}
-    \State{$i \gets 3$\Comment{$O(1)$}
+    \State $res \gets 0$\Comment{$O(1)$}
+    \State $i \gets 3$\Comment{$O(1)$}
     \While{$f - il.ultAcceso < i$}\Comment{gracias a la Pre $(f - il.ultAcceso) > 0 \Rightarrow 3O(1) = O(1)$}
         \State $i \gets i - 1$\Comment{$O(1)$}
         \State $res \gets res + il.accesos[i]$\Comment{$O(1)$}

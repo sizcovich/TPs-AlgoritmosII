@@ -240,8 +240,10 @@
 	    \end{Tupla}
 
 	    \begin{Tupla}[nodo]
-	      \tupItem{hijo}{vector(puntero(nodo))}
+	      \tupItem{hijo}{puntero(nodo)}
+	      \tupItem{hermano}{puntero(nodo)}
 	      \tupItem{elem}{puntero($\alpha$)}
+	      \tupItem{letra}{char}
 	    \end{Tupla}
 	\end{Estructura}
 
@@ -259,41 +261,76 @@
 \begin{algorithm}[H]
 \caption*{iVacio() $\DRef res$ : \TipoVariable{diccTrie($\alpha$)}}
 \begin{algorithmic}[1]
-	\var{nodoVacio}{nodo}	
-	\State $nodoVacio.elem \gets NULL$ \Comment{O(1)}
-	\State $nodoVacio.hijo \gets$ \Call{vacia}{} \Comment{O(1)}
-	\State $i \gets 0$\Comment{O(1)}
-	\While{$i < 256$}\Comment{$O(256)* O(1) = O(256) = O(1)$}
-    	\State \Call{AgregarAtras}{$nodoVacio.hijo, NULL$}\Comment{O(1)}
-	\EndWhile
-	\State $res.trie \gets \&nodoVacio$ \Comment{O(1)}
+	\State $res.trie \gets NULL$ \Comment{O(1)}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $5O(1) = O(1)$
+\textbf{C\'alculo de complejidad}: $O(1)$
 \end{algorithm}
 
 \begin{algorithm}[H]
 \caption*{iDefinir(\Inout{d}{diccTrie($\alpha$)}, \In {k}{string}, \In{s}{$\alpha$)}}
 \begin{algorithmic}[1]
 	\var{nodo}{nodo}
-	\State $nodo \gets *d.trie$\Comment{O(1)}
-	\For {$i = 0 \to (\Call{longitud}{k} - 1)$}\Comment{$O(256)* O(1) = O(256) = O(1)$}
-    	\If{$nodo.hijo[\Call{ord}{k[i]}] \neq NULL$}
-			\State $nodo \gets *nodo.hijo[\Call{ord}{k[i]}]$
-		\Else
-			\var{nodoVacio}{nodo}	
+	\var{cargoTodo?}{Bool}
+	\State $i \gets 0$\Comment{O(1)}
+	\Statex
+	\If {d.trie = NULL}
+		\State $cargoTodo? \gets True$\Comment{O(1)}
+		\var{nodoVacio}{nodo}				
+		\State $nodoVacio.elem \gets NULL$ \Comment{O(1)}
+		\State $nodoVacio.hijo \gets NULL$ \Comment{O(1)}
+		\State $nodoVacio.hermano \gets NULL$ \Comment{O(1)}
+		\State $nodoVacio.letra \gets k[i]$ \Comment{O(1)}
+		\State $nodo \gets nodoVacio$ \Comment{O(1)}
+		\State $i++$\Comment{O(1)}	
+	\Else
+		\State $cargoTodo? \gets False$\Comment{O(1)}
+		\State $nodo \gets *d.trie$\Comment{O(1)}
+	\EndIf	\Comment{O(1)}
+	\Statex	
+	\Statex // Agarre el primer nodo. si cargoTodo? es true, entonces en el bucle voy a ir creando todos los nodos hasta formar // k. Si cargoTodo? es false entonces voy a ir recorriendo todo el arbol hasta encontrar el lugar donde voy a tener // que colocar el resto de los caracteres de k que no esten en el arbol	
+	\Statex
+	\While{$i < \Call{longitud}{k}$}\Comment{$256 * O(|k|) * O(1) = O(|k|)$}
+		\If{cargoTodo?}
+			\var{nodoVacio}{nodo}				
 			\State $nodoVacio.elem \gets NULL$ \Comment{O(1)}
-			\State $nodoVacio.hijo \gets$ \Call{vacia}{} \Comment{O(1)}
-			\State $j \gets 0$\Comment{O(1)}
-			\While{$j < 256$}\Comment{$O(256)* O(1) = O(256) = O(1)$}
-    			\State \Call{AgregarAtras}{$nodoVacio.hijo, NULL$}\Comment{O(1)}
-			\EndWhile
-			\State $nodo.hijo[\Call{ord}{k[i]}] \gets \&nodoVacio$\Comment{O(1)}
+			\State $nodoVacio.hijo \gets NULL$ \Comment{O(1)}
+			\State $nodoVacio.hermano \gets NULL$ \Comment{O(1)}
+			\State $nodoVacio.letra \gets k[i]$ \Comment{O(1)}
+			\State $nodo.hijo \gets \&nodoVacio$ \Comment{O(1)}
 			\State $nodo \gets nodoVacio$ \Comment{O(1)}
-		\EndIf
-	\EndFor
+			\State $i++$\Comment{O(1)}	
+		\Else
+					
+			\If {$nodo.letra = k[i]$}    	
+    			\If {$nodo.hijo = NULL$}
+					\State $cargoTodo? \gets True$\Comment{O(1)}
+					\State $i++$\Comment{O(1)}
+				\Else    			
+    				\State $nodo \gets *nodo.hijo$\Comment{O(1)}
+    				\State $i++$\Comment{O(1)}
+    			\EndIf\Comment{O(1)}
+			\Else
+				\If{$nodo.hermano \neq NULL$} 
+					\State $nodo \gets nodo.hermano$\Comment{O(1)}
+				\Else
+					\var{nodoVacio}{nodo}				
+					\State $nodoVacio.elem \gets NULL$ \Comment{O(1)}
+					\State $nodoVacio.hijo \gets NULL$ \Comment{O(1)}
+					\State $nodoVacio.hermano \gets NULL$ \Comment{O(1)}
+					\State $nodoVacio.letra \gets k[i]$ \Comment{O(1)}
+					\State $nodo.hermano \gets \&nodoVacio$ \Comment{O(1)}
+					\State $nodo \gets nodoVacio$ \Comment{O(1)}		
+					\State $i++$\Comment{O(1)}
+					\State $cargoTodo? \gets True$\Comment{O(1)}
+				\EndIf\Comment{O(1)}
+			\EndIf	\Comment{O(1)}	
+		\EndIf\Comment{O(1)}
+ 	\EndWhile
+	\Statex		
 	\State $nodo.elem \gets \&s$ \Comment{O(1)}	
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $estan mal las complejidades porque alguien tiene que hacer que esto se vea lindo xD$
+\textbf{C\'alculo de complejidad}: $3O(1) + O(|k|) = O(|k)$
+\\ \tab El bucle en el peor caso (cargoTodo es False y el caracter a buscar es el que tiene ord = 255 y en ese nivel estan todos los caracteres del 0 al 254) tiene que hacer 256 ciclos pero como esto es un valor finito no arruina nuestra complejidad
 \end{algorithm}
 
 \begin{algorithm}[H]

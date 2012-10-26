@@ -432,7 +432,7 @@
 	\end{Estructura}
 
 \tadAlinearAxiomas{Rep(e)}
-\Rep[abcat][e]{$1 \land 2 \yluego 3 \yluego 4 \yluego 5 \yluego 6 \land 7 \land 8 \land 9 \land 10$}\mbox{}
+\Rep[abcat][e]{$1 \yluego 2 \land 3 \yluego 4 \yluego 5 \yluego 6 \land 7 \land 8 \land 9 \land 10$}\mbox{}
 
 {\bf Donde:}
 
@@ -440,9 +440,6 @@
   \item El id de la ra\'iz del \'arbol es 1 (requerido por el enunciado del TP).\\
         {\bf Formalmente:} $id(e.raiz) = 1$
         
-\item No existen dos categor\'ias iguales en un mismo \'arbol.\\
-        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \Rightarrow \neg(\exists t:categoria)esta?(t,e)$ (esto lo tengo que preguntar)
-           
 
   \item No existe ninguna categor\'ia incluida en sus categor\'ias hijas.\\
         {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \Rightarrow \neg(estaLista(c,hijas(c)))$
@@ -464,14 +461,15 @@
         {\bf Formalmente:} $((\forall c:categoria)esta?(c,e)) \Rightarrow ((\forall t:categoria)(esta?(c,e) \yluego estaLista(t,hijas(c))) \Rightarrow id(c) < id(t))$
   
   \item No existen dos IDs iguales para categor\'ias distintas.\\
-        {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,e) \land esta?(t,e) \land t \not= c) \Rightarrow id(c) \not =id(t)$
+        {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,e) \land esta?(t,e) \land t \not= c) \impluego id(c) \not =id(t)$
         
   \item Ningún padre es Null salvo el de la raíz. \\
-  		{\bf Formalmente:}
+  		{\bf Formalmente:} $(\forall t:categoria)(esta?(c,e) \land (t\not=e.raiz)) \impluego padre(t) \not= Null$
   		
   \item El padre de la raíz es Null  \\
+  {\bf Formalmente:} $*padre(raiz) = Null$
   
-  %\item Ningún padre tiene más de dos hijos diferentes. NO, NO ES BINARIO
+  %\item Dada una categoría que pertenece a una lista de hijas, su categoría padre apunta al padre (necesario?)
     
 \end{enumerate}
 

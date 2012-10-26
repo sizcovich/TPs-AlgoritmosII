@@ -211,19 +211,19 @@
 	  [O(1)]
 	  [Genera un diccionario vac\'io.]
 
-	\InterfazFuncion{Definir}{\Inout{d}{diccTrie}, \In{k}{string}, \In{s}{$\alpha$}}{}
+	\InterfazFuncion{Definir}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}, \In{s}{$\alpha$}}{}
 	  [$d \igobs d_0$]
 	  {$d \igobs definir(k, s, d_0)$}
 	  [O(|$k$|)]
 	  [Define la clave $k$ con el significado $s$ en el diccionario.]
 	  [La clave se guarda por copia y el significado por referencia.]
 
-	\InterfazFuncion{Definido?}{\Inout{d}{diccTrie}, \In{k}{string}}{Bool}
+	\InterfazFuncion{Definido?}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}}{Bool}
 	  {$res \igobs def?(k, d)$}
 	  [O(|$k$|)]
 	  [Devuelve \TipoVariable{True} si y s\'olo si $k$ est\'a definido en el diccionario.]
 
-	\InterfazFuncion{Obtener}{\Inout{d}{diccTrie}, \In{k}{string}}{$\alpha$}
+	\InterfazFuncion{Obtener}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}}{$\alpha$}
 	  [$def?(k, d)$]
 	  {$alias(res \igobs obtener(k, d))$}
 	  [O(|$k$|)]
@@ -271,25 +271,56 @@
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iDefinir(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{categoria}}
+\caption*{iDefinir(\Inout{d}{diccTrie($\alpha$)}, \In {k}{string}, \In{s}{$\alpha$)}}
 \begin{algorithmic}[1]
-	\State $COMPLETAR$ \Comment{O(1)}	
+	\var{nodo}{nodo}
+	\State $nodo \gets *d.trie$\Comment{O(1)}
+	\For {$i = 0 \to (\Call{longitud}{k} - 1)$}\Comment{$O(256)* O(1) = O(256) = O(1)$}
+    	\If{$nodo.hijo[\Call{ord}{k[i]}] \neq NULL$}
+			\State $nodo \gets *nodo.hijo[\Call{ord}{k[i]}]$
+		\Else
+			\var{nodoVacio}{nodo}	
+			\State $nodoVacio.elem \gets NULL$ \Comment{O(1)}
+			\State $nodoVacio.hijo \gets$ \Call{vacia}{} \Comment{O(1)}
+			\State $j \gets 0$\Comment{O(1)}
+			\While{$j < 256$}\Comment{$O(256)* O(1) = O(256) = O(1)$}
+    			\State \Call{AgregarAtras}{$nodoVacio.hijo, NULL$}\Comment{O(1)}
+			\EndWhile
+			\State $nodo.hijo[\Call{ord}{k[i]}] \gets \&nodoVacio$\Comment{O(1)}
+			\State $nodo \gets nodoVacio$ \Comment{O(1)}
+		\EndIf
+	\EndFor
+	\State $nodo.elem \gets \&s$ \Comment{O(1)}	
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $estan mal las complejidades porque alguien tiene que hacer que esto se vea lindo xD$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iDefinido?(\Inout{d}{diccTrie($\alpha$)}, \In{k}{string} $\DRef res$ : \TipoVariable{Bool}}
+\begin{algorithmic}[1]
+	\var{nodo}{nodo}
+	\State $nodo \gets *d.trie$\Comment{O(1)}
+	\For {$i = 0 \to (\Call{longitud}{k} - 1)$}\Comment{$O(256)* O(1) = O(256) = O(1)$}
+    	\If{$nodo.hijo[\Call{ord}{k[i]}] = NULL$}
+			\State $res \gets False$
+		\Else
+			\State $nodo \gets *nodo.hijo[\Call{ord}{k[i]}]$\Comment{O(1)}
+		\EndIf
+	\EndFor
+	\State $res \gets True$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: 
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iDefinido?(\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria})}
+\caption*{iObtener(\Inout{d}{diccTrie($\alpha$)}, \In{k}{string} $\DRef res$ : \TipoVariable{$\alpha$}}
 \begin{algorithmic}[1]
-	\State $COMPLETAR$ \Comment{O(1)}	
-\end{algorithmic}
-\textbf{C\'alculo de complejidad}: 
-\end{algorithm}
-
-\begin{algorithm}[H]
-\caption*{iObtener(\In{ac}{abCat}, \In{padre}{categoria}) $\DRef res$ : \TipoVariable{iteradorUni(categoria)}}
-\begin{algorithmic}[1]
-	\State $COMPLETAR$ \Comment{O(1)} 
+	\var{nodo}{nodo}
+	\State $nodo \gets *d.trie$\Comment{O(1)}
+	\For {$i = 0 \to (\Call{longitud}{k} - 1)$}\Comment{$O(256)* O(1) = O(256) = O(1)$}
+    	\State $nodo \gets *nodo.hijo[\Call{ord}{k[i]}]$\Comment{O(1)}
+	\EndFor
+	\State $res \gets \&nodo.elem$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}:   
 \end{algorithm}

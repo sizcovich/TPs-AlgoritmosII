@@ -96,13 +96,14 @@
   \vspace*{1ex}\par\noindent\textbf{\large #1}\par
 }
 
-\newenvironmentx{Estructura}[2][2={estr}]{%
-  \par\vspace*{2ex}%
-  \TipoVariable{#1} \textbf{se representa con} \TipoVariable{#2}%
-  \par\vspace*{1ex}%
-}{%
-  \par\vspace*{2ex}%
-}%
+\newenvironmentx{Estructura}[2][2={estr}]{
+  \par\vspace*{2ex}
+  \hypertarget{#1}{}
+  \TipoVariable{#1} \textbf{se representa con} \TipoVariable{#2}
+  \par\vspace*{1ex}
+}{
+  \par\vspace*{2ex}
+}
 
 \newboolean{EstructuraHayItems}
 \newlength{\lenTupla}
@@ -681,15 +682,56 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 
     \InterfazFuncion{linksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
 	  [$\emph{est\'a}?(c, categorias(s))$]
-	  {$res \igobs crearIteradorLinksOrdenadosPorAccesos(s, c)$}
+	  {$res \igobs crearIt(secuInfoLinks(s, c))$}
 	  [$\Theta(|c| + n^2)$]
 	  [Devuelve la cantidad de links que tiene una categor\'ia.]
 
     \InterfazFuncion{puntajeDelLink}{\In{il}{infoLink}, \In{f}{fecha}}{Nat}
 	  [$il.ultAcceso \leq f$]
 	  {$res \igobs ???$}
-	  [$\Theta(1)$]be
-	  [Devuelve el puntaje del link. Esta funci\'on es privada, ya que reci] una estructura interna.
+	  [$\Theta(1)$]
+	  [Devuelve el puntaje del link. Esta funci\'on es privada, ya que recibe una estructura interna.]
+
+\modTitulo{Funciones auxiliares}
+
+	\tadOperacion{secuInfoLinks}{lli\ s, categoria\ c}{secu(tupla(link, categoria, Nat))}{est\'a?(c, categorias(s))}
+	\tadAxioma{secuInfoLinks(s, c)}{infoLinks(s, c, linksOrdenadosPorAccesos(s, c))}
+	
+	\tadOperacion{infoLinks}{lli\ s, categoria\ c, secu(link)\ ls}{secu(tupla(link, categoria, Nat))}{est\'a?(c, categorias(s)) $\land$ ($\forall$ l:link)(est\'a?(l, ls) $\Rightarrow$ l $\in$ links(s) $\land$ esSubCategoria(categorias(s), c, categoriaLink(s, l)))}
+	\tadAxioma{infoLinks(s, c, ls)}{\IF Vacia(ls) THEN <> ELSE
+					tupla(prim(ls), categoriaLink(s, prim(ls)), accesosRecientes(s, c, prim(ls))) $\bullet$ infoLinks(s, c, fin(ls))
+				FI}
+
+\modTitulo{Operaciones del iterador}
+
+	\InterfazFuncion{CrearItLinks}{\In{ls}{lista(infoLink), \In{f}{fecha}}}{itLinks}
+	  [$(\forall\ l:infoLink)(\emph{est\'a}?(l, ls) \Rightarrow l.ultAcceso \leq f)$]
+	  {$res \igobs \Pi_1(Siguiente(it))$}
+	  [$O(1)$]
+
+	\InterfazFuncion{SiguienteLink}{\In{it}{itLinks}}{link}
+	  [$HaySiguiente?(it)$]
+	  {$res \igobs \Pi_1(Siguiente(it))$}
+	  [$O(1)$]
+
+	\InterfazFuncion{SiguienteCategoria}{\In{it}{itLinks}}{categoria}
+	  [$HaySiguiente?(it)$]
+	  {$res \igobs \Pi_2(Siguiente(it))$}
+	  [$O(1)$]
+
+	\InterfazFuncion{SiguienteAccesosRecientes}{\In{it}{itLinks}}{Nat}
+	  [$HaySiguiente?(it)$]
+	  {$res \igobs \Pi_3(Siguiente(it))$}
+	  [$O(1)$]
+
+	\InterfazFuncion{HaySiguiente}{\In{it}{itLinks}}{Bool}
+	  {$res \igobs HaySiguiente?(it)$}
+	  [$O(1)$]
+
+	\InterfazFuncion{Avanzar}{\Inout{it}{itLinks}}{}
+	  [$it = it_0 \land HaySiguiente?(it)$]
+	  {$it \igobs Avanzar(it_0)$}
+	  [$O(1)$]
 
 \end{Interfaz}
 
@@ -710,15 +752,24 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 		\end{Tupla}
 	\end{Estructura}
 
-\end{Representacion}
-
 \tadAlinearAxiomas{Rep(e)}
 \Rep[LinkLinkIt][e]{}\mbox{}
+
+\modTitulo{Iterador}
+
+	\begin{Estructura}{itLinks}
+		\begin{Tupla}
+			\tupItem{it}{itLista(link)}
+			\tupItem{fecha}{fecha}
+		\end{Tupla}
+	\end{Estructura}
+
+\end{Representacion}
 
 \begin{Algoritmos}
 
 \begin{algorithm}[H]
-\caption*{iCrearLinkLinkIt(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{LinkLinkIt}}
+\caption*{iCrearLinkLinkIt(\In{ac}{abCat}) $\DRef res$ : \TipoVariable{\hyperlink{LinkLinkIt}{LinkLinkIt}}}
 \begin{algorithmic}[1]
 	\State $res.aCategorias \gets ac$\Comment{$\Theta$(1)}
 	\State $res.linksPorCat \gets \Call{Vacia}{\null}$\Comment{$\Theta$(1)}
@@ -793,7 +844,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iLinksOrdenadosPorAccesos(\Inout{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{itLinks}}
+\caption*{iLinksOrdenadosPorAccesos(\Inout{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{\hyperlink{itLinks}{itLinks}}}
 \begin{algorithmic}[1]
     \State $categoriaID \gets \Call{ID}{s.aCategorias, c}$\Comment{$O(|c|)$}
     \State $lista \gets s.linksPorCat[categoriaID - 1]$\Comment{$O(1)$}
@@ -820,7 +871,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 		\State \Return $res \gets \Call{crearItLinks}{lista}$\Comment{O(1)}
 	\EndIf
 	\Statex
-	\Statex // Voy agregando el de m\'as accesos que encuentre
+	\Statex // Ordeno agregando $n$ veces el de m\'as accesos que encuentre
 	\State $listaOrdenada \gets \Call{Vacia}{\null}$
 	\State $itOrd \gets \Call{crearIt}{listaOrdenada}$
 	\While{$\neg\Call{Vacia}{lista}$}\Comment{$n * (O(n) + 3O(1)) = O(n^2)$}
@@ -856,6 +907,59 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \end{algorithm}
 
 \end{Algoritmos}
+
+\begin{Algoritmos Del Iterador}
+
+\begin{algorithm}[H]
+\caption*{iCrearItLinks(\In{ls}{lista(link)}, fecha) $\DRef res$ : \TipoVariable{\hyperlink{itLinks}{itLinks}}}
+\begin{algorithmic}[1]
+	\State $res.it \gets \Call{crearIt}{ls}$\Comment{O(1)}
+	\State $res.fecha \gets fecha$\Comment{O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(1)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iSiguienteLink(\In{itl}{itLinks}) $\DRef res$ : \TipoVariable{link}}
+\begin{algorithmic}[1]
+	\State $res \gets \Call{Siguiente}{itl.it}.link$\Comment{O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(1)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iSiguienteCategoria(\In{itl}{itLinks}) $\DRef res$ : \TipoVariable{categoria}}
+\begin{algorithmic}[1]
+	\State $res \gets \Call{Siguiente}{itl.it}.categoria$\Comment{O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(1)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iSiguienteAccesosRecientes(\In{itl}{itLinks}) $\DRef res$ : \TipoVariable{Nat}}
+\begin{algorithmic}[1]
+	\State $res \gets \Call{puntajeDelLink}{\Call{Siguiente}{itl.it}, itl.fecha}$\Comment{2O(1) = O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(1)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iHaySiguiente?(\In{itl}{itLinks}) $\DRef res$ : \TipoVariable{Bool}}
+\begin{algorithmic}[1]
+	\State $res \gets \Call{HaySiguiente?}{itl.it} \yluego \Call{puntajeDelLink}{\Call{Siguiente}{itl.it}, itl.fecha} > 0$\Comment{3O(1) = O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(1)$
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption*{iAvanzar(\Inout{itl}{itLinks})}
+\begin{algorithmic}[1]
+	\State $\Call{Avanzar}{itl.it}$
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(1) = O(1)$
+\end{algorithm}
+
+\end{Algoritmos Del Iterador}
 
 
 \section{M\'odulo Iterador Unidireccional($\alpha$)}

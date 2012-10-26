@@ -797,45 +797,51 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \begin{algorithm}[H]
 \caption*{iLinksOrdenadosPorAccesos(\Inout{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{itLinks}}
 \begin{algorithmic}[1]
-    \State $categoriaID \gets \Call{ID}{s.aCategorias, c}$\Comment{$O(1)$}
-    \State $it \gets \Call{crearIt}{s.linksPorCat[categoriaID - 1]}$\Comment{$O(1)$}
+    \State $categoriaID \gets \Call{ID}{s.aCategorias, c}$\Comment{$O(|c|)$}
+    \State $lista \gets s.linksPorCat[categoriaID - 1]$\Comment{$O(1)$}
     \Statex
     \Statex // Encuentro la fecha m\'as alta de esta categor\'ia
+    \State $it \gets \Call{crearIt}{lista}$\Comment{$O(1)$}
     \State $f \gets 0$\Comment{$O(1)$}
     \While{$\Call{HaySiguiente}{it}$}\Comment{$nO(1) = O(n)$}
         \State $f \gets \Call{max}{\Call{Siguiente}{it}.ultAcceso, f}$\Comment{$O(1)$}
         \State $\Call{Avanzar}{it}$\Comment{$O(1)$}
     \EndWhile
     \Statex
-    \Statex // Filtro los que tienen que quedar (aquellos que tengan alg\'un acceso)
-    \State $itLinksEnCat \gets \Call{crearIt}{s.linksPorCat[categoriaID - 1]}$
-	\State $listaRes \gets \Call{Vacia}{\null}$
-	\State $itRes \gets \Call{crearIt}{listaRes}$
-	\While{$\Call{HaySiguiente}{itLinksEnCat}$}
-		\If{$\Call{puntajeDelLink}{\Call{Siguiente}{itLinksEnCat}, f} > 0$}
-			\State $\Call{AgregarComoAnterior}{itRes, \Call{Siguiente}{itLinksEnCat}}$
+	\Statex // Ya está ordenado?
+	\State $it \gets \Call{crearIt}{lista}$
+	\State $estaOrdenada \gets \TipoVariable{True}$
+	\State $ultPuntaje \gets -1$
+	\While{$\Call{HaySiguiente}{it} \land estaOrdenada$}\Comment{$(n + O(1)) * 2O(1) = O(n)$}
+		\If{$ultPuntaje > -1$}
+			\State $estaOrdenada \gets ultPuntaje \geq \Call{puntajeDelLink}{\Call{Siguiente}{it}, f}$\Comment{2O(1)}
 		\EndIf
+		\State $ultPuntaje \gets \Call{puntajeDelLink}{\Call{Siguiente}{it}, f}$\Comment{2O(1)}
 	\EndWhile
+	\If{$estaOrdenada$}
+		\State \Return $res \gets \Call{crearItLinks}{lista}$\Comment{O(1)}
+	\EndIf
 	\Statex
 	\Statex // Voy agregando el de m\'as accesos que encuentre
-	\State $listaResOrdenada \gets \Call{Vacia}{\null}$
-	\State $itResOrd \gets \Call{crearIt}{listaResOrdenada}$
-	\While{$\neg\Call{Vacia}{listaRes}$}
-		\State $itRes \gets \Call{crearIt}{listaRes}$
-		\State $itMaxAccesos \gets \Call{crearIt}{listaRes}$
-		\While{$\Call{HaySiguiente}{itRes}$}
+	\State $listaOrdenada \gets \Call{Vacia}{\null}$
+	\State $itOrd \gets \Call{crearIt}{listaOrdenada}$
+	\While{$\neg\Call{Vacia}{lista}$}\Comment{$n * (O(n) + 3O(1)) = O(n^2)$}
+		\State $itRes \gets itMaxAccesos \gets \Call{crearIt}{lista}$\Comment{2O(1) = O(1)}
+		\While{$\Call{HaySiguiente}{itRes}$}\Comment{$n * 5O(1) = O(n)$}
 			\If{$\Call{puntajeDelLink}{\Call{Siguiente}{itRes}, f} > \Call{puntajeDelLink}{\Call{Siguiente}{itMaxAccesos}, f}$}
 				\State $itMaxAccesos \gets itRes$
 			\EndIf
 		\EndWhile
 		\Statex
-		\State $\Call{AgregarComoAnterior}{itResOrd, \Call{Siguiente}{itMaxAccesos}}$
-		\State $\Call{EliminarSiguiente}{itMaxAccesos}$
+		\State $\Call{AgregarComoAnterior}{itOrd, \Call{Siguiente}{itMaxAccesos}}$\Comment{O(1)}
+		\State $\Call{EliminarSiguiente}{itMaxAccesos}$\Comment{O(1)}
+		\Statex
 	\EndWhile
 	\Statex
-	\State $res \gets \Call{crearItLinks}{listaResOrdenada}$
+	\State $s.linksPorCat[categoriaID-1] \gets listaOrdenada$\Comment{O(1)}
+	\State $res \gets \Call{crearItLinks}{listaOrdenada}$\Comment{O(1)}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $O(|c| + n^2)$
+\textbf{C\'alculo de complejidad}: $O(|c|) + 2O(n) + O(n^2) + 11O(1)= O(|c| + n^2)$
 \end{algorithm}
 
 \begin{algorithm}[H]

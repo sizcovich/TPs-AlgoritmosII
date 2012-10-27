@@ -62,6 +62,12 @@
   \par%
 }{}
 
+\newenvironment{Operacion Auxiliar}{%
+  \parskip=2ex%
+  \noindent\textbf{\Large Operaci\'on auxiliar}%
+  \par%
+}{}
+
 \newenvironment{Representacion}{%
   \vspace*{2ex}%
   \noindent\textbf{\Large Representaci\'on}%
@@ -256,7 +262,27 @@
 
 \end{Justificacion}
 
+\begin{Operacion Auxiliar}
+
+	\InterfazFuncion{crearNodo}{\In {c}{char}}{nodo}
+	  {$res.hijo \igobs NULL \wedge res.hermano \igobs NULL \wedge res.elem \igobs NULL \wedge res.letra \igobs c$}
+	  [O(1)]
+	  [Genera un nodo con todos los punteros a NULL y con el char que se pasa como parametro almacenado en el campo letra]
+
+\end{Operacion Auxiliar}
+
 \begin{Algoritmos}
+
+\begin{algorithm}[H]
+\caption*{iCrearNodo(\In{c}{char}) $\DRef res$ : \TipoVariable{nodo}}
+\begin{algorithmic}[1]
+	\State $res.elem \gets NULL$ \Comment{O(1)}
+	\State $res.hijo \gets NULL$ \Comment{O(1)}
+	\State $res.hermano \gets NULL$ \Comment{O(1)}
+	\State $res.letra \gets c$ \Comment{O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $4O(1) = O(1)$
+\end{algorithm}
 
 \begin{algorithm}[H]
 \caption*{iVacio() $\DRef res$ : \TipoVariable{diccTrie($\alpha$)}}
@@ -276,10 +302,7 @@
 	\If {d.trie = NULL}
 		\State $cargoTodo? \gets True$\Comment{O(1)}
 		\var{nodoVacio}{nodo}				
-		\State $nodoVacio.elem \gets NULL$ \Comment{O(1)}
-		\State $nodoVacio.hijo \gets NULL$ \Comment{O(1)}
-		\State $nodoVacio.hermano \gets NULL$ \Comment{O(1)}
-		\State $nodoVacio.letra \gets k[i]$ \Comment{O(1)}
+		\State $nodoVacio \gets \Call{crearNodo}{k[i]}$ \Comment{O(1)}
 		\State $nodo \gets nodoVacio$ \Comment{O(1)}
 		\State $i++$\Comment{O(1)}	
 	\Else
@@ -292,10 +315,7 @@
 	\While{$i < \Call{longitud}{k}$}\Comment{$256 * O(|k|) * O(1) = O(|k|)$}
 		\If{cargoTodo?}
 			\var{nodoVacio}{nodo}				
-			\State $nodoVacio.elem \gets NULL$ \Comment{O(1)}
-			\State $nodoVacio.hijo \gets NULL$ \Comment{O(1)}
-			\State $nodoVacio.hermano \gets NULL$ \Comment{O(1)}
-			\State $nodoVacio.letra \gets k[i]$ \Comment{O(1)}
+			\State $nodoVacio \gets \Call{crearNodo}{k[i]})$\Comment{O(1)}
 			\State $nodo.hijo \gets \&nodoVacio$ \Comment{O(1)}
 			\State $nodo \gets nodoVacio$ \Comment{O(1)}
 			\State $i++$\Comment{O(1)}	
@@ -311,13 +331,10 @@
     			\EndIf\Comment{O(1)}
 			\Else
 				\If{$nodo.hermano \neq NULL$} 
-					\State $nodo \gets nodo.hermano$\Comment{O(1)}
+					\State $nodo \gets *nodo.hermano$\Comment{O(1)}
 				\Else
 					\var{nodoVacio}{nodo}				
-					\State $nodoVacio.elem \gets NULL$ \Comment{O(1)}
-					\State $nodoVacio.hijo \gets NULL$ \Comment{O(1)}
-					\State $nodoVacio.hermano \gets NULL$ \Comment{O(1)}
-					\State $nodoVacio.letra \gets k[i]$ \Comment{O(1)}
+					\State $nodoVacio \gets \Call{crearNodo}{k[i]}$\Comment{O(1)}
 					\State $nodo.hermano \gets \&nodoVacio$ \Comment{O(1)}
 					\State $nodo \gets nodoVacio$ \Comment{O(1)}		
 					\State $i++$\Comment{O(1)}
@@ -330,24 +347,47 @@
 	\State $nodo.elem \gets \&s$ \Comment{O(1)}	
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $3O(1) + O(|k|) = O(|k)$
-\\ \tab El bucle en el peor caso (cargoTodo es False y el caracter a buscar es el que tiene ord = 255 y en ese nivel estan todos los caracteres del 0 al 254) tiene que hacer 256 ciclos pero como esto es un valor finito no arruina nuestra complejidad
+\\ \tab El bucle en el peor caso (cargoTodo es False y el caracter a buscar es el que tiene ord = 255 y en ese nivel estan todos los caracteres del 0 al 254) tiene que hacer 256 ciclos pero como esto es un valor finito no arruina nuestra complejidad.
 \end{algorithm}
 
 \begin{algorithm}[H]
 \caption*{iDefinido?(\Inout{d}{diccTrie($\alpha$)}, \In{k}{string} $\DRef res$ : \TipoVariable{Bool}}
 \begin{algorithmic}[1]
 	\var{nodo}{nodo}
-	\State $nodo \gets *d.trie$\Comment{O(1)}
-	\For {$i = 0 \to (\Call{longitud}{k} - 1)$}\Comment{$O(256)* O(1) = O(256) = O(1)$}
-    	\If{$nodo.hijo[\Call{ord}{k[i]}] = NULL$}
-			\State $res \gets False$
+	\State $i \gets 0$\Comment{O(1)}
+	\Statex
+	\If {d.trie = NULL}
+		\State $res \gets False$\Comment{O(1)}
+		\State $i \gets \Call{longitud}{k}$\Comment{O(1)}
+	\Else
+		\State $nodo \gets *d.trie$\Comment{O(1)}
+	\EndIf	\Comment{O(1)}
+	\Statex	
+	\While{$i < \Call{longitud}{k}$}\Comment{$256 * O(|k|) * O(1) = O(|k|)$}					
+		\If {$nodo.letra = k[i]$}    	
+    		\If {$i + 1 = \Call{longitud}{k}$}
+				\State $res \gets True$\Comment{O(1)}
+				\State $i++$\Comment{O(1)}
+			\Else    			
+				\If{$nodo.hijo = NULL$}    			
+   		 			\State $res \gets False$\Comment{O(1)}
+   		 			\State $i \gets \Call{longitud}{k}$\Comment{O(1)}
+   		 		\Else
+   		 			\State $nodo \gets *nodo.hijo$\Comment{O(1)}
+    				\State $i++$\Comment{O(1)}
+    			\EndIf\Comment{O(1)}
+    		\EndIf\Comment{O(1)}
 		\Else
-			\State $nodo \gets *nodo.hijo[\Call{ord}{k[i]}]$\Comment{O(1)}
-		\EndIf
-	\EndFor
-	\State $res \gets True$\Comment{O(1)}
+			\If{$nodo.hermano \neq NULL$} 
+				\State $nodo \gets *nodo.hermano$\Comment{O(1)}
+			\Else
+				\State $res \gets False$\Comment{O(1)}
+				\State $i \gets \Call{longitud}{k}$\Comment{O(1)}
+			\EndIf\Comment{O(1)}
+		\EndIf	\Comment{O(1)}	
+ 	\EndWhile
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: 
+\textbf{C\'alculo de complejidad}: $2O(1) + O(|k|) = O(|k|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -355,12 +395,22 @@
 \begin{algorithmic}[1]
 	\var{nodo}{nodo}
 	\State $nodo \gets *d.trie$\Comment{O(1)}
-	\For {$i = 0 \to (\Call{longitud}{k} - 1)$}\Comment{$O(256)* O(1) = O(256) = O(1)$}
-    	\State $nodo \gets *nodo.hijo[\Call{ord}{k[i]}]$\Comment{O(1)}
-	\EndFor
-	\State $res \gets \&nodo.elem$\Comment{O(1)}
+	\State $i \gets 0$\Comment{O(1)}
+	\Statex
+	\While{$i < \Call{longitud}{k}$}\Comment{$256 * O(|k|) * O(1) = O(|k|)$}					
+		\If {$nodo.letra = k[i]$}    	
+    		\If {$i + 1 = \Call{longitud}{k}$}
+				\State $res \gets *nodo.elem$\Comment{O(1)}
+			\Else    			
+				\State $nodo \gets *nodo.hijo$\Comment{O(1)}	
+    		\EndIf\Comment{O(1)}
+    		\State $i++$\Comment{O(1)}
+		\Else
+			\State $nodo \gets *nodo.hermano$\Comment{O(1)}
+		\EndIf	\Comment{O(1)}	
+ 	\EndWhile
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}:   
+\textbf{C\'alculo de complejidad}: $2O(1) + O(|k|) = O(|k|)$   
 \end{algorithm}
  
 \end{Algoritmos}

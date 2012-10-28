@@ -483,7 +483,7 @@
 
 {\bf Donde:}
 
-ACLARACI\'ON: Llamaremos a la operaci\'on $"$esta?$"$ (definida en el TAD secuencia) $"$estaLista?$"$ para no generar confusiones.\\ 
+ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuencia) ``estaLista?'' para no generar confusiones.\\ 
 \begin{enumerate}
   \item El id de la ra\'iz del \'arbol es 1 (requerido por el enunciado del TP).\\
         {\bf Formalmente:} $id(e.raiz) = 1$
@@ -523,12 +523,13 @@ ACLARACI\'ON: Llamaremos a la operaci\'on $"$esta?$"$ (definida en el TAD secuen
 
   \AbsFc[estr]{abcat}{e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,e.claves(categorias)) $\impluego$ id(e,c) = id(c,a) $\land$ ($\forall$ c:categoria)esta?(c,e) $\impluego$  }
 
-\begin{Justificacion}
-\\Para representar el árbol de categorías elegimos esta estructura por los siguientes motivos:
-\\En primer lugar, el Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloco en cada nodo una lista con los nombres de cada hijo. 
-\\En segundo lugar, esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|c|) donde c es el nombre de la categor\'ia.
-\\El iterador que recorre el arbol hacia arriba será necesario en el LinkLinkIt
-\end{Justificacion}
+\modTitulo{Justificaci\'on}
+Para representar el \'arbol de categor\'ias elegimos esta estructura por los siguientes motivos:
+\begin{itemize}
+	\item En primer lugar, el Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloco en cada nodo una lista con los nombres de cada hijo. 
+	\item En segundo lugar, esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|$c$|) donde $c$ es el nombre de la categor\'ia.
+\end{itemize}
+\par El iterador que recorre el \'arbol hacia arriba ser\'a necesario en el LinkLinkIt
 
 \subsection{Iterador}
 
@@ -547,9 +548,8 @@ ACLARACI\'ON: Llamaremos a la operaci\'on $"$esta?$"$ (definida en el TAD secuen
 \tadAlinearAxiomas{Rep(e)}
 \Rep[itabcat][e]{}\mbox{}
 
-\begin{Justificacion}
+\modTitulo{Justificaci\'on}
 
-\end{Justificacion}
 
 \subsection{Algoritmos}
 
@@ -1095,10 +1095,8 @@ ACLARACI\'ON: Llamaremos a la operaci\'on $"$esta?$"$ (definida en el TAD secuen
 \tadAlinearAxiomas{Rep(e)}
 \Rep[it][e]{true}\mbox{}
 
-\begin{Justificacion}
-\\Para representar el iterador unidireccional de la lista, decidimos usar el iterador bidireccional que nos provee la lista enlazada y obtener, del iterador, las operaciones que necesitamos.
-
-\end{Justificacion}
+\modTitulo{Justificaci\'on}
+Para representar el iterador unidireccional de la lista, decidimos usar el iterador bidireccional que nos provee la lista enlazada y obtener, del iterador, las operaciones que necesitamos.
 
 \subsection{Algoritmos}
 

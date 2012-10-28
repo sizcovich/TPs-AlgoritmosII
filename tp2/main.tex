@@ -479,29 +479,30 @@ La función $\bullet$[$\bullet$] debe tener complejidad O(1).
 
 {\bf Donde:}
 
+ACLARACI\'ON: Llamaremos a la operaci\'on $"$esta?$"$ (definida en el TAD secuencia) $"$estaLista?$"$ para no generar confusiones.\\ 
 \begin{enumerate}
   \item El id de la ra\'iz del \'arbol es 1 (requerido por el enunciado del TP).\\
         {\bf Formalmente:} $id(e.raiz) = 1$
         
 
   \item No existe ninguna categor\'ia incluida en sus categor\'ias hijas.\\
-        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \impluego \neg(estaLista(c,hijas(c)))$
+        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \impluego \neg(estaLista?(c,hijas(c)))$
 
   \item Todas las categor\'ias tienen padre, excluyendo la ra\'iz.\\
-        {\bf Formalmente:} $(\forall c:categoria)(esta?(c,e) \land (c \not= e.raiz)) \impluego ((\exists t:categoria)(esta?(t,e) \land t\not=c) \yluego estaLista(c,hijas(t)))$
+        {\bf Formalmente:} $(\forall c:categoria)(esta?(c,e) \land (c \not= e.raiz)) \impluego ((\exists t:categoria)(esta?(t,e) \land t\not=c) \yluego estaLista?(c,hijas(t)))$
 
   \item Existe una categor\'ia que no tiene padre y que es igual a ra\'iz.\\
-        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \impluego \neg(estaLista(c,hijas(c)))$
+        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \impluego \neg(estaLista?(c,hijas(c)))$
   	     
   \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 2,3 y
   4) garantiza que el \'arbol no sea c\'iclico) (esto supuestamente queda expl\'icito pues el padre es un puntero).\\
-        {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,e)) \yluego (esta?(t,e))$ $\yluego (t \not= c)) \yluego ((\forall k:categoria)esta?(k,e) \impluego (estaLista(k,hijas(c)) \yluego estaLista(k,hijas(t)))$
+        {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,e)) \yluego (esta?(t,e))$ $\yluego (t \not= c)) \yluego ((\forall k:categoria)esta?(k,e) \impluego (estaLista?(k,hijas(c)) \yluego estaLista?(k,hijas(t)))$
   
   \item La cantidad de categor\'ias totales es igual a UltId.\\
         {\bf Formalmente:} $\#conjuntoCats(e) = e.ultId$
   
   \item Las categor\'ias hijas de cada categor\'ia tienen un id mayor a \'esta.\\
-        {\bf Formalmente:} $((\forall c:categoria)esta?(c,e)) \impluego ((\forall t:categoria)(esta?(c,e) \yluego estaLista(t,hijas(c))) \impluego id(c) < id(t))$
+        {\bf Formalmente:} $((\forall c:categoria)esta?(c,e)) \impluego ((\forall t:categoria)(esta?(c,e) \yluego estaLista?(t,hijas(c))) \impluego id(c) < id(t))$
   
   \item No existen dos IDs iguales para categor\'ias distintas.\\
         {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,e) \land esta?(t,e) \land t \not= c) \impluego id(c) \not =id(t)$
@@ -516,11 +517,6 @@ La función $\bullet$[$\bullet$] debe tener complejidad O(1).
     
 \end{enumerate}
 
-
-  \tadOperacion{estaLista}{lst}{bool}{} (no se como poner que me agregue un parametro mas de entrada)
-  \tadAxioma{}{}
-
-  ~
 
   \tadOperacion{ConjuntoCats}{Lista(categoria)}{conj(categoria)}{}
   \tadAxioma{}{}

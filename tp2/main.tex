@@ -490,44 +490,38 @@ ACLARACI\'ON: Llamaremos a la operaci\'on $"$esta?$"$ (definida en el TAD secuen
         
 
   \item No existe ninguna categor\'ia incluida en sus categor\'ias hijas.\\
-        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \impluego \neg(estaLista?(c,hijas(c)))$
+        {\bf Formalmente:} $(\forall c:categoria)esta?(c,claves(e.categorias)) \impluego \neg(estaLista?(c,hijas(c)))$
 
   \item Todas las categor\'ias tienen padre, excluyendo la ra\'iz.\\
-        {\bf Formalmente:} $(\forall c:categoria)(esta?(c,e) \land (c \not= e.raiz)) \impluego ((\exists t:categoria)(esta?(t,e) \land t\not=c) \yluego estaLista?(c,hijas(t)))$
+        {\bf Formalmente:} $(\forall c:categoria)(esta?(c,claves(e.categorias)) \land (c\not=e.raiz)) \impluego ((\exists t:categoria)(esta?(t,claves(e.categorias)) \land t\not=c) \yluego estaLista?(c,hijas(t)))$
 
   \item Existe una categor\'ia que no tiene padre y que es igual a ra\'iz.\\
-        {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \impluego \neg(estaLista?(c,hijas(c)))$
+        {\bf Formalmente:} $(\forall c:categoria)esta?(c,claves(e.categorias)) \impluego \neg(estaLista?(c,hijas(c)))$
   	     
   \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 2,3 y
   4) garantiza que el \'arbol no sea c\'iclico) (esto supuestamente queda expl\'icito pues el padre es un puntero).\\
-        {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,e)) \yluego (esta?(t,e))$ $\yluego (t \not= c)) \yluego ((\forall k:categoria)esta?(k,e) \impluego (estaLista?(k,hijas(c)) \yluego estaLista?(k,hijas(t)))$
+        {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,claves(e.categorias))) \yluego (esta?(t,claves(e.categorias)))$ $\yluego (t\not=c)) \yluego ((\forall k:categoria)esta?(k,claves(e.categorias)) \impluego (estaLista?(k,hijas(c)) \yluego estaLista?(k,hijas(t)))$
   
   \item La cantidad de categor\'ias totales es igual a UltId.\\
-        {\bf Formalmente:} $\#conjuntoCats(e) = e.ultId$
+        {\bf Formalmente:} $\#claves(e.categorias) = e.ultId$
   
   \item Las categor\'ias hijas de cada categor\'ia tienen un id mayor a \'esta.\\
-        {\bf Formalmente:} $((\forall c:categoria)esta?(c,e)) \impluego ((\forall t:categoria)(esta?(c,e) \yluego estaLista?(t,hijas(c))) \impluego id(c) < id(t))$
+        {\bf Formalmente:} $((\forall c:categoria)esta?(c,claves(e.categorias))) \impluego ((\forall t:categoria)(esta?(c,claves(e.categorias)) \yluego estaLista?(t,hijas(c))) \impluego id(c)<id(t))$
   
   \item No existen dos IDs iguales para categor\'ias distintas.\\
-        {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,e) \land esta?(t,e) \land t \not= c) \impluego id(c) \not =id(t)$
+        {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,claves(e.categorias)) \land esta?(t,claves(e.categorias)) \land t\not=c) \impluego id(c)\not=id(t)$
         
   \item Ningún padre es Null salvo el de la raíz. \\
-  		{\bf Formalmente:} $(\forall t:categoria)(esta?(c,e) \land (t\not=e.raiz)) \impluego padre(t) \not= Null$
+  		{\bf Formalmente:} $(\forall t:categoria)(esta?(c,claves(e.categorias)) \land (t\not=e.raiz)) \impluego padre(t)\not=Null$
   		
   \item El padre de la raíz es Null.  \\
-  {\bf Formalmente:} $*padre(raiz) = Null$
+  {\bf Formalmente:} $*padre(e.raiz) = Null$
   
   %\item Dada una categoría que pertenece a una lista de hijas, su categoría padre apunta al padre (necesario?)
     
 \end{enumerate}
 
-
-  \tadOperacion{ConjuntoCats}{Lista(categoria)}{conj(categoria)}{}
-  \tadAxioma{}{}
-
-  ~
- 
-  \AbsFc[estr]{abcat}{e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,e) $\impluego$ id(e,c) = id(c,a) $\land$ ($\forall$ c:categoria)esta?(c,e) $\impluego$  }
+  \AbsFc[estr]{abcat}{e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,e.claves(categorias)) $\impluego$ id(e,c) = id(c,a) $\land$ ($\forall$ c:categoria)esta?(c,e) $\impluego$  }
 
 \begin{Justificacion}
 \\Para representar el árbol de categorías elegimos esta estructura por los siguientes motivos:

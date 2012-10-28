@@ -517,7 +517,7 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
     
 \end{enumerate}
 
-  \AbsFc[estr]{abcat}{e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = *padre(a,c) $\yluego$ ($\forall$ c:categoria)esta?(c,claves(e.categorias))  }
+  \AbsFc[estr]{abcat}{e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = padre(a,c) $\yluego$ ($\forall$ c:categoria)esta?(c,claves(e.categorias))  }
 
 \modTitulo{Justificaci\'on}
 Para representar el \'arbol de categor\'ias elegimos esta estructura por los siguientes motivos:
@@ -525,7 +525,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 	\item En primer lugar, el Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloco en cada nodo una lista con los nombres de cada hijo. 
 	\item En segundo lugar, esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|$c$|) donde $c$ es el nombre de la categor\'ia.
 \end{itemize}
-\par El iterador que recorre el \'arbol hacia arriba ser\'a necesario en el LinkLinkIt
+\par El iterador que recorre el \'arbol hacia arriba ser\'a necesario en el LinkLinkIt.
 
 \subsection{Iterador}
 

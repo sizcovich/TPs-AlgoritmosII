@@ -277,10 +277,10 @@
 			\If {$nodo.letra = k[i]$}    	
     			\If {$nodo.hijo = \TipoVariable{NULL}$}
 					\State $cargoTodo \gets \TipoVariable{True}$\Comment{O(1)}
-					\State $i \gets i + 1$\Comment{O(1)}	
+					\State $i++$\Comment{O(1)}
 				\Else    			
     				\State $nodo \gets *nodo.hijo$\Comment{O(1)}
-					\State $i \gets i + 1$\Comment{O(1)}	
+			\State $i \gets i + 1$\Comment{O(1)}	
     			\EndIf
 			\Else
 				\If{$nodo.hermano \neq \TipoVariable{NULL}$} 
@@ -366,21 +366,17 @@
  
 \subsection{Servicios Usados}
 
-\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos}
+\textbf{Los siguientes m\'odulos deben cumplir con los compromisos pedidos a continuaci\'on:}
 
-\begin{itemize}
-	\item \TipoVariable{Puntero($\alpha$)}
-	\begin{itemize}
-		\item La función * debe tener complejidad O(1).
-		\item La función \& debe tener complejidad O(1).
-	\end{itemize}
+\modTitulo{Puntero ($\alpha$)}
 
-	\item \TipoVariable{Vector($\alpha$)}
-	\begin{itemize}
-		\item La función Longitud debe tener complejidad O(1).
-		\item La función $\bullet[\bullet]$ debe tener complejidad O(1).
-	\end{itemize}
-\end{itemize}
+La función * debe tener complejidad O(1).\\
+La función \& debe tener complejidad O(1).
+
+\modTitulo{Vector ($\alpha$)}
+
+La función Longitud debe tener complejidad O(1).\\
+La función $\bullet$[$\bullet$] debe tener complejidad O(1).
 
 \section{M\'odulo ArbolCategorias}
 \subsection{Interfaz}
@@ -483,7 +479,7 @@
 
 {\bf Donde:}
 
-ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuencia) ``estaLista?'' para no generar confusiones.\\ 
+ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuencia) como ``estaLista?'' para no generar confusiones.\\ 
 \begin{enumerate}
   \item El id de la ra\'iz del \'arbol es 1 (requerido por el enunciado del TP).\\
         {\bf Formalmente:} $id(e.raiz) = 1$
@@ -521,7 +517,7 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
     
 \end{enumerate}
 
-  \AbsFc[estr]{abcat}{e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,e.claves(categorias)) $\impluego$ id(e,c) = id(c,a) $\land$ ($\forall$ c:categoria)esta?(c,e) $\impluego$  }
+  \AbsFc[estr]{abcat}{e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = *padre(a,c) $\yluego$ ($\forall$ c:categoria)esta?(c,claves(e.categorias))  }
 
 \modTitulo{Justificaci\'on}
 Para representar el \'arbol de categor\'ias elegimos esta estructura por los siguientes motivos:
@@ -635,7 +631,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \textbf{C\'alculo de complejidad}: $O(1)$
 \end{algorithm}
 
-\subsubsection{Algoritmos del Iterador}
+\subsubsection{Algoritmos Del Iterador}
 
 \begin{algorithm}[H]
 \caption*{iHayMasPadres?(\In{it}{itabCat}) $\DRef res$ : \TipoVariable{Bool}}
@@ -663,32 +659,26 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
 \subsection{Servicios Usados}
 
-\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos}
+\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos a continuaci\'on:}
 
-\begin{itemize}
-	\item \TipoVariable{Lista Enlazada ($\alpha$)}
-	\begin{itemize}
-		\item[Vacia] debe tener complejidad O(1).
-		\item[AgregarAtras] debe tener complejidad O($copy$($a$)), donde $a$ es el tipo del elemento que se va a colocar en la lista.
-	\end{itemize}
+\modTitulo{Lista Enlazada ($\alpha$)}
 
-	\item \TipoVariable{Iterador Unidireccional ($\alpha$)}
-	\begin{itemize}
-		\item[crearIterador] debe tener complejidad O(1).
-	\end{itemize}
+La función Vacia debe tener complejidad O(1).\\
+La función agregarAtras debe tener complejidad O($copy$($a$)), donde $a$ es el tipo del elemento que se va a colocar en la lista.
 
-	\item \TipoVariable{DiccTrie ($\alpha$)}
-	\begin{itemize}
-		\item[Vacio] debe tener complejidad O(1).
-		\item[Definir] debe tener complejidad O(|$k$|) donde $k$ es el string que se va a colocar por definici\'on.
-		\item[Obtener] debe tener complejidad O(|$k$|) donde $k$ es la clave.
-	\end{itemize}
+\modTitulo{Iterador Unidireccional ($\alpha$)}
 
-	\item \TipoVariable{Puntero ($\alpha$)}
-	\begin{itemize}
-		\item[\&] debe tener complejidad O(1).
-	\end{itemize}
-\end{itemize}
+la función crearIterador debe tener complejidad O(1) 
+
+\modTitulo{DiccTrie ($\alpha$)}
+
+La función Vacio debe tener complejidad O(1). \\
+La función Definir debe tener complejidad O(|$k$|) donde $k$ es el string que se va a colocar por definici\'on. \\
+La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
+
+\modTitulo{Puntero ($\alpha$)}
+
+La función \& debe tener complejidad O(1).
 
 \section{M\'odulo LinkLinkIt}
 
@@ -940,7 +930,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \textbf{C\'alculo de complejidad}: $3O(1) = O(1)$
 \end{algorithm}
 
-\subsubsection{Algoritmos del Iterador}
+\subsubsection{Algoritmos Del Iterador}
 
 \begin{algorithm}[H]
 \caption*{iCrearItLinks(\In{ls}{lista(link)}, fecha) $\DRef res$ : \TipoVariable{\hyperlink{itLinks}{itLinks}}}
@@ -993,61 +983,51 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
 \subsection{Servicios Usados}
 
-\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos}
+\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos a continuaci\'on:}
 
-\begin{itemize}
-	\item \TipoVariable{Puntero($\alpha$)}
-	\begin{itemize}
-		\item[\&] debe tener complejidad O(1).
-	\end{itemize}
+\modTitulo{Puntero ($\alpha$)}
 
-	\item \TipoVariable{abCat}
-	\begin{itemize}
-		\item[cantCategorias] debe tener complejidad O(1).
-		\item[ID] debe tener complejidad O(|c|) donde c es la categor\'ia de la que se desea saber el id.
-		\item[padres] debe tener complejidad O(|c|) donde c es la categor\'ia de la que se desea conocer sus padres.
-	\end{itemize}
+La función \& debe tener complejidad O(1).
 
-	\item \TipoVariable{itabCat}
-	\begin{itemize}
-		\item[hayMasPadres?] debe tener complejidad O(1).
-		\item[subir] debe tener complejidad O(1).
-		\item[actualID] debe tener complejidad O(1).
-	\end{itemize}
+\modTitulo{abCat}
 
-	\item \TipoVariable{diccTrie($\alpha$)}
-	\begin{itemize}
-		\item[Definir] debe tener complejidad O(|k|) donde k es la clave.
-	\end{itemize}
+La función cantCategorias debe tener complejidad O(1).\\
+La función ID debe tener complejidad O(|c|) donde c es la categor\'ia de la que se desea saber el id.\\
+La función padres debe tener complejidad O(|c|) donde c es la categor\'ia de la que se desea conocer sus padres.
 
-	\item \TipoVariable{Vector($\alpha$)}
-	\begin{itemize}
-		\item[Vacia] debe tener complejidad O(1).
-		\item[AgregarAtras] debe tener complejidad O(n) s\'i y s\'olo s\'i se agregan $n$ elementos de forma consecutiva.
-		\item[Longitud] debe tener complejidad O(1).
-		\item[$\bullet\begin{bmatrix}\bullet\end{bmatrix}$] debe tener complejidad O(1).
-	\end{itemize}
+\modTitulo{itabCat}
 
-	\item \TipoVariable{Lista Enlazada ($\alpha$)}
-	\begin{itemize}
-		\item[Vacia] debe tener complejidad O(1).
-		\item[AgregarAtras] debe tener complejidad O($copy$($\alpha$)), donde $\alpha$ es el tipo del elemento que va a ser colocado en la lista.
-	\end{itemize}
+La función hayMasPadres? debe tener complejidad O(1).\\
+La función subir debe tener complejidad O(1).\\
+La función actualID debe tener complejidad O(1).
 
-	\item \TipoVariable{itLista($\alpha$)}
-	\begin{itemize}
-		\item[crearIt] debe tener complejidad O(1).
-		\item[HaySiguiente?] debe tener complejidad O(1).
-		\item[Avanzar] debe tener complejidad O(1).
-		\item[Siguiente] debe tener complejidad O(1).
-	\end{itemize}
+\modTitulo{diccTrie($\alpha$)}
 
-	\item \TipoVariable{DiccTrie($\alpha$)}
-	\begin{itemize}
-		\item[Vacio] debe tener complejidad O(1).
-		\item[Obtener] debe tener complejidad O(|$k$|) donde $k$ es la clave.
-	\end{itemize}
-\end{itemize}
+La función definir debe tener complejidad O(|k|) donde k es la clave.\\
+
+\modTitulo{Vector ($\alpha$)}
+
+La función Vacia debe tener complejidad O(1).\\
+La función agregarAtras debe tener complejidad O(n) s\'i y s\'olo s\'i se agregan n elementos de forma consecutiva.\\
+La función Longitud debe tener complejidad O(1).\\
+La función $\bullet$[$\bullet$] debe tener complejidad O(1).
+
+\modTitulo{Lista Enlazada ($\alpha$)}
+
+La función Vacia debe tener complejidad O(1).\\
+La función agregarAtras debe tener complejidad O($copy$($a$)), donde $a$ es el tipo del elemento que va a ser colocado en la lista.
+
+\modTitulo{itLista($\alpha$)}
+
+La función crearIt debe tener complejidad O(1).\\
+La función haySiguiente? debe tener complejidad O(1).\\
+La función avanzar debe tener complejidad O(1).\\
+La función siguiente debe tener complejidad O(1).
+
+\modTitulo{DiccTrie ($\alpha$)}
+
+La función Vacio debe tener complejidad O(1). \\
+La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 
 \section{M\'odulo Iterador Unidireccional($\alpha$)}
 
@@ -1134,16 +1114,13 @@ Para representar el iterador unidireccional de la lista, decidimos usar el itera
 
 \subsection{Servicios Usados}
 
-\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos}
+\textbf{Los siguientes m\'odulos deben cumplir con los compromisos pedidos a continuaci\'on:}
 
-\begin{itemize}
-	\item \TipoVariable{itLista($\alpha$)}
-	\begin{itemize}
-		\item[crearIt] debe tener complejidad O(1).
-		\item[HaySiguiente?] debe tener complejidad O(1).
-		\item[Avanzar] debe tener complejidad O(1).
-		\item[Siguiente] debe tener complejidad O(1).
-	\end{itemize} 
-\end{itemize}
+\modTitulo{itLista($\alpha$)}
+
+La función crearIt debe tener complejidad O(1).\\
+La función haySiguiente? debe tener complejidad O(1).\\
+La función avanzar debe tener complejidad O(1).\\
+La función siguiente debe tener complejidad O(1).
 
 \end{document}

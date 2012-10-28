@@ -419,6 +419,16 @@
 
 \textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos a continuaci\'on:}
 
+\modTitulo{Puntero ($\alpha$)}
+
+La función * debe tener complejidad O(1)\\
+La función \& debe tener complejidad O(1)
+
+\modTitulo{Vector ($\alpha$)}
+
+La función Lonitud debe tener complejidad O(1)\\
+La función $\bullet$[$\bullet$] debe tener complejidad O(1)
+
 \end{Servicios Usados}
 
 \section{M\'odulo ArbolCategorias}
@@ -739,6 +749,11 @@ La función Vacio debe tener complejidad O(1). \\
 La función Definir debe tener complejidad O(|$k$|) donde $k$ es el string que se va a colocar como definicion. \\
 La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 
+\modTitulo{Puntero ($\alpha$)}
+
+La función \& debe tener complejidad O(1)
+
+
 \end{Servicios Usados}
 
 \section{M\'odulo LinkLinkIt}
@@ -1048,6 +1063,55 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 
 \end{Algoritmos Del Iterador}
 
+\begin{Servicios Usados}
+
+\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos a continuaci\'on:}
+
+\modTitulo{Puntero ($\alpha$)}
+
+La función \& debe tener complejidad O(1)
+
+\modTitulo{abCat}
+
+La función cantCategorias debe tener complejidad O(1)\\
+La función ID debe tener complejidad O(|c|) donde c es la categoria de la cual se desea saber su id\\
+La función padres debe tener complejidad O(|c|) donde c es la categoria de la cual se desea saber sus padres
+
+\modTitulo{itabCat}
+
+La función hayMasPadres? debe tener complejidad O(1)\\
+La función subir debe tener complejidad O(1)\\
+La función actualID debe tener complejidad O(1)
+
+\modTitulo{diccTrie($\alpha$)}
+
+La función definir debe tener complejidad O(|k|) donde k es la clave\\
+
+\modTitulo{Vector ($\alpha$)}
+
+La función Vacia debe tener complejidad O(1)\\
+La función agregarAtras debe tener complejidad O(n) si y solo si se agregan n elementos de forma consecutiva\\
+La función Lonitud debe tener complejidad O(1)\\
+La función $\bullet$[$\bullet$] debe tener complejidad O(1)
+
+\modTitulo{Lista Enlazada ($\alpha$)}
+
+La función Vacia debe tener complejidad O(1)\\
+La función agregarAtras debe tener complejidad O($copy$($a$)), donde $a$ es el tipo del elemento que se va a colocar en la lista.
+
+\modTitulo{itLista($\alpha$)}
+
+La función crearIt debe tener complejidad O(1)\\
+La función haySiguiente? debe tener complejidad O(1)\\
+La función avanzar debe tener complejidad O(1)\\
+La función siguiente debe tener complejidad O(1)
+
+\modTitulo{DiccTrie ($\alpha$)}
+
+La función Vacio debe tener complejidad O(1). \\
+La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
+
+\end{Servicios Usados}
 
 \section{M\'odulo Iterador Unidireccional($\alpha$)}
 

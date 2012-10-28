@@ -228,7 +228,7 @@
 	\InterfazFuncion{Definido?}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}}{Bool}
 	  {$res \igobs def?(k, d)$}
 	  [O(|$k$|)]
-	  [Devuelve \TipoVariable{True} si y s\'olo si $k$ est\'a definido en el diccionario.]
+	  [Devuelve \TipoVariable{True} s\'i y s\'olo s\'i $k$ est\'a definido en el diccionario.]
 
 	\InterfazFuncion{Obtener}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}}{$\alpha$}
 	  [$def?(k, d)$]
@@ -267,7 +267,7 @@
 	\InterfazFuncion{crearNodo}{\In {c}{char}}{nodo}
 	  {$res.hijo \igobs NULL \wedge res.hermano \igobs NULL \wedge res.elem \igobs NULL \wedge res.letra \igobs c$}
 	  [O(1)]
-	  [Genera un nodo con todos los punteros a NULL y con el char que se pasa como parametro almacenado en el campo letra]
+	  [Genera un nodo con todos los punteros a NULL y con el char que se pasa como par\'ametro almacenado en el campo letra.]
 
 \end{Operacion Auxiliar}
 
@@ -310,7 +310,7 @@
 		\State $nodo \gets *d.trie$\Comment{O(1)}
 	\EndIf	\Comment{O(1)}
 	\Statex	
-	\Statex // Agarre el primer nodo. si cargoTodo? es true, entonces en el bucle voy a ir creando todos los nodos hasta formar // k. Si cargoTodo? es false entonces voy a ir recorriendo todo el arbol hasta encontrar el lugar donde voy a tener // que colocar el resto de los caracteres de k que no esten en el arbol	
+	\Statex // Se toma el primer nodo. si cargoTodo? es true, entonces en el bucle se crear\'an todos los nodos hasta formar // k. Si cargoTodo? es false entonces se ir\'a recorriendo todo el \'arbol hasta encontrar el lugar donde habr\'a // que colocar el resto de los caracteres de k que no est\'en en el arbol.	
 	\Statex
 	\While{$i < \Call{longitud}{k}$}\Comment{$256 * O(|k|) * O(1) = O(|k|)$}
 		\If{cargoTodo?}
@@ -347,7 +347,7 @@
 	\State $nodo.elem \gets \&s$ \Comment{O(1)}	
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $3O(1) + O(|k|) = O(|k)$
-\\ \tab El bucle en el peor caso (cargoTodo es False y el caracter a buscar es el que tiene ord = 255 y en ese nivel estan todos los caracteres del 0 al 254) tiene que hacer 256 ciclos pero como esto es un valor finito no arruina nuestra complejidad.
+\\ \tab El bucle, en el peor caso (cargoTodo es False y el caracter a buscar es el que tiene ord = 255 y en ese nivel est\'an todos los caracteres del 0 al 254), tiene que hacer 256 ciclos pero como este es un valor finito, no arruina nuestra complejidad.
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -417,17 +417,17 @@
 
 \begin{Servicios Usados}
 
-\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos a continuaci\'on:}
+\textbf{Los siguientes m\'odulos deben cumplir con los compromisos pedidos a continuaci\'on:}
 
 \modTitulo{Puntero ($\alpha$)}
 
-La función * debe tener complejidad O(1)\\
-La función \& debe tener complejidad O(1)
+La función * debe tener complejidad O(1).\\
+La función \& debe tener complejidad O(1).
 
 \modTitulo{Vector ($\alpha$)}
 
-La función Lonitud debe tener complejidad O(1)\\
-La función $\bullet$[$\bullet$] debe tener complejidad O(1)
+La función Longitud debe tener complejidad O(1).\\
+La función $\bullet$[$\bullet$] debe tener complejidad O(1).
 
 \end{Servicios Usados}
 
@@ -450,7 +450,7 @@ La función $\bullet$[$\bullet$] debe tener complejidad O(1)
 	\InterfazFuncion{raiz}{\In{ac}{abCat}}{categoria}
 	  {$res \igobs raiz(ac)$}
 	  [$\Theta(1)$]
-	  [Devuelve el nombre de la categor\'ia raiz por referencia, con lo cual, si \'este valor es modificado, se romper\'a el Rep, invalidando todo el \'arbol.]
+	  [Devuelve el nombre de la categor\'ia raiz por referencia, con lo cual, si \'este valor es modificado, se romper\'a el invariante de representaci\'on invalidando todo el \'arbol.]
 
 	\InterfazFuncion{agregar}{\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria}}{}
 	  [$ac \igobs ac_0 \land \emph{est\'a}?(padre, ac) \land \neg\emph{vac\'ia}?(hija) \land \neg\emph{est\'a}?(hija, ac)$]
@@ -462,14 +462,14 @@ La función $\bullet$[$\bullet$] debe tener complejidad O(1)
 	  [$\emph{est\'a}?(padre, ac)$]
 	  {$res \igobs crearItUni(conjuntoASecuencia(hijos(ac, padre)))$}
 	  [$\Theta(|padre|)$]
-	  [Devuelve un iterador que proyecta las hijas del padre de forma tal que al pedir actual, el iterador devuelve el primer elemento de la lista.]
-	  [El iterador se invalida si y s\'olo si se elimina el elemento siguiente del iterador.]
+	  [Devuelve un iterador que proyecta las hijas del padre de forma tal que, al pedir actual, el iterador devuelve el primer elemento de la lista.]
+	  [El iterador se invalida s\'i y s\'olo s\'i se elimina el elemento siguiente del iterador.]
 
     \InterfazFuncion{padres}{\In{ac}{abCat}, \In{hija}{categoria}}{itabCat}
       [$\emph{est\'a}?(hija, ac)$]
 	  {$res \igobs crearItUni(padres(ac, hija))$}
 	  [$\Theta(|hija|)$]
-	  [Devuelve un iterador que proyecta los IDs de los padres de forma tal que al pedir ActualID, el iterador devuelve el ID de la hija.]
+	  [Devuelve un iterador que proyecta los id's de los padres de forma tal que, al pedir ActualID, el iterador devuelve el id de la hija.]
 
 	\InterfazFuncion{ID}{\In{ac}{abCat}, \In{c}{categoria}}{Nat}
 	  [$\emph{est\'a}?(c, ac)$]
@@ -498,18 +498,18 @@ La función $\bullet$[$\bullet$] debe tener complejidad O(1)
    	\InterfazFuncion{HayMasPadres?}{\In{it}{itabCat}}{Bool}
 	  {$res \igobs HayMas?(it)$}
 	  [$\Theta(1)$]
-	  [Devuelve true si y solo si en el iterador todav\'ia quedan elementos para iterar]
+	  [Devuelve true s\'i y s\'olo s\'i en el iterador todav\'ia quedan elementos por iterar]
 
 	\InterfazFuncion{Subir}{\Inout{it}{itabCat}}{}
 	  [$hayMas?(it) \land it \igobs it_0$]
 	  {$it \igobs Avanzar(it_0)$}
 	  [$\Theta(1)$]
-	  [Avanza al iterador a la siguiente posici\'on.]
+	  [Avanza el iterador a la siguiente posici\'on.]
 	  
 	 \InterfazFuncion{ActualID}{\In{it}{itabCat}}{$Nat$}
 	  {$res \igobs Actual(it)$}
 	  [$\Theta(1)$]
-	  [Devuelve el ID del elemento al cual esta apuntando.]
+	  [Devuelve el id del elemento al que est\'a apuntando.]
 	
 \end{Interfaz}
 
@@ -549,7 +549,7 @@ La función $\bullet$[$\bullet$] debe tener complejidad O(1)
         {\bf Formalmente:} $(\forall c:categoria)esta?(c,e) \impluego \neg(estaLista(c,hijas(c)))$
   	     
   \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 2,3 y
-  4) garantiza que el \'arbol no sea c\'iclico). (esto supuestamente queda explicito pues el padre es un puntero)\\
+  4) garantiza que el \'arbol no sea c\'iclico) (esto supuestamente queda expl\'icito pues el padre es un puntero).\\
         {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,e)) \yluego (esta?(t,e))$ $\yluego (t \not= c)) \yluego ((\forall k:categoria)esta?(k,e) \impluego (estaLista(k,hijas(c)) \yluego estaLista(k,hijas(t)))$
   
   \item La cantidad de categor\'ias totales es igual a UltId.\\
@@ -564,7 +564,7 @@ La función $\bullet$[$\bullet$] debe tener complejidad O(1)
   \item Ningún padre es Null salvo el de la raíz. \\
   		{\bf Formalmente:} $(\forall t:categoria)(esta?(c,e) \land (t\not=e.raiz)) \impluego padre(t) \not= Null$
   		
-  \item El padre de la raíz es Null  \\
+  \item El padre de la raíz es Null.  \\
   {\bf Formalmente:} $*padre(raiz) = Null$
   
   %\item Dada una categoría que pertenece a una lista de hijas, su categoría padre apunta al padre (necesario?)
@@ -736,7 +736,7 @@ La función $\bullet$[$\bullet$] debe tener complejidad O(1)
 
 \modTitulo{Lista Enlazada ($\alpha$)}
 
-La función Vacia debe tener complejidad O(1)\\
+La función Vacia debe tener complejidad O(1).\\
 La función agregarAtras debe tener complejidad O($copy$($a$)), donde $a$ es el tipo del elemento que se va a colocar en la lista.
 
 \modTitulo{Iterador Unidireccional ($\alpha$)}
@@ -746,12 +746,12 @@ la función crearIterador debe tener complejidad O(1)
 \modTitulo{DiccTrie ($\alpha$)}
 
 La función Vacio debe tener complejidad O(1). \\
-La función Definir debe tener complejidad O(|$k$|) donde $k$ es el string que se va a colocar como definicion. \\
+La función Definir debe tener complejidad O(|$k$|) donde $k$ es el string que se va a colocar por definici\'on. \\
 La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 
 \modTitulo{Puntero ($\alpha$)}
 
-La función \& debe tener complejidad O(1)
+La función \& debe tener complejidad O(1).
 
 
 \end{Servicios Usados}
@@ -763,7 +763,7 @@ La función \& debe tener complejidad O(1)
 	\InterfazFuncion{crearLinkLinkIt}{\In{ac}{abCat}}{LinkLinkIt}
 	  {$res \igobs iniciar(ac)$}
 	  [$\Theta(\#categorias(ac))$]
-	  [Crea un sistema LinkLinkIt. El arbol de categor\'ias se guarda por refencia.]
+	  [Crea un sistema LinkLinkIt. El \'arbol de categor\'ias se guarda por refencia.]
 
 	\InterfazFuncion{agregarLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria}}{}
 	  [$s \igobs s_0$ $\land$ $l \notin links(s)$ $\land$ \emph{est\'a}?$(c, categorias(s))$]
@@ -780,7 +780,7 @@ La función \& debe tener complejidad O(1)
 	\InterfazFuncion{cantLinks}{\In{s}{LinkLinkIt}, \In{c}{categoria}}{Nat}
 	  {$res \igobs cantLinks(s, c)$}
 	  [$\Theta(|c|)$]
-	  [Devuelve la cantidad de links que tiene una categor\'ia y sus hijas]
+	  [Devuelve la cantidad de links que tiene una categor\'ia y sus hijas.]
 
     \InterfazFuncion{linksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
 	  [$\emph{est\'a}?(c, categorias(s))$]
@@ -792,7 +792,7 @@ La función \& debe tener complejidad O(1)
 	  [$il.ultAcceso \leq f$]
 	  {$res \igobs ???$}
 	  [$\Theta(1)$]
-	  [Devuelve el puntaje del link. Esta funci\'on es privada, ya que recibe una estructura interna.]
+	  [Devuelve el puntaje del link. Esta funci\'on es privada ya que recibe una estructura interna.]
 
 \modTitulo{Funciones auxiliares}
 
@@ -907,7 +907,7 @@ La función \& debe tener complejidad O(1)
 	\EndWhile
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(1) + 3O(|c|) + 2O(|l|) + O(h) = O(|c|) + O(|l|) + O(h) = O(|c| + |l| + h)$
-\\ \tab El bucle tiene $h$ iteraciones ya que se comienza en un nodo y luego, en cada ciclo, se va subiendo hasta la raiz del \'arbol.
+\\ \tab El bucle tiene $h$ iteraciones ya que inicia en un nodo y luego, en cada ciclo, se va subiendo hasta la raiz del \'arbol.
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -951,7 +951,7 @@ La función \& debe tener complejidad O(1)
     \State $categoriaID \gets \Call{ID}{s.aCategorias, c}$\Comment{$O(|c|)$}
     \State $lista \gets s.linksPorCat[categoriaID - 1]$\Comment{$O(1)$}
     \Statex
-    \Statex // Encuentro la fecha m\'as alta de esta categor\'ia
+    \Statex // Encuentro la fecha m\'as alta de esta categor\'ia.
     \State $it \gets \Call{crearIt}{lista}$\Comment{$O(1)$}
     \State $f \gets 0$\Comment{$O(1)$}
     \While{$\Call{HaySiguiente}{it}$}\Comment{$nO(1) = O(n)$}
@@ -973,7 +973,7 @@ La función \& debe tener complejidad O(1)
 		\State \Return $res \gets \Call{crearItLinks}{lista}$\Comment{O(1)}
 	\EndIf
 	\Statex
-	\Statex // Ordeno agregando $n$ veces el de m\'as accesos que encuentre
+	\Statex // Ordeno agregando $n$ veces el de m\'as accesos que encuentre.
 	\State $listaOrdenada \gets \Call{Vacia}{\null}$
 	\State $itOrd \gets \Call{crearIt}{listaOrdenada}$
 	\While{$\neg\Call{Vacia}{lista}$}\Comment{$n * (O(n) + 3O(1)) = O(n^2)$}
@@ -1069,42 +1069,42 @@ La función \& debe tener complejidad O(1)
 
 \modTitulo{Puntero ($\alpha$)}
 
-La función \& debe tener complejidad O(1)
+La función \& debe tener complejidad O(1).
 
 \modTitulo{abCat}
 
-La función cantCategorias debe tener complejidad O(1)\\
-La función ID debe tener complejidad O(|c|) donde c es la categoria de la cual se desea saber su id\\
-La función padres debe tener complejidad O(|c|) donde c es la categoria de la cual se desea saber sus padres
+La función cantCategorias debe tener complejidad O(1).\\
+La función ID debe tener complejidad O(|c|) donde c es la categor\'ia de la que se desea saber el id.\\
+La función padres debe tener complejidad O(|c|) donde c es la categor\'ia de la que se desea conocer sus padres.
 
 \modTitulo{itabCat}
 
-La función hayMasPadres? debe tener complejidad O(1)\\
-La función subir debe tener complejidad O(1)\\
-La función actualID debe tener complejidad O(1)
+La función hayMasPadres? debe tener complejidad O(1).\\
+La función subir debe tener complejidad O(1).\\
+La función actualID debe tener complejidad O(1).
 
 \modTitulo{diccTrie($\alpha$)}
 
-La función definir debe tener complejidad O(|k|) donde k es la clave\\
+La función definir debe tener complejidad O(|k|) donde k es la clave.\\
 
 \modTitulo{Vector ($\alpha$)}
 
-La función Vacia debe tener complejidad O(1)\\
-La función agregarAtras debe tener complejidad O(n) si y solo si se agregan n elementos de forma consecutiva\\
-La función Lonitud debe tener complejidad O(1)\\
-La función $\bullet$[$\bullet$] debe tener complejidad O(1)
+La función Vacia debe tener complejidad O(1).\\
+La función agregarAtras debe tener complejidad O(n) s\'i y s\'olo s\'i se agregan n elementos de forma consecutiva.\\
+La función Longitud debe tener complejidad O(1).\\
+La función $\bullet$[$\bullet$] debe tener complejidad O(1).
 
 \modTitulo{Lista Enlazada ($\alpha$)}
 
-La función Vacia debe tener complejidad O(1)\\
-La función agregarAtras debe tener complejidad O($copy$($a$)), donde $a$ es el tipo del elemento que se va a colocar en la lista.
+La función Vacia debe tener complejidad O(1).\\
+La función agregarAtras debe tener complejidad O($copy$($a$)), donde $a$ es el tipo del elemento que va a ser colocado en la lista.
 
 \modTitulo{itLista($\alpha$)}
 
-La función crearIt debe tener complejidad O(1)\\
-La función haySiguiente? debe tener complejidad O(1)\\
-La función avanzar debe tener complejidad O(1)\\
-La función siguiente debe tener complejidad O(1)
+La función crearIt debe tener complejidad O(1).\\
+La función haySiguiente? debe tener complejidad O(1).\\
+La función avanzar debe tener complejidad O(1).\\
+La función siguiente debe tener complejidad O(1).
 
 \modTitulo{DiccTrie ($\alpha$)}
 
@@ -1130,12 +1130,12 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 	\InterfazFuncion{crearIterador}{\In{l}{lista($\alpha$)}}{iteradorUni($\alpha$)}
 	  {$res \igobs crearItUni(l)$}
 	  [$\Theta(1)$]
-	  [Crea un iterador unidireccional a la lista de forma tal que al pedir actual se obtenga el primer elemento de l]
+	  [Crea un iterador unidireccional a la lista de forma tal que al pedir actual se obtenga el primer elemento de l.]
 
 	\InterfazFuncion{HayMas?}{\In{it}{iteradorUni($\alpha$)}}{Bool}
 	  {$res \igobs HayMas?(it)$}
 	  [$\Theta(1)$]
-	  [Devuelve true si y solo si en el iterador todav\'ia quedan elementos para iterar]
+	  [Devuelve true s\'i y s\'olo s\'i en el iterador todav\'ia quedan elementos por iterar.]
 
 	\InterfazFuncion{Siguiente}{\Inout{it}{iteradorUni($\alpha$)}}{}
 	  [$hayMas?(it) \land it \igobs it_0$]
@@ -1146,7 +1146,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 	 \InterfazFuncion{Actual}{\In{it}{iteradorUni($\alpha$)}}{$\alpha$}
 	  {$res \igobs Actual(it)$}
 	  [$\Theta(1)$]
-	  [Devuelve elemeno al que esta apuntando el iterador por referencia, dicho elemento no debe ser modificado ya que modificaria la lista y eso no esta permitido]
+	  [Devuelve el elemento al que est\'a apuntando el iterador por referencia. Dicho elemento no debe ser modificado ya que alterar\'ia la lista y eso no est\'a permitido.]
 
 \end{Interfaz}
 
@@ -1164,7 +1164,7 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 \end{Representacion}
 
 \begin{Justificacion}
-\\Para representar el iterador unidireccional de la lista decidimos usar el iterador bidireccional que nos provee la lista enlazada y obtener del iterador las operaciones que necesitabamos.
+\\Para representar el iterador unidireccional de la lista, decidimos usar el iterador bidireccional que nos provee la lista enlazada y obtener, del iterador, las operaciones que necesitamos.
 
 \end{Justificacion}
 
@@ -1206,14 +1206,14 @@ La función Obtener debe tener complejidad O(|$k$|) donde $k$ es la clave.
 
 \begin{Servicios Usados}
 
-\textbf{Los siguientes m\'odulos deben cumplir los compromisos pedidos a continuaci\'on:}
+\textbf{Los siguientes m\'odulos deben cumplir con los compromisos pedidos a continuaci\'on:}
 
 \modTitulo{itLista($\alpha$)}
 
-La función crearIt debe tener complejidad O(1)\\
-La función haySiguiente? debe tener complejidad O(1)\\
-La función avanzar debe tener complejidad O(1)\\
-La función siguiente debe tener complejidad O(1)
+La función crearIt debe tener complejidad O(1).\\
+La función haySiguiente? debe tener complejidad O(1).\\
+La función avanzar debe tener complejidad O(1).\\
+La función siguiente debe tener complejidad O(1).
 
 \end{Servicios Usados}
 

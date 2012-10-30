@@ -215,8 +215,10 @@
 	    \end{Tupla}
 	\end{Estructura}
 
-\tadAlinearAxiomas{Rep(e)}
-\Rep[diccString($\alpha$)][e]{}\mbox{}
+\tadAlinearAxiomas{Rep(d)}
+\Rep[diccTrie($\alpha$)][d]{d.letra$=_{obs}$*(d.trie) $\land$ (obtener(*(d.trie),trie)$=_{obs}$*(d.elem) \oluego obtener(*(d.trie),trie)$=_{obs}$Null) \yluego *(d.elem)$=_{obs}$obtener(d.letra)}\mbox{}
+
+\AbsFc[estr]{diccTrie($\alpha$)}{t:diccTrie($\alpha$) $|$ obtener(d.letra, trie) = obtener(letra,t) }
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su contenido con la complejidad requerida para otros algoritmos en otros m\'odulos.
@@ -488,7 +490,8 @@ Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su co
 ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuencia) como ``estaLista?'' para no generar confusiones.\\ 
 \begin{enumerate}
   \item El id de la ra\'iz del \'arbol es 1 (requerido por el enunciado del TP).\\
-        {\bf Formalmente:} $id(e.raiz) = 1$
+        {\bf Formalmente:} $id(e.raiz) =_{obs} 1$
+        
 
   \item No existe ninguna categor\'ia incluida en sus categor\'ias hijas.\\
         {\bf Formalmente:} $(\forall c:categoria)esta?(c,claves(e.categorias)) \impluego \neg(estaLista?(c,hijas(c)))$
@@ -498,30 +501,31 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
 
   \item Existe una categor\'ia que no tiene padre y que es igual a ra\'iz.\\
         {\bf Formalmente:} $(\forall c:categoria)esta?(c,claves(e.categorias)) \impluego \neg(estaLista?(c,hijas(c)))$
-
-  \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 2,3 y 4) garantiza que el \'arbol no sea c\'iclico) (esto supuestamente queda expl\'icito pues el padre es un puntero).\\
+  	     
+  \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 2,3 y
+  4) garantiza que el \'arbol no sea c\'iclico) (esto supuestamente queda expl\'icito pues el padre es un puntero).\\
         {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,claves(e.categorias))) \yluego (esta?(t,claves(e.categorias)))$ $\yluego (t\not=c)) \yluego ((\forall k:categoria)esta?(k,claves(e.categorias)) \impluego (estaLista?(k,hijas(c)) \yluego estaLista?(k,hijas(t)))$
-
+  
   \item La cantidad de categor\'ias totales es igual a UltId.\\
-        {\bf Formalmente:} $\#claves(e.categorias) = e.ultId$
-
+        {\bf Formalmente:} $\#claves(e.categorias) =_{obs} e.ultId$
+  
   \item Las categor\'ias hijas de cada categor\'ia tienen un id mayor a \'esta.\\
-        {\bf Formalmente:} $((\forall c:categoria) esta?(c,claves(e.categorias))) \impluego ((\forall t:categoria) (esta?(c,claves(e.categorias)) \yluego estaLista?(t,hijas(c))) \impluego id(c)<id(t))$
-
+        {\bf Formalmente:} $((\forall c:categoria)esta?(c,claves(e.categorias))) \impluego ((\forall t:categoria)(esta?(c,claves(e.categorias)) \yluego estaLista?(t,hijas(c))) \impluego id(c)<id(t))$
+  
   \item No existen dos IDs iguales para categor\'ias distintas.\\
         {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,claves(e.categorias)) \land esta?(t,claves(e.categorias)) \land t\not=c) \impluego id(c)\not=id(t)$
-
-  \item Ning\'un padre es Null salvo el de la raíz. \\
+        
+  \item Ningún padre es Null salvo el de la raíz. \\
   		{\bf Formalmente:} $(\forall t:categoria)(esta?(c,claves(e.categorias)) \land (t\not=e.raiz)) \impluego padre(t)\not=Null$
-
-  \item El padre de la ra\'iz es Null.  \\
-  		{\bf Formalmente:} $*padre(e.raiz) = Null$
+  		
+  \item El padre de la raíz es Null.  \\
+  {\bf Formalmente:} $*padre(e.raiz) =_{obs} Null$
   
   %\item Dada una categoría que pertenece a una lista de hijas, su categoría padre apunta al padre (necesario?)
     
 \end{enumerate}
 
-  \AbsFc[estr]{abcat}{e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = padre(a,c) $\yluego$ categorias(a) = claves(e.categorias)}
+  \AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = padre(a,c) $\yluego$ categorias(a) = claves(e.categorias)}
 
 \modTitulo{Justificaci\'on de la representacion de la estructura}
 Para representar el \'arbol de categor\'ias elegimos esta estructura por los siguientes motivos:

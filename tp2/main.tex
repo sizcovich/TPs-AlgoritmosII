@@ -428,7 +428,7 @@ Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a 
 
     \InterfazFuncion{padres}{\In{ac}{abCat}, \In{hija}{categoria}}{itAbCat}
       [$\emph{est\'a}?(hija, ac)$]
-	  {$res \igobs crearItUni(padres(ac, hija))$}
+	  {$res \igobs CrearItUni(padres(ac, hija))$}
 	  [$\Theta(|hija|)$]
 	  [Devuelve un iterador que proyecta los IDs de los padres de forma tal que, al pedir ActualID, el iterador devuelve el id de la hija.]
 
@@ -546,7 +546,7 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
 ~
 \tadAlinearFunciones{Abs}{estr\ e}
 \tadAlinearAxiomas{Abs(e)}
-\AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ eId(e,c) = id(a,c) $\land$ (($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ (($\exists$ t: categoria)esta?(c,claves(e.categorias)) $\impluego$ esSuId?(t,(ePadre(e,c).id)) $\yluego$ padre(a,c) = t) $\yluego$ categorias(a) = claves(e.categorias)}
+\AbsFc{acat}{a:acat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ eId(e,c) = id(a,c) $\land$ (($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ (($\exists$ t: categoria)esta?(c,claves(e.categorias)) $\impluego$ esSuId?(t,(ePadre(e,c).id)) $\yluego$ padre(a,c) = t) $\yluego$ categorias(a) = claves(e.categorias)}
 ~
 \tadAlinearFunciones{eId}{estr\ e, categoria\ c}
 \tadAlinearAxiomas{eId(e, c)}
@@ -574,8 +574,16 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 	    \end{Tupla}
 	\end{Estructura}
 
+\tadAlinearFunciones{Rep}{estr\ e}
 \tadAlinearAxiomas{Rep(e)}
-\Rep[itabcat][e]{}\mbox{}
+\Rep{e.iterador $\neq$ NULL}\mbox{}
+
+\AbsFc{itAbCat}{it:itAbCat $|$ Siguientes(it) \igobs ePadres(it.iterador)}
+~
+\tadAlinearFunciones{ePadres}{puntero(catInfo)}
+\tadAlinearAxiomas{ePadres(pci)}
+\tadOperacion{ePadres}{puntero(catInfo)}{secu(Nat)}{}
+\tadAxioma{ePadres(pci)}{\IF pci = NULL THEN <> ELSE (*pci).id $\bullet$ ePadres((*pci).padre) FI}
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 \par El iterador solo necesita guardar un puntero a la categor\'ia actual, ya que con esto alcanza para acceder al padre y as\'i subir en O(1). \'Este se usar\'a en el LinkLinkIt.

@@ -527,17 +527,33 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
 
 \tadAlinearAxiomas{acotado(a, cat, n)}
 \tadOperacion{acotado}{estr, categoria, Nat}{Bool}{}
-\tadAxioma{acotado(a, cat, n)}{\IF $n = 0$ THEN \TipoVariable{False} ELSE ($\forall$ h:categoria)(h $\in$ hijas(a, cat))acotado(n-1, a, h) FI}
+\tadAxioma{acotado(a, cat, n)}{\IF $n = 0$ THEN \TipoVariable{False} ELSE ($\forall$ h:categoria)(h $\in$ eHijas(a, cat))acotado(n-1, a, h) FI}
 ~
 \tadAlinearFunciones{ePadre}{estr\ e, categoria\ c}
 \tadAlinearAxiomas{ePadre(e, c)}
 \tadOperacion{eHijas}{estr\ e, categoria\ c}{secu(categoria)}{def?(c, e.categorias)}
 \tadAxioma{eHijas(e, c)}{obtener(e.categorias, c).hijas}
+~
 \tadOperacion{ePadre}{estr\ e, categoria\ c}{puntero(catInfo)}{def?(c, e.categorias)}
 \tadAxioma{ePadre(e, c)}{obtener(e.categorias, c).padre}
 ~
 \tadAlinearAxiomas{Abs(e)}
-\AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = padre(a,c) $\yluego$ categorias(a) = claves(e.categorias)}
+\AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ (($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ ((\exists t: categoria)esta?(c,claves(e.categorias)) $\impluego$ esSuId?(t,(ePadre(e,c).id)) \yluego padre(a,c) = t) $\yluego$ categorias(a) = claves(e.categorias)}
+~
+\tadAlinearFunciones{eId}{estr\ e, categoria\ c}
+\tadAlinearAxiomas{eId(e, c)}
+\tadOperacion{eId}{estr\ e, categoria\ c}{Nat}{def?(c, e.categorias)}
+\tadAxioma{eId(e, c)}{obtener(e.categorias, c).id}
+~
+\tadAlinearFunciones{deIdACat}{estr\ e, nat\ i}
+\tadAlinearAxiomas{deIdACat(e, i)}
+\tadOperacion{deIdACat}{estr\ e, Nat\ i}{Nat}{i <= e.ultId}
+\tadAxioma{eIdACat(e, i)}{}
+~
+\tadAlinearFunciones{esSuId?}{estr\ e, categoria\ c, nat\ i}{}
+\tadAlinearAxiomas{esSuId?(e, i)}
+\tadOperacion{esSuId?}{estr\ e, categoria\ c, Nat\ i}{Bool}{def?(c, e.categorias) $\land$ i <= e.ultId}
+\tadAxioma{esSuId?(e, i)}{obtener(e.categorias, c).id = i}
 
 \modTitulo{Justificaci\'on de la representacion de la estructura}
 Para representar el \'arbol de categor\'ias elegimos esta estructura por los siguientes motivos:

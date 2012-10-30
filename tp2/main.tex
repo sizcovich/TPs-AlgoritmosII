@@ -216,15 +216,27 @@
 	\end{Estructura}
 
 \tadAlinearAxiomas{Rep(e)}
-\Rep{}\mbox{}
+\Rep[estr][e]{$1 \land 2$}\mbox{}
 
-\AbsFc[estr]{diccString($\alpha$)}{($\forall$ c:string)def?(c, t) $\Leftrightarrow$ ((e.trie $\not=$ NULL) $\yluego$ (c $\in$ eClavesTrie(*(e.trie), c)))) $\land$ ($\forall$ )}
+{\bf Donde:}
+
+\begin{enumerate}
+  \item Todos los punteros cuyo hijo sea igual NULL, tienen un elem distinto de NULL.\\
+        {\bf Formalmente:} 
+
+  \item No existen dos nodos iguales.\\
+        {\bf Formalmente:} $(e.trie.hijo \not= e.trie.hermano)$
+
+\end{enumerate}
+
+\AbsFc[estr]{diccString($\alpha$)}{($\forall$ c:string)def?(c, t) $\Leftrightarrow$ ((e.trie $\not=$ NULL) $\impluego$ (c $\in$ eClavesTrie(*(e.trie), c)))) $\land$ ($\forall$ )}
 
 \tadAlinearAxiomas{eClavesTrie(n, pal)}
 \tadOperacion{eClavesTrie}{nodo, string}{conj(string)}{}
 \tadAxioma{eClavesTrie(n, pal)}{\IF n.elem = NULL THEN $\emptyset$ ELSE Ag(pal $\circ$ n.letra, $\emptyset$) FI $\cup$ \\
 								 \IF n.hermano = NULL THEN $\emptyset$ ELSE clavesTrie(pal, *n.hermano) FI $\cup$ \\
 								 \IF n.hijo = NULL THEN $\emptyset$ ELSE claveTrie(pal $\circ$ n.letra, *n.hijo) FI}
+
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a su contenido con la complejidad requerida para realizar los algoritmos de otros m\'odulos.
@@ -824,8 +836,25 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 	\end{Tupla}
 \end{Estructura}
 
+\tadAlinearFunciones{Rep(e)}{estr}
 \tadAlinearAxiomas{Rep(e)}
-\Rep{}\mbox{}
+\Rep{$1 \land 2$}\mbox{}
+
+{\bf Donde:}
+
+\begin{enumerate}
+  \item falta\\
+   {\bf Formalmente:} 
+
+  \item falta \\
+        {\bf Formalmente:} 
+
+\end{enumerate}
+
+~
+\tadAlinearFunciones{Abs}{estr\ e}
+\tadAlinearAxiomas{Abs(e)}
+\AbsFc{lli}{}
 
 \subsection{Iterador}
 
@@ -1128,8 +1157,13 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 		\end{Tupla}
 	\end{Estructura}
     
+\tadAlinearFunciones{Rep}{estr}
 \tadAlinearAxiomas{Rep(e)}
-\Rep[it][e]{true}\mbox{}
+\Rep[estr][e]{true}\mbox{}
+
+\tadAlinearFunciones{Abs}{estr\ e}
+\tadAlinearAxiomas{Abs}
+\AbsFc[estr]{itUni}{}
 
 \modTitulo{Justificaci\'on}
 Para representar el iterador unidireccional de la lista, decidimos usar el iterador bidireccional que nos provee la lista enlazada y obtener, del iterador, las operaciones que necesitamos.

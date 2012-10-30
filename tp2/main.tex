@@ -164,7 +164,7 @@
 \tableofcontents
 \newpage
 
-\section{M\'odulo DiccTrie($\alpha$)}
+\section{M\'odulo DiccString($\alpha$)}
 \subsection{Interfaz}
 
 	\textbf{par\'ametro formal}: \TipoVariable{$\alpha$}.
@@ -173,28 +173,28 @@
 
 	\textbf{se explica con}: \TipoVariable{Diccionario(String, $\alpha$)}.
 
-	\textbf{g\'eneros}: \TipoVariable{diccTrie($\alpha$)}.
+	\textbf{g\'eneros}: \TipoVariable{diccString($\alpha$)}.
 
 	\modTitulo{Operaciones b\'asicas}
 
-	\InterfazFuncion{Vacio}{}{diccTrie($\alpha$)}
+	\InterfazFuncion{Vacio}{}{diccString($\alpha$)}
 	  {$res \igobs vacio()$}
 	  [$\Theta(1)$]
 	  [Genera un diccionario vac\'io.]
 
-	\InterfazFuncion{Definir}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}, \In{s}{$\alpha$}}{}
+	\InterfazFuncion{Definir}{\Inout{d}{diccString($\alpha$)}, \In{k}{string}, \In{s}{$\alpha$}}{}
 	  [$d \igobs d_0$]
 	  {$d \igobs definir(k, s, d_0)$}
 	  [O(|$k$|)]
 	  [Define la clave $k$ con el significado $s$ en el diccionario.]
 	  [La clave se guarda por copia y el significado por referencia.]
 
-	\InterfazFuncion{Definido?}{\In{d}{diccTrie($\alpha$)}, \In{k}{string}}{Bool}
+	\InterfazFuncion{Definido?}{\In{d}{diccString($\alpha$)}, \In{k}{string}}{Bool}
 	  {$res \igobs def?(k, d)$}
 	  [O(|$k$|)]
 	  [Devuelve \TipoVariable{True} s\'i y s\'olo s\'i $k$ est\'a definido en el diccionario.]
 
-	\InterfazFuncion{Obtener}{\Inout{d}{diccTrie($\alpha$)}, \In{k}{string}}{$\alpha$}
+	\InterfazFuncion{Obtener}{\Inout{d}{diccString($\alpha$)}, \In{k}{string}}{$\alpha$}
 	  [$def?(k, d)$]
 	  {$alias(res \igobs obtener(k, d))$}
 	  [O(|$k$|)]
@@ -202,7 +202,7 @@
 
 \subsection{Representaci\'on}
 
-	\begin{Estructura}{diccTrie($\alpha$)}
+	\begin{Estructura}{diccString($\alpha$)}
 	    \begin{Tupla}
 	      \tupItem{trie}{puntero(nodo)}
 	    \end{Tupla}
@@ -216,7 +216,7 @@
 	\end{Estructura}
 
 \tadAlinearAxiomas{Rep(e)}
-\Rep[diccTrie($\alpha$)][e]{}\mbox{}
+\Rep[diccString($\alpha$)][e]{}\mbox{}
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su contenido con la complejidad requerida para otros algoritmos en otros m\'odulos.
@@ -242,7 +242,7 @@ Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su co
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iVacio() $\DRef res$ : \TipoVariable{diccTrie($\alpha$)}}
+\caption*{iVacio() $\DRef res$ : \TipoVariable{diccString($\alpha$)}}
 \begin{algorithmic}[1]
 	\State $res.trie \gets \TipoVariable{NULL}$ \Comment{$\Theta(1)$}
 \end{algorithmic}
@@ -250,7 +250,7 @@ Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su co
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iDefinir(\Inout{d}{diccTrie($\alpha$)}, \In {k}{string}, \In{s}{$\alpha$)}}
+\caption*{iDefinir(\Inout{d}{diccString($\alpha$)}, \In {k}{string}, \In{s}{$\alpha$)}}
 \begin{algorithmic}[1]
 	\State $cargoTodo \gets d.trie = \TipoVariable{NULL}$\Comment{O(1)}
 	\State $i \gets 0$\Comment{O(1)}
@@ -279,7 +279,7 @@ Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su co
 					\State $i \gets i + 1$\Comment{O(1)}
 				\Else    			
     				\State $nodo \gets *nodo.hijo$\Comment{O(1)}
-			\State $i \gets i + 1$\Comment{O(1)}	
+					\State $i \gets i + 1$\Comment{O(1)}	
     			\EndIf
 			\Else
 				\If{$nodo.hermano \neq \TipoVariable{NULL}$}
@@ -302,7 +302,7 @@ Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su co
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iDefinido?(\In{d}{diccTrie($\alpha$)}, \In{k}{string} $\DRef res$ : \TipoVariable{Bool}}
+\caption*{iDefinido?(\In{d}{diccString($\alpha$)}, \In{k}{string} $\DRef res$ : \TipoVariable{Bool}}
 \begin{algorithmic}[1]
 	\var{nodo}{nodo}
 	\State $i \gets 0$\Comment{O(1)}
@@ -343,7 +343,7 @@ Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su co
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iObtener(\Inout{d}{diccTrie($\alpha$)}, \In{k}{string} $\DRef res$ : \TipoVariable{$\alpha$}}
+\caption*{iObtener(\Inout{d}{diccString($\alpha$)}, \In{k}{string} $\DRef res$ : \TipoVariable{$\alpha$}}
 \begin{algorithmic}[1]
 	\State $nodo \gets *d.trie$\Comment{O(1)}
 	\State $i \gets 0$\Comment{O(1)}
@@ -386,15 +386,16 @@ Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su co
 \section{M\'odulo ArbolCategorias}
 \subsection{Interfaz}
 
-    \textbf{usa}: \TipoVariable{Nat, String, diccTrie($\alpha$), lista($\alpha$), iteradorUni($\alpha$)}.
+    \textbf{usa}: \TipoVariable{Nat}, \TipoVariable{String}, \TipoVariable{diccString($\alpha$)}, \TipoVariable{lista($\alpha$)}, \TipoVariable{iteradorUni($\alpha$)}, \TipoVariable{puntero($\alpha$)}.
 
-	\textbf{se explica con}: \TipoVariable{ArbolCategorias, Iterador Unidireccional($\alpha$)}.
+	\textbf{se explica con}: \TipoVariable{ArbolCategorias}, \TipoVariable{Iterador Unidireccional($\alpha$)}.
 
-	\textbf{g\'eneros}: \TipoVariable{abCat}, \TipoVariable{itabCat}.
+	\textbf{g\'eneros}: \TipoVariable{abCat}, \TipoVariable{itAbCat}.
 
 	\modTitulo{Operaciones b\'asicas}
 
 	\InterfazFuncion{nuevoAC}{\In{raiz}{categoria}}{abCat}
+	  [$\neg vacia?(raiz)$]
 	  {$res \igobs nuevo(raiz)$}
 	  [$\Theta(|raiz|)$]
 	  [Crea un \'arbol con categor\'ia \emph{raiz}.]
@@ -408,7 +409,7 @@ Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su co
 	  [$ac \igobs ac_0 \land \emph{est\'a}?(padre, ac) \land \neg\emph{vac\'ia}?(hija) \land \neg\emph{est\'a}?(hija, ac)$]
 	  {$ac \igobs agregar(ac_0, padre, hija)$}
 	  [$\Theta(|padre| + |hija|)$]
-	  [Agrega la categor\'ia hija a padre.]
+	  [Agrega la categor\'ia $hija$ a $padre$.]
 
 	\InterfazFuncion{hijas}{\In{ac}{abCat}, \In{padre}{categoria}}{iteradorUni(categoria)}
 	  [$\emph{est\'a}?(padre, ac)$]
@@ -417,11 +418,11 @@ Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su co
 	  [Devuelve un iterador que proyecta las hijas del padre de forma tal que, al pedir actual, el iterador devuelve el primer elemento de la lista.]
 	  [El iterador se invalida s\'i y s\'olo s\'i se elimina el elemento siguiente del iterador.]
 
-    \InterfazFuncion{padres}{\In{ac}{abCat}, \In{hija}{categoria}}{itabCat}
+    \InterfazFuncion{padres}{\In{ac}{abCat}, \In{hija}{categoria}}{itAbCat}
       [$\emph{est\'a}?(hija, ac)$]
 	  {$res \igobs crearItUni(padres(ac, hija))$}
 	  [$\Theta(|hija|)$]
-	  [Devuelve un iterador que proyecta los id's de los padres de forma tal que, al pedir ActualID, el iterador devuelve el id de la hija.]
+	  [Devuelve un iterador que proyecta los IDs de los padres de forma tal que, al pedir ActualID, el iterador devuelve el id de la hija.]
 
 	\InterfazFuncion{ID}{\In{ac}{abCat}, \In{c}{categoria}}{Nat}
 	  [$\emph{est\'a}?(c, ac)$]
@@ -438,27 +439,27 @@ Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su co
 \modTitulo{Funciones auxiliares}
 
 	\tadOperacion{conjuntoASecuencia}{Conjunto($\alpha$)}{Secuencia($\alpha$)}{}
-	\tadAlinearAxiomas{conjuntoASecuencia(c)}
-    \tadAxioma{conjuntoASecuencia(c)}{\IF $\emptyset$?(c) THEN <> ELSE dameUno(c) $\bullet$ conjuntoASecuencia(sinUno(c)) FI}
+	\tadAlinearAxiomas{conjuntoASecuencia($c$)}
+    \tadAxioma{conjuntoASecuencia($c$)}{\IF $\emptyset$?($c$) THEN <> ELSE dameUno($c$) $\bullet$ conjuntoASecuencia(sinUno($c$)) FI}
 ~
-    \tadOperacion{padres}{acat\ $ac$, categoria\ $hija$}{Secuencia(Nat)}{est\'a?(hija, ac)}
+    \tadOperacion{padres}{acat\ $ac$, categoria\ $hija$}{Secuencia(Nat)}{est\'a?($hija$, $ac$)}
     %\tadAlinearAxiomas{padres($ac$, $hija$)}
 	\tadAxioma{padres($ac$, $hija$)}{\IF $hija$ \igobs raiz($ac$) THEN 1 $\bullet$ <> ELSE id($ac$, $hija$) $\bullet$ padres($ac$, padre($ac$, $hija$)) FI}
 
 \modTitulo{Operaciones del iterador}
 
-   	\InterfazFuncion{HayMasPadres?}{\In{it}{itabCat}}{Bool}
+   	\InterfazFuncion{HayMasPadres?}{\In{it}{itAbCat}}{Bool}
 	  {$res \igobs HayMas?(it)$}
 	  [$\Theta(1)$]
-	  [Devuelve true s\'i y s\'olo s\'i en el iterador todav\'ia quedan elementos por iterar.]
+	  [Devuelve \TipoVariable{True} s\'i y s\'olo s\'i en el iterador todav\'ia quedan elementos por iterar.]
 
-	\InterfazFuncion{Subir}{\Inout{it}{itabCat}}{}
-	  [$hayMas?(it) \land it \igobs it_0$]
+	\InterfazFuncion{Subir}{\Inout{it}{itAbCat}}{}
+	  [$it \igobs it_0 \land hayMas?(it)$]
 	  {$it \igobs Avanzar(it_0)$}
 	  [$\Theta(1)$]
 	  [Avanza el iterador a la siguiente posici\'on.]
 	  
-	 \InterfazFuncion{ActualID}{\In{it}{itabCat}}{$Nat$}
+	 \InterfazFuncion{ActualID}{\In{it}{itAbCat}}{Nat}
 	  {$res \igobs Actual(it)$}
 	  [$\Theta(1)$]
 	  [Devuelve el id del elemento al que est\'a apuntando.]
@@ -467,7 +468,7 @@ Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su co
 
 	\begin{Estructura}{abCat}
 	    \begin{Tupla}
-	      \tupItem{categorias}{DiccTrie(categoria, catInfo)}
+	      \tupItem{categorias}{diccString(catInfo)}
 	      \tupItem{raiz}{categoria}
 	      \tupItem{ultID}{Nat}
 	    \end{Tupla}
@@ -488,7 +489,6 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
 \begin{enumerate}
   \item El id de la ra\'iz del \'arbol es 1 (requerido por el enunciado del TP).\\
         {\bf Formalmente:} $id(e.raiz) = 1$
-        
 
   \item No existe ninguna categor\'ia incluida en sus categor\'ias hijas.\\
         {\bf Formalmente:} $(\forall c:categoria)esta?(c,claves(e.categorias)) \impluego \neg(estaLista?(c,hijas(c)))$
@@ -498,25 +498,24 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
 
   \item Existe una categor\'ia que no tiene padre y que es igual a ra\'iz.\\
         {\bf Formalmente:} $(\forall c:categoria)esta?(c,claves(e.categorias)) \impluego \neg(estaLista?(c,hijas(c)))$
-  	     
-  \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 2,3 y
-  4) garantiza que el \'arbol no sea c\'iclico) (esto supuestamente queda expl\'icito pues el padre es un puntero).\\
+
+  \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 2,3 y 4) garantiza que el \'arbol no sea c\'iclico) (esto supuestamente queda expl\'icito pues el padre es un puntero).\\
         {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,claves(e.categorias))) \yluego (esta?(t,claves(e.categorias)))$ $\yluego (t\not=c)) \yluego ((\forall k:categoria)esta?(k,claves(e.categorias)) \impluego (estaLista?(k,hijas(c)) \yluego estaLista?(k,hijas(t)))$
-  
+
   \item La cantidad de categor\'ias totales es igual a UltId.\\
         {\bf Formalmente:} $\#claves(e.categorias) = e.ultId$
-  
+
   \item Las categor\'ias hijas de cada categor\'ia tienen un id mayor a \'esta.\\
-        {\bf Formalmente:} $((\forall c:categoria)esta?(c,claves(e.categorias))) \impluego ((\forall t:categoria)(esta?(c,claves(e.categorias)) \yluego estaLista?(t,hijas(c))) \impluego id(c)<id(t))$
-  
+        {\bf Formalmente:} $((\forall c:categoria) esta?(c,claves(e.categorias))) \impluego ((\forall t:categoria) (esta?(c,claves(e.categorias)) \yluego estaLista?(t,hijas(c))) \impluego id(c)<id(t))$
+
   \item No existen dos IDs iguales para categor\'ias distintas.\\
         {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,claves(e.categorias)) \land esta?(t,claves(e.categorias)) \land t\not=c) \impluego id(c)\not=id(t)$
-        
-  \item Ningún padre es Null salvo el de la raíz. \\
+
+  \item Ning\'un padre es Null salvo el de la raíz. \\
   		{\bf Formalmente:} $(\forall t:categoria)(esta?(c,claves(e.categorias)) \land (t\not=e.raiz)) \impluego padre(t)\not=Null$
-  		
-  \item El padre de la raíz es Null.  \\
-  {\bf Formalmente:} $*padre(e.raiz) = Null$
+
+  \item El padre de la ra\'iz es Null.  \\
+  		{\bf Formalmente:} $*padre(e.raiz) = Null$
   
   %\item Dada una categoría que pertenece a una lista de hijas, su categoría padre apunta al padre (necesario?)
     
@@ -524,32 +523,27 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
 
   \AbsFc[estr]{abcat}{e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = padre(a,c) $\yluego$ categorias(a) = claves(e.categorias)}
 
-\modTitulo{Justificaci\'on}
+\modTitulo{Justificaci\'on de la representacion de la estructura}
 Para representar el \'arbol de categor\'ias elegimos esta estructura por los siguientes motivos:
 \begin{itemize}
-	\item En primer lugar, el Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloco en cada nodo una lista con los nombres de cada hijo. 
-	\item En segundo lugar, esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|$c$|) donde $c$ es el nombre de la categor\'ia.
+	\item El Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloc\'o en cada nodo una lista con los nombres de cada hijo. 
+	\item Esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|$c$|) donde $c$ es el nombre de la categor\'ia.
+	\item Tener un puntero a la categor\'ia padre, nos permite luego hacer un iterador de padres.
 \end{itemize}
-\par El iterador que recorre el \'arbol hacia arriba ser\'a necesario en el LinkLinkIt.
 
 \subsection{Iterador}
 
-	\begin{Estructura}{itabCat}
+	\begin{Estructura}{itAbCat}
 	    \begin{Tupla}
-	      \tupItem{iterador}{puntero(Info)}
-	    \end{Tupla}
-
-	    \begin{Tupla}[Info]
-	      \tupItem{id}{Nat}
-	      \tupItem{padre}{puntero(catInfo)}
-	      \tupItem{hijas}{lista(categoria)}
+	      \tupItem{iterador}{puntero(catInfo)}
 	    \end{Tupla}
 	\end{Estructura}
 
 \tadAlinearAxiomas{Rep(e)}
 \Rep[itabcat][e]{}\mbox{}
 
-\modTitulo{Justificaci\'on}
+\modTitulo{Justificaci\'on de la elecci\'on de la estructura}
+\par El iterador solo necesita guardar un puntero a la categor\'ia actual, ya que con esto alcanza para acceder al padre y as\'i subir en O(1). \'Este se usar\'a en el LinkLinkIt.
 
 
 \subsection{Algoritmos}
@@ -561,18 +555,13 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 	\State $res.raiz \gets raiz$\Comment{O(|$raiz$|)}
 	\State $res.ultID \gets 1$\Comment{O(1)}
 	\Statex
-	\var{infoPadre}{catInfo}
-	\State $infoPadre.id \gets 0$\Comment{O(1)}
-	\State $infoPadre.padre \gets NULL$\Comment{O(1)}
-	\State $infoPadre.hijas \gets$ \Call{Vacia}{\null}\Comment{O(1)}
-	\Statex
 	\var{infoRaiz}{catInfo}
 	\State $infoRaiz.id \gets res.ultID$\Comment{O(1)}
-	\State $infoRaiz.padre \gets \&infoPadre$\Comment{O(1)}
+	\State $infoRaiz.padre \gets \TipoVariable{NULL}$\Comment{O(1)}
 	\State $infoRaiz.hijas \gets$ \Call{Vacia}{\null}\Comment{O(1)}
 	\State \Call{Definir}{$res.categorias, raiz, infoRaiz$}\Comment{O(|$raiz$|)}
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $9O(1) + 2O(|raiz|) = O(|raiz|)$
+\textbf{C\'alculo de complejidad}: $5O(1) + 2O(|raiz|) = O(|raiz|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -610,7 +599,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iPadres(\In{ac}{abCat}, \In{hija}{categoria}) $\DRef res$ : \TipoVariable{itabCat}}
+\caption*{iPadres(\In{ac}{abCat}, \In{hija}{categoria}) $\DRef res$ : \TipoVariable{itAbCat}}
 \begin{algorithmic}[1]
     \State $nodoHija \gets \Call{Obtener}{ac.categorias, hija}$\Comment{O(|$hija$|)}
     \State $iterador \gets \&nodoHija$\Comment{O(1)}
@@ -636,10 +625,10 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \textbf{C\'alculo de complejidad}: $O(1)$
 \end{algorithm}
 
-\subsubsection{Algoritmos Del Iterador}
+\subsubsection{Algoritmos del Iterador}
 
 \begin{algorithm}[H]
-\caption*{iHayMasPadres?(\In{it}{itabCat}) $\DRef res$ : \TipoVariable{Bool}}
+\caption*{iHayMasPadres?(\In{it}{itAbCat}) $\DRef res$ : \TipoVariable{Bool}}
 \begin{algorithmic}[1]
 	\State $res \gets it.padre \neq \TipoVariable{NULL}$\Comment{$\Theta(1)$}
 \end{algorithmic}
@@ -647,7 +636,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iSubir(\Inout{it}{itabCat})}
+\caption*{iSubir(\Inout{it}{itAbCat})}
 \begin{algorithmic}[1]
 	\State $it \gets \&it.padre$ \Comment{$\Theta(1)$}
 \end{algorithmic}
@@ -655,7 +644,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iActualID(\In{it}{itabCat}) $\DRef res$ : {$Nat$}}
+\caption*{iActualID(\In{it}{itAbCat}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
 	\State $res \gets it.id$ \Comment{$\Theta(1)$}
 \end{algorithmic}
@@ -678,7 +667,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 		\item[crearIterador] debe tener complejidad O(1).
 	\end{itemize}
 
-	\item \TipoVariable{DiccTrie($\alpha$)}
+	\item \TipoVariable{diccString($\alpha$)}
 	\begin{itemize}
 		\item[Vacio] debe tener complejidad O(1).
 		\item[Definir] debe tener complejidad O(|$k$|) donde $k$ es el string que se va a colocar por definici\'on.
@@ -776,9 +765,9 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
 \begin{Estructura}{LinkLinkIt}
     \begin{Tupla}
-      \tupItem{aCategorias}{abcat}
+      \tupItem{aCategorias}{abCat}
       \tupItem{\\ linksPorCat}{vector(lista(puntero(infoLink)))}
-      \tupItem{\\ infoLinks}{DiccTrie(link, infoLink)}
+      \tupItem{\\ infoLinks}{diccString(infoLink)}
     \end{Tupla}
 
 	\begin{Tupla}[infoLink]
@@ -796,7 +785,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
 \begin{Estructura}{itLinks}
 	\begin{Tupla}
-		\tupItem{it}{itLista(link)}
+		\tupItem{it}{itLista(puntero(infoLink))}
 		\tupItem{fecha}{fecha}
 	\end{Tupla}
 \end{Estructura}
@@ -941,7 +930,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \textbf{C\'alculo de complejidad}: $3O(1) = O(1)$
 \end{algorithm}
 
-\subsubsection{Algoritmos Del Iterador}
+\subsubsection{Algoritmos del Iterador}
 
 \begin{algorithm}[H]
 \caption*{iCrearItLinks(\In{ls}{lista(link)}, fecha) $\DRef res$ : \TipoVariable{\hyperlink{itLinks}{itLinks}}}
@@ -1009,14 +998,14 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 		\item[padres] debe tener complejidad O(|c|) donde c es la categor\'ia de la que se desea conocer sus padres.
 	\end{itemize}
 
-	\item \TipoVariable{itabCat}
+	\item \TipoVariable{itAbCat}
 	\begin{itemize}
 		\item[hayMasPadres?] debe tener complejidad O(1).
 		\item[subir] debe tener complejidad O(1).
 		\item[actualID] debe tener complejidad O(1).
 	\end{itemize}
 
-	\item \TipoVariable{diccTrie($\alpha$)}
+	\item \TipoVariable{diccString($\alpha$)}
 	\begin{itemize}
 		\item[Definir] debe tener complejidad O(|k|) donde k es la clave.
 	\end{itemize}
@@ -1043,7 +1032,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 		\item[Siguiente] debe tener complejidad O(1).
 	\end{itemize}
 
-	\item \TipoVariable{DiccTrie($\alpha$)}
+	\item \TipoVariable{diccString($\alpha$)}
 	\begin{itemize}
 		\item[Vacio] debe tener complejidad O(1).
 		\item[Obtener] debe tener complejidad O(|$k$|) donde $k$ es la clave.

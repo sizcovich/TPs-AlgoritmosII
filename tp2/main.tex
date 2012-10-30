@@ -186,19 +186,19 @@
 	  [$d \igobs d_0$]
 	  {$d \igobs definir(k, s, d_0)$}
 	  [O(|$k$|)]
-	  [Define la clave $k$ con el significado $s$ en el diccionario.]
+	  [Agrega la clave $k$ con el significado $s$ al diccionario.]
 	  [La clave se guarda por copia y el significado por referencia.]
 
 	\InterfazFuncion{Definido?}{\In{d}{diccString($\alpha$)}, \In{k}{string}}{Bool}
 	  {$res \igobs def?(k, d)$}
 	  [O(|$k$|)]
-	  [Devuelve \TipoVariable{True} s\'i y s\'olo s\'i $k$ est\'a definido en el diccionario.]
+	  [Devuelve \TipoVariable{True} s\'i y s\'olo s\'i $k$ es una clave del diccionario.]
 
 	\InterfazFuncion{Obtener}{\Inout{d}{diccString($\alpha$)}, \In{k}{string}}{$\alpha$}
 	  [$def?(k, d)$]
 	  {$alias(res \igobs obtener(k, d))$}
 	  [O(|$k$|)]
-	  [Devuelve el significado por referencia de la clave $k$ en $d$.]
+	  [Devuelve el significado por referencia de la clave $k$ en el diccString $d$.]
 
 \subsection{Representaci\'on}
 
@@ -221,7 +221,7 @@
 \AbsFc[estr]{diccTrie($\alpha$)}{t:diccTrie($\alpha$) $|$ obtener(d.letra, trie) = obtener(letra,t) }
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
-Decidimos realizar este m\'odulo como un trie ya que nos permite acceder a su contenido con la complejidad requerida para otros algoritmos en otros m\'odulos.
+Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a su contenido con la complejidad requerida para realizar los algoritmos de otros m\'odulos.
 
 \modTitulo{Operacion Auxiliar}
 

@@ -218,13 +218,13 @@
 \tadAlinearAxiomas{Rep(e)}
 \Rep{}\mbox{}
 
+\AbsFc[estr]{diccString($\alpha$)}{t:diccString($\alpha$) $|$ ((e.trie \not= Null) \impluego ($\forall$ c:categoria)def?(c, t) $\Leftrightarrow$ c $\in$ eClavesTrie(*(e.trie), c))}
+
 \tadAlinearAxiomas{eClavesTrie(n, pal)}
 \tadOperacion{eClavesTrie}{nodo, string}{conj(string)}{}
 \tadAxioma{eClavesTrie(n, pal)}{\IF n.elem = NULL THEN $\emptyset$ ELSE Ag(pal $\circ$ n.letra, $\emptyset$) FI $\cup$ \\
 								 \IF n.hermano = NULL THEN $\emptyset$ ELSE clavesTrie(pal, *n.hermano) FI $\cup$ \\
 								 \IF n.hijo = NULL THEN $\emptyset$ ELSE claveTrie(pal $\circ$ n.letra, *n.hijo) FI}
-
-\AbsFc[estr]{diccString($\alpha$)}{t:diccString($\alpha$) $|$ claves(t) = eClavesTrie(e.trie, "") $\land$ ($\forall$c:categoria)c $\in$ claves(t) $\impluego$ def?(c, d) $=_{obs}$ c $\in$ eClavesTrie}
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a su contenido con la complejidad requerida para realizar los algoritmos de otros m\'odulos.

@@ -186,7 +186,7 @@
 	  [$d \igobs d_0$]
 	  {$d \igobs definir(k, s, d_0)$}
 	  [O(|$k$|)]
-	  [Agrega la clave $k$ con el significado $s$ al diccionario.]
+	  [En el caso en el que $k$ no pertenezca al diccionario, se lo agrega. Caso contrario, se reemplaza el significado anterior por $s$.]
 	  [La clave se guarda por copia y el significado por referencia.]
 
 	\InterfazFuncion{Definido?}{\In{d}{diccString($\alpha$)}, \In{k}{string}}{Bool}
@@ -518,15 +518,15 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
   		{\bf Formalmente:} $(\forall t:categoria)(esta?(c,claves(e.categorias)) \land (t\not=e.raiz)) \impluego t.padre\not=Null$
   		
   \item El padre de la raíz es Null.\\
-  {\bf Formalmente:} $*padre(e.raiz) =_{obs} Null$
+  {\bf Formalmente:} $padre(e.raiz) =_{obs} Null$
   
   \item La altura del \'arbol est\'a acotada por un natural. Esta propiedad nos asegurar\'a que el \'arbol no sea c\'iclico.\\
   {\bf Formalmente:} $(\exists n:nat)acotado(n,e,e.raiz)$
     
 \end{enumerate}
 
-\tadOperacion{acotado}{cota X abcat X nombre}{Bool}{}
-  \tadAxioma{(n, ab, cat)}{\IF $n = 0$ THEN false ELSE ($\forall$ h:string)(h $\in$ hijas(abcat, cat)) acotado(n-1, abcat, h) FI}
+\tadOperacion{acotado}{nat, abcat, categoria}{Bool}{}
+  \tadAxioma{(n, a, cat)}{\IF $n = 0$ THEN false ELSE ($\forall$ h:categoria)(h $\in$ hijas(a, cat)) acotado(cat-1, a, h) FI}
 
 
   \AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = padre(a,c) $\yluego$ categorias(a) = claves(e.categorias)}

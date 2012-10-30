@@ -483,7 +483,7 @@ Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a 
 	\end{Estructura}
 
 \tadAlinearAxiomas{Rep(e)}
-\Rep[abcat][e]{$1 \yluego 2 \land 3 \yluego 4 \yluego 5 \yluego 6 \land 7 \land 8 \land 9 \land 10$}\mbox{}
+\Rep[estr][e]{$1 \yluego 2 \land 3 \yluego 4 \yluego 5 \yluego 6 \land 7 \land 8 \land 9 \land 10 \land 11$}\mbox{}
 
 {\bf Donde:}
 
@@ -494,42 +494,51 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
         
 
   \item No existe ninguna categor\'ia incluida en sus categor\'ias hijas.\\
-        {\bf Formalmente:} $(\forall c:categoria)esta?(c,claves(e.categorias)) \impluego \neg(estaLista?(c,hijas(c)))$
+        {\bf Formalmente:} $(\forall c:categoria)esta?(c,claves(e.categorias)) \impluego \neg(estaLista?(c,eHijas(c)))$
 
   \item Todas las categor\'ias tienen padre, excluyendo la ra\'iz.\\
-        {\bf Formalmente:} $(\forall c:categoria)(esta?(c,claves(e.categorias)) \land (c\not=e.raiz)) \impluego ((\exists t:categoria)(esta?(t,claves(e.categorias)) \land t\not=c) \yluego estaLista?(c,hijas(t)))$
+        {\bf Formalmente:} $(\forall c:categoria)(esta?(c,claves(e.categorias)) \land (c\not=e.raiz)) \impluego ((\exists t:categoria)(esta?(t,claves(e.categorias)) \land t\not=c) \yluego estaLista?(c,eHijas(t)))$
 
   \item Existe una categor\'ia que no tiene padre y que es igual a ra\'iz.\\
-        {\bf Formalmente:} $(\exists c:categoria)(esta?(c,claves(e.categorias)) \yluego c=_{obs}e.raiz) \impluego *(e.raiz.padre) = Null$
+        {\bf Formalmente:} $(\exists c:categoria)(esta?(c,claves(e.categorias)) \yluego c=_{obs}e.raiz) \impluego (e.raiz.padre) = Null$
   	     
   \item Cada categor\'ia tiene un \'unico padre.\\
-        {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,claves(e.categorias))) \yluego (esta?(t,claves(e.categorias)))$ $\yluego (t\not=c)) \yluego ((\forall k:categoria)esta?(k,claves(e.categorias)) \impluego (estaLista?(k,hijas(c)) \yluego estaLista?(k,hijas(t)))$
+        {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,claves(e.categorias))) \yluego (esta?(t,claves(e.categorias)))$ $\yluego (t\not=c)) \yluego ((\forall k:categoria)esta?(k,claves(e.categorias)) \impluego (estaLista?(k,eHijas(c)) \yluego estaLista?(k,eHijas(t)))$
   
   \item La cantidad de categor\'ias totales es igual a UltId.\\
         {\bf Formalmente:} $\#claves(e.categorias) =_{obs} e.ultId$
   
   \item Las categor\'ias hijas de cada categor\'ia tienen un id mayor a \'esta.\\
-        {\bf Formalmente:} $((\forall c:categoria)esta?(c,claves(e.categorias))) \impluego ((\forall t:categoria)(esta?(c,claves(e.categorias)) \yluego estaLista?(t,hijas(c))) \impluego id(c)<id(t))$
+        {\bf Formalmente:} $((\forall c:categoria)esta?(c,claves(e.categorias))) \impluego ((\forall t:categoria)(esta?(c,claves(e.categorias)) \yluego estaLista?(t,eHijas(c))) \impluego id(c)<id(t))$
   
   \item No existen dos IDs iguales para categor\'ias distintas.\\
         {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,claves(e.categorias)) \land esta?(t,claves(e.categorias)) \land t\not=c) \impluego id(c)\not=id(t)$
         
   \item Ningún padre es Null salvo el de la raíz. \\
-  		{\bf Formalmente:} $(\forall t:categoria)(esta?(c,claves(e.categorias)) \land (t\not=e.raiz)) \impluego t.padre\not=Null$
+  		{\bf Formalmente:} $(\forall t:categoria)(esta?(t,claves(e.categorias)) \land (t\not=e.raiz)) \impluego ePadre(e,t)\not=Null$
   		
   \item El padre de la raíz es Null.\\
-  {\bf Formalmente:} $padre(e.raiz) =_{obs} Null$
+  {\bf Formalmente:} $ePadre(e, e.raiz) =_{obs} Null$
   
   \item La altura del \'arbol est\'a acotada por un natural. Esta propiedad nos asegurar\'a que el \'arbol no sea c\'iclico.\\
-  {\bf Formalmente:} $(\exists n:nat)acotado(n,e,e.raiz)$
+  {\bf Formalmente:} $(\exists n:nat)acotado(e, e.raiz, n)$
     
 \end{enumerate}
 
-\tadOperacion{acotado}{nat, abcat, categoria}{Bool}{}
-  \tadAxioma{(n, a, cat)}{\IF $n = 0$ THEN false ELSE ($\forall$ h:categoria)(h $\in$ hijas(a, cat)) acotado(cat-1, a, h) FI}
+\tadAlinearAxiomas{acotado(a, cat, n)}
+\tadOperacion{acotado}{estr, categoria, Nat}{Bool}{}
+  \tadAxioma{acotado(a, cat, n)}{\IF $n = 0$ THEN false ELSE ($\forall$ h:categoria)(h $\in$ hijas(a, cat))acotado(n-1, a, h) FI}
 
-
-  \AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = padre(a,c) $\yluego$ categorias(a) = claves(e.categorias)}
+\tadAlinearAxiomas{eHijas(e ,c)}  
+\tadOperacion{eHijas}{estr\ e, categoria\ c}{secu(categoria)}{def?(c, e.categorias)}
+  \tadAxioma{eHijas(e ,c)}{obtener(e.categorias, c).hijas}
+  
+\tadAlinearAxiomas{ePadre(e ,c)}  
+\tadOperacion{ePadre}{estr\ e, categoria\ c}{puntero(catInfo)}{def?(c, e.categorias)}
+  \tadAxioma{ePadre(e ,c)}{obtener(e.categorias, c).padre}
+  
+\tadAlinearAxiomas{Abs(e)}
+\AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = padre(a,c) $\yluego$ categorias(a) = claves(e.categorias)}
 
 \modTitulo{Justificaci\'on de la representacion de la estructura}
 Para representar el \'arbol de categor\'ias elegimos esta estructura por los siguientes motivos:

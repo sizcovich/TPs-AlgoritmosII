@@ -218,7 +218,7 @@
 \tadAlinearAxiomas{Rep(e)}
 \Rep{}\mbox{}
 
-\AbsFc[estr]{diccString($\alpha$)}{t:diccString($\alpha$) $|$ ((e.trie $\not=$ Null) $\impluego$ ($\forall$ c:categoria)def?(c, t) $\Leftrightarrow$ c $\in$ eClavesTrie(*(e.trie), c))}
+\AbsFc[estr]{diccString($\alpha$)}{($\forall$ c:string)def?(c, t) $\Leftrightarrow$ ((e.trie $\not=$ NULL) \yluego (c $\in$ eClavesTrie(*(e.trie), c)))) \land ($\forall$ )}
 
 \tadAlinearAxiomas{eClavesTrie(n, pal)}
 \tadOperacion{eClavesTrie}{nodo, string}{conj(string)}{}

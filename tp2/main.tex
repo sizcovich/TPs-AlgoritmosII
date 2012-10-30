@@ -489,7 +489,7 @@ Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a 
 	\end{Estructura}
 
 \tadAlinearAxiomas{Rep(e)}
-\Rep[estr][e]{$1 \yluego 2 \land 3 \yluego 4 \yluego 5 \yluego 6 \land 7 \land 8 \land 9 \land 10 \land 11$}\mbox{}
+\Rep[estr][e]{$1 \land 2 \land 3 \yluego 4 \yluego 5 \land 6 \land 7 \yluego 8 \land 9 \yluego 10 \land 11$}\mbox{}
 
 {\bf Donde:}
 
@@ -508,18 +508,19 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
   \item Existe una categor\'ia que no tiene padre y que es igual a ra\'iz.\\
         {\bf Formalmente:} $(\exists c:categoria)(esta?(c,claves(e.categorias)) \yluego c=_{obs}e.raiz) \impluego (e.raiz.padre) = Null$
   	     
-  \item Cada categor\'ia tiene un \'unico padre.\\
-        {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,claves(e.categorias))) \yluego (esta?(t,claves(e.categorias)))$ $\yluego (t\not=c)) \yluego ((\forall k:categoria)esta?(k,claves(e.categorias)) \impluego (estaLista?(k,eHijas(c)) \yluego estaLista?(k,eHijas(t)))$
+  \item Ninguna categor\'ia tiene m\'as de un padre.\\
+        {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,claves(e.categorias))) \yluego (esta?(t,claves(e.categorias)))$ $\yluego (t\not=c) \land (t\not=e.raiz)) \yluego ((\forall k:categoria)esta?(k,claves(e.categorias)) \impluego (estaLista?(k,eHijas(c)) \yluego estaLista?(k,eHijas(t)))$
   
   \item La cantidad de categor\'ias totales es igual a UltId.\\
         {\bf Formalmente:} $\#claves(e.categorias) =_{obs} e.ultId$
   
-  \item Las categor\'ias hijas de cada categor\'ia tienen un id mayor a \'esta.\\
-        {\bf Formalmente:} $((\forall c:categoria)esta?(c,claves(e.categorias))) \impluego ((\forall t:categoria)(esta?(c,claves(e.categorias)) \yluego estaLista?(t,eHijas(c))) \impluego id(c)<id(t))$
   
   \item No existen dos IDs iguales para categor\'ias distintas.\\
         {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,claves(e.categorias)) \land esta?(t,claves(e.categorias)) \land t\not=c) \impluego id(c)\not=id(t)$
         
+  \item Las categor\'ias hijas de cada categor\'ia tienen un id mayor a \'esta.\\
+        {\bf Formalmente:} $((\forall c:categoria)esta?(c,claves(e.categorias))) \impluego ((\forall t:categoria)(esta?(c,claves(e.categorias)) \yluego estaLista?(t,eHijas(c))) \impluego id(c)<id(t))$
+              
   \item Ningún padre es Null salvo el de la raíz. \\
   		{\bf Formalmente:} $(\forall t:categoria)(esta?(t,claves(e.categorias)) \land (t\not=e.raiz)) \impluego ePadre(e,t)\not=Null$
   		
@@ -543,18 +544,14 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
 \tadOperacion{ePadre}{estr\ e, categoria\ c}{puntero(catInfo)}{def?(c, e.categorias)}
 \tadAxioma{ePadre(e, c)}{obtener(e.categorias, c).padre}
 ~
+\tadAlinearFunciones{Abs}{estr\ e}
 \tadAlinearAxiomas{Abs(e)}
-\AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ (($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ (($\exists$ t: categoria)esta?(c,claves(e.categorias)) $\impluego$ esSuId?(t,(ePadre(e,c).id)) $\yluego$ padre(a,c) = t) $\yluego$ categorias(a) = claves(e.categorias)}
+\AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ eId(e,c) = id(a,c) $\land$ (($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ (($\exists$ t: categoria)esta?(c,claves(e.categorias)) $\impluego$ esSuId?(t,(ePadre(e,c).id)) $\yluego$ padre(a,c) = t) $\yluego$ categorias(a) = claves(e.categorias)}
 ~
 \tadAlinearFunciones{eId}{estr\ e, categoria\ c}
 \tadAlinearAxiomas{eId(e, c)}
 \tadOperacion{eId}{estr\ e, categoria\ c}{Nat}{def?(c, e.categorias)}
 \tadAxioma{eId(e, c)}{obtener(e.categorias, c).id}
-~
-\tadAlinearFunciones{deIdACat}{estr\ e, nat\ i}
-\tadAlinearAxiomas{deIdACat(e, i)}
-\tadOperacion{deIdACat}{estr\ e, Nat\ i}{Nat}{i <= e.ultId}
-\tadAxioma{eIdACat(e, i)}{}
 ~
 \tadAlinearFunciones{esSuId?}{estr\ e, categoria\ c, nat\ i}{}
 \tadAlinearAxiomas{esSuId?(e, i)}

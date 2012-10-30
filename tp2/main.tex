@@ -578,13 +578,13 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \tadAlinearAxiomas{Rep(e)}
 \Rep{e.iterador $\neq$ NULL}\mbox{}
 
-\AbsFc{itAbCat}{it:itAbCat $|$ Siguientes(it) \igobs ePadres(it.iterador)}
+\AbsFc{itAbCat}{it:itAbCat $|$ Siguientes(it) \igobs ePadres(e.iterador)}
 ~
 \tadAlinearFunciones{ePadres}{puntero(catInfo)}
 \tadAlinearAxiomas{ePadres(pci)}
 \tadOperacion{ePadres}{puntero(catInfo)}{secu(Nat)}{}
 \tadAxioma{ePadres(pci)}{\IF pci = NULL THEN <> ELSE (*pci).id $\bullet$ ePadres((*pci).padre) FI}
-
+~
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 \par El iterador solo necesita guardar un puntero a la categor\'ia actual, ya que con esto alcanza para acceder al padre y as\'i subir en O(1). \'Este se usar\'a en el LinkLinkIt.
 

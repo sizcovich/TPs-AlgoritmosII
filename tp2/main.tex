@@ -756,15 +756,17 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
 \modTitulo{Funciones auxiliares}
 
-	\tadOperacion{secuInfoLinks}{lli\ s, categoria\ c}{secu(tupla(link, categoria, Nat))}{est\'a?(c, categorias(s))}
-	\tadAlinearAxiomas{secuInfoLinks(s, c)}
-	\tadAxioma{secuInfoLinks(s, c)}{infoLinks(s, c, linksOrdenadosPorAccesos(s, c))}
+\tadAlinearFunciones{secuInfoLinks}{lli\ s, categoria\ c, secu(link)\ ls}
+\tadAlinearAxiomas{secuInfoLinks(s, c)}
+
+\tadOperacion{secuInfoLinks}{lli\ s, categoria\ c}{secu(tupla(link, categoria, Nat))}{est\'a?(c, categorias(s))}
+\tadAxioma{secuInfoLinks(s, c)}{infoLinks(s, c, linksOrdenadosPorAccesos(s, c))}
 ~
-	\tadOperacion{infoLinks}{lli\ s, categoria\ c, secu(link)\ ls}{secu(tupla(link, categoria, Nat))}{est\'a?(c, categorias(s)) $\land$ ($\forall$ l:link)(est\'a?(l, ls) $\Rightarrow$ l $\in$ links(s) $\land$ esSubCategoria(categorias(s), c, categoriaLink(s, l)))}
-	\tadAlinearAxiomas{infoLinks(s, c, ls)}
-	\tadAxioma{infoLinks(s, c, ls)}{\IF Vacia(ls) THEN <> ELSE
-					tupla(prim(ls), categoriaLink(s, prim(ls)), accesosRecientes(s, c, prim(ls))) $\bullet$ infoLinks(s, c, fin(ls))
-				FI}
+\tadOperacion{infoLinks}{lli\ s, categoria\ c, secu(link)\ ls}{secu(tupla(link, categoria, Nat))}{est\'a?(c, categorias(s)) $\land$ ($\forall$ l:link)(est\'a?(l, ls) $\Rightarrow$ l $\in$ links(s) $\land$ esSubCategoria(categorias(s), c, categoriaLink(s, l)))}
+\tadAlinearAxiomas{infoLinks(s, c, ls)}
+\tadAxioma{infoLinks(s, c, ls)}{\IF Vacia(ls) THEN <> ELSE
+				tupla(prim(ls), categoriaLink(s, prim(ls)), accesosRecientes(s, c, prim(ls))) $\bullet$ infoLinks(s, c, fin(ls))
+			FI}
 
 \modTitulo{Operaciones del iterador}
 

@@ -527,16 +527,15 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
 
 \tadAlinearAxiomas{acotado(a, cat, n)}
 \tadOperacion{acotado}{estr, categoria, Nat}{Bool}{}
-  \tadAxioma{acotado(a, cat, n)}{\IF $n = 0$ THEN false ELSE ($\forall$ h:categoria)(h $\in$ hijas(a, cat))acotado(n-1, a, h) FI}
-
-\tadAlinearAxiomas{eHijas(e ,c)}  
+\tadAxioma{acotado(a, cat, n)}{\IF $n = 0$ THEN \TipoVariable{False} ELSE ($\forall$ h:categoria)(h $\in$ hijas(a, cat))acotado(n-1, a, h) FI}
+~
+\tadAlinearFunciones{ePadre}{estr\ e, categoria\ c}
+\tadAlinearAxiomas{ePadre(e, c)}
 \tadOperacion{eHijas}{estr\ e, categoria\ c}{secu(categoria)}{def?(c, e.categorias)}
-  \tadAxioma{eHijas(e ,c)}{obtener(e.categorias, c).hijas}
-  
-\tadAlinearAxiomas{ePadre(e ,c)}  
+\tadAxioma{eHijas(e, c)}{obtener(e.categorias, c).hijas}
 \tadOperacion{ePadre}{estr\ e, categoria\ c}{puntero(catInfo)}{def?(c, e.categorias)}
-  \tadAxioma{ePadre(e ,c)}{obtener(e.categorias, c).padre}
-  
+\tadAxioma{ePadre(e, c)}{obtener(e.categorias, c).padre}
+~
 \tadAlinearAxiomas{Abs(e)}
 \AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = padre(a,c) $\yluego$ categorias(a) = claves(e.categorias)}
 

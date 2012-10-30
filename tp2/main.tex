@@ -215,8 +215,8 @@
 	    \end{Tupla}
 	\end{Estructura}
 
-\tadAlinearAxiomas{Rep(d)}
-\Rep[diccTrie($\alpha$)][d]{d.letra$=_{obs}$*(d.trie) $\land$ (obtener(*(d.trie),trie)$=_{obs}$*(d.elem) \oluego obtener(*(d.trie),trie)$=_{obs}$Null) \yluego *(d.elem)$=_{obs}$obtener(d.letra)}\mbox{}
+\tadAlinearAxiomas{Rep(e)}
+\Rep{}\mbox{}
 
 \tadAlinearAxiomas{eClavesTrie(n, pal)}
 \tadOperacion{eClavesTrie}{nodo, string}{conj(string)}{}
@@ -224,7 +224,7 @@
 								 \IF n.hermano = NULL THEN $\emptyset$ ELSE clavesTrie(pal, *n.hermano) FI $\cup$ \\
 								 \IF n.hijo = NULL THEN $\emptyset$ ELSE claveTrie(pal $\circ$ n.letra, *n.hijo) FI}
 
-\AbsFc[estr]{diccTrie($\alpha$)}{t:diccTrie($\alpha$) $|$ obtener(d.letra, trie) = obtener(letra,t) }
+\AbsFc[estr]{diccString($\alpha$)}{t:diccString($\alpha$) $|$ claves(t) = eClavesTrie(e.trie, "") $\land$ ($\forall$c:categoria)c $\in$ claves(t) $\impluego$ def?(c, d) $=_{obs}$ c $\in$ eClavesTrie}
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a su contenido con la complejidad requerida para realizar los algoritmos de otros m\'odulos.

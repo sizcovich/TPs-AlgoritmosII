@@ -220,9 +220,9 @@
 
 \tadAlinearAxiomas{eClavesTrie(n, pal)}
 \tadOperacion{eClavesTrie}{nodo, string}{conj(string)}{}
-\tadAxioma{eClavesTrie(n, pal)}{\IF n.elem = NULL THEN <> ELSE pal \& \{n.letra\} FI \& \\
-								\IF n.hermano = NULL THEN <> ELSE clavesTrie(pal, *n.hermano) FI \& \\
-								\IF n.hijo = NULL THEN <> ELSE claveTrie(pal \& \{n.letra\}, *n.hijo) FI}
+\tadAxioma{eClavesTrie(n, pal)}{\IF n.elem = NULL THEN $\emptyset$ ELSE Ag(pal $\circ$ n.letra, $\emptyset$) FI $\cup$ \\
+								 \IF n.hermano = NULL THEN $\emptyset$ ELSE clavesTrie(pal, *n.hermano) FI $\cup$ \\
+								 \IF n.hijo = NULL THEN $\emptyset$ ELSE claveTrie(pal $\circ$ n.letra, *n.hijo) FI}
 
 \AbsFc[estr]{diccTrie($\alpha$)}{t:diccTrie($\alpha$) $|$ obtener(d.letra, trie) = obtener(letra,t) }
 

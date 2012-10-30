@@ -178,7 +178,7 @@
 	\modTitulo{Operaciones b\'asicas}
 
 	\InterfazFuncion{Vacio}{}{diccString($\alpha$)}
-	  {$res \igobs vacio()$}
+	  {$res \igobs vacio$}
 	  [$\Theta(1)$]
 	  [Genera un diccionario vac\'io.]
 
@@ -500,10 +500,9 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
         {\bf Formalmente:} $(\forall c:categoria)(esta?(c,claves(e.categorias)) \land (c\not=e.raiz)) \impluego ((\exists t:categoria)(esta?(t,claves(e.categorias)) \land t\not=c) \yluego estaLista?(c,hijas(t)))$
 
   \item Existe una categor\'ia que no tiene padre y que es igual a ra\'iz.\\
-        {\bf Formalmente:} $(\forall c:categoria)esta?(c,claves(e.categorias)) \impluego \neg(estaLista?(c,hijas(c)))$
+        {\bf Formalmente:} $(\exists c:categoria)(esta?(c,claves(e.categorias)) \yluego c=_{obs}e.raiz) \impluego *(e.raiz.padre) = Null$
   	     
-  \item Cada categor\'ia tiene un \'unico padre (este \'item (junto con el 2,3 y
-  4) garantiza que el \'arbol no sea c\'iclico) (esto supuestamente queda expl\'icito pues el padre es un puntero).\\
+  \item Cada categor\'ia tiene un \'unico padre.\\
         {\bf Formalmente:} $\neg(\exists t,c:categoria)((esta?(c,claves(e.categorias))) \yluego (esta?(t,claves(e.categorias)))$ $\yluego (t\not=c)) \yluego ((\forall k:categoria)esta?(k,claves(e.categorias)) \impluego (estaLista?(k,hijas(c)) \yluego estaLista?(k,hijas(t)))$
   
   \item La cantidad de categor\'ias totales es igual a UltId.\\
@@ -518,12 +517,17 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
   \item Ningún padre es Null salvo el de la raíz. \\
   		{\bf Formalmente:} $(\forall t:categoria)(esta?(c,claves(e.categorias)) \land (t\not=e.raiz)) \impluego padre(t)\not=Null$
   		
-  \item El padre de la raíz es Null.  \\
+  \item El padre de la raíz es Null.\\
   {\bf Formalmente:} $*padre(e.raiz) =_{obs} Null$
   
-  %\item Dada una categoría que pertenece a una lista de hijas, su categoría padre apunta al padre (necesario?)
+  \item La altura del \'arbol est\'a acotada por un natural. Esta propiedad nos asegurar\'a que el \'arbol no sea c\'iclico.\\
+  {\bf Formalmente:} $(\exists n:nat)acotado(n,e,e.raiz)$
     
 \end{enumerate}
+
+\tadOperacion{acotado}{cota X abcat X nombre}{Bool}{}
+  \tadAxioma{(n, ab, cat)}{\IF $n = 0$ THEN false ELSE ($\forall$ h:string)(h $\in$ hijas(abcat, cat)) acotado(n-1, abcat, h) FI}
+
 
   \AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ *padre(e,c) = padre(a,c) $\yluego$ categorias(a) = claves(e.categorias)}
 

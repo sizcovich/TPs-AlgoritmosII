@@ -752,7 +752,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
     \InterfazFuncion{linksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
 	  [$\emph{est\'a}?(c, categorias(s))$]
-	  {$res \igobs crearIt(secuInfoLinks(s, c))$}
+	  {$res \igobs CrearItUni(secuInfoLinks(s, c))$}
 	  [$\Theta(|c| + n^2)$]
 	  [Devuelve la cantidad de links que tiene una categor\'ia.]
 
@@ -780,30 +780,30 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
 	\InterfazFuncion{CrearItLinks}{\In{ls}{lista(infoLink), \In{f}{fecha}}}{itLinks}
 	  [$(\forall\ l:infoLink)(\emph{est\'a}?(l, ls) \Rightarrow l.ultAcceso \leq f)$]
-	  {$res \igobs \Pi_1(Siguiente(it))$}
+	  {$res \igobs \Pi_1(Actual(it))$}
 	  [$O(1)$]
 
 	\InterfazFuncion{SiguienteLink}{\In{it}{itLinks}}{link}
-	  [$HaySiguiente?(it)$]
-	  {$res \igobs \Pi_1(Siguiente(it))$}
+	  [$HayMas?(it)$]
+	  {$res \igobs \Pi_1(Actual(it))$}
 	  [$O(1)$]
 
 	\InterfazFuncion{SiguienteCategoria}{\In{it}{itLinks}}{categoria}
-	  [$HaySiguiente?(it)$]
-	  {$res \igobs \Pi_2(Siguiente(it))$}
+	  [$HayMas?(it)$]
+	  {$res \igobs \Pi_2(Actual(it))$}
 	  [$O(1)$]
 
 	\InterfazFuncion{SiguienteAccesosRecientes}{\In{it}{itLinks}}{Nat}
-	  [$HaySiguiente?(it)$]
-	  {$res \igobs \Pi_3(Siguiente(it))$}
+	  [$HayMas?(it)$]
+	  {$res \igobs \Pi_3(Actual(it))$}
 	  [$O(1)$]
 
 	\InterfazFuncion{HaySiguiente}{\In{it}{itLinks}}{Bool}
-	  {$res \igobs HaySiguiente?(it)$}
+	  {$res \igobs HayMas?(it)$}
 	  [$O(1)$]
 
 	\InterfazFuncion{Avanzar}{\Inout{it}{itLinks}}{}
-	  [$it = it_0 \land HaySiguiente?(it)$]
+	  [$it = it_0 \land HayMas?(it)$]
 	  {$it \igobs Avanzar(it_0)$}
 	  [$O(1)$]
 
@@ -825,7 +825,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \end{Estructura}
 
 \tadAlinearAxiomas{Rep(e)}
-\Rep[LinkLinkIt][e]{}\mbox{}
+\Rep{}\mbox{}
 
 \subsection{Iterador}
 

@@ -544,7 +544,7 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
 \tadAxioma{ePadre(e, c)}{obtener(e.categorias, c).padre}
 ~
 \tadAlinearAxiomas{Abs(e)}
-\AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ (($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ ((\exists t: categoria)esta?(c,claves(e.categorias)) $\impluego$ esSuId?(t,(ePadre(e,c).id)) \yluego padre(a,c) = t) $\yluego$ categorias(a) = claves(e.categorias)}
+\AbsFc[estr]{abcat}{a:abcat $|$ e.raiz = raiz(a) $\land$ ($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ id(e,c) = id(a,c) $\land$ (($\forall$ c:categoria)esta?(c,claves(e.categorias)) $\impluego$ (($\exists$ t: categoria)esta?(c,claves(e.categorias)) $\impluego$ esSuId?(t,(ePadre(e,c).id)) $\yluego$ padre(a,c) = t) $\yluego$ categorias(a) = claves(e.categorias)}
 ~
 \tadAlinearFunciones{eId}{estr\ e, categoria\ c}
 \tadAlinearAxiomas{eId(e, c)}
@@ -668,7 +668,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \begin{algorithm}[H]
 \caption*{iHayMasPadres?(\In{it}{itAbCat}) $\DRef res$ : \TipoVariable{Bool}}
 \begin{algorithmic}[1]
-	\State $res \gets it.padre \neq \TipoVariable{NULL}$\Comment{$\Theta(1)$}
+	\State $res \gets (*it.iterador).padre \neq \TipoVariable{NULL}$\Comment{$\Theta(1)$}
 \end{algorithmic}
 	\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}
@@ -676,7 +676,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \begin{algorithm}[H]
 \caption*{iSubir(\Inout{it}{itAbCat})}
 \begin{algorithmic}[1]
-	\State $it \gets \&it.padre$ \Comment{$\Theta(1)$}
+	\State $it \gets (*it.iterador).padre$ \Comment{$\Theta(1)$}
 \end{algorithmic}
 	\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}
@@ -684,7 +684,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \begin{algorithm}[H]
 \caption*{iActualID(\In{it}{itAbCat}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
-	\State $res \gets it.id$ \Comment{$\Theta(1)$}
+	\State $res \gets (*it.iterador).id$ \Comment{$\Theta(1)$}
 \end{algorithmic}
 	\textbf{C\'alculo de complejidad}: $\Theta(1)$
 \end{algorithm}

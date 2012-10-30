@@ -515,7 +515,7 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
         {\bf Formalmente:} $(\forall c,t:categoria)(esta?(c,claves(e.categorias)) \land esta?(t,claves(e.categorias)) \land t\not=c) \impluego id(c)\not=id(t)$
         
   \item Ningún padre es Null salvo el de la raíz. \\
-  		{\bf Formalmente:} $(\forall t:categoria)(esta?(c,claves(e.categorias)) \land (t\not=e.raiz)) \impluego padre(t)\not=Null$
+  		{\bf Formalmente:} $(\forall t:categoria)(esta?(c,claves(e.categorias)) \land (t\not=e.raiz)) \impluego t.padre\not=Null$
   		
   \item El padre de la raíz es Null.\\
   {\bf Formalmente:} $*padre(e.raiz) =_{obs} Null$
@@ -536,7 +536,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \begin{itemize}
 	\item El Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloc\'o en cada nodo una lista con los nombres de cada hijo. 
 	\item Esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|$c$|) donde $c$ es el nombre de la categor\'ia.
-	\item Tener un puntero a la categor\'ia padre, nos permite luego hacer un iterador de padres.
+	\item Tener un puntero a la categor\'ia padre nos permite luego hacer un iterador de padres.
 \end{itemize}
 
 \subsection{Iterador}

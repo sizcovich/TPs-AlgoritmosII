@@ -618,19 +618,19 @@ ACLARACI\'ON: Llamaremos a la operaci\'on ``esta?'' (definida en el TAD secuenci
 \modTitulo{Justificaci\'on de la representacion de la estructura}
 Para representar el \'arbol de categor\'ias elegimos esta estructura por los siguientes motivos:
 \begin{itemize}
-	\item El Diccionario Trie modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloc\'o en cada nodo una lista con los nombres de cada hijo. \\
+	\item El Diccionario String modulariza perfectamente un \'arbol de categor\'ias dado que es posible conocer los hijos de cada una de las categor\'ias con la complejidad requerida, para esto, se coloc\'o en cada nodo una lista con los nombres de cada hijo. \\
 	\item Esta estructura nos permite acceder a la ra\'iz del arbol en O(1) y al ID de cada categor\'ia en O(|$c$|) donde $c$ es el nombre de la categor\'ia.\\
-	\item Tener un puntero a la categor\'ia padre nos permite luego hacer un iterador de padres.\\
+	\item Tener un puntero a la categor\'ia padre nos permite luego hacer un iterador de padres el cual utilizaremos en linkLinkIt.\\
 \end{itemize}
 
 La estructura elegida se puede explicar de la siguiente manera:
 \begin{itemize}
 	\item $categorias$ es un DiccString que almacena cada categor\'ia junto con su informaci\'on. \\
-	\item $raiz$ es la categor\'ia raiz del Trie.\\
-	\item $ultId$ es el $id$ de la \'ultima categor\'ia agregada al Trie.\\
+	\item $raiz$ es la categor\'ia raiz del arbol de categorias.\\
+	\item $ultId$ es el $id$ de la \'ultima categor\'ia agregada al arbol.\\
 	\item $id$ es el id de la categor\'ia cuya $catInfo$ est\'a siendo observada.\\
 	\item $padre$ es un puntero a la informaci\'on del padre de la categor\'ia que est\'a siendo observada.\\
-	\item $hijas$ es la lista de hijas directas de la categor\'ia.\\
+	\item $hijas$ es la lista de las hijas directas de un categor\'ia.\\
 \end{itemize}
 
 \subsection{Iterador}
@@ -1266,7 +1266,7 @@ Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que rel
 	  [$hayMas?(it) \land it \igobs it_0$]
 	  {$it \igobs Avanzar(it_0)$}
 	  [$\Theta(1)$]
-	  [Avanza al iterador a la siguiente posici\'on.]
+	  [Avanza el iterador a la siguiente posici\'on.]
 	  
 	 \InterfazFuncion{Actual}{\In{it}{iteradorUni($\alpha$)}}{$\alpha$}
 	  {$res \igobs Actual(it)$}

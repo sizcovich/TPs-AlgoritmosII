@@ -965,7 +965,7 @@ l:link) l $\in$ links(s) \impluego ($\forall$ f:fecha)
 accesosRecientesDia(s, l, f) $\impluego$}
 ~
 \tadAlinearFunciones{mayorUltimoAcceso}{lista(puntero(infoLinik))}{fecha}
-\tadAlinearAxiomas{mayorUltimoAcceso}
+\tadAlinearAxiomas{mayorUltimoAcceso(list)}
 \tadOperacion{mayorUltimoAcceso}{lista(puntero(infoLinik))}{fecha}{}
 \tadAxioma{mayorUltimoAcceso(list)}{\IF list $\neq$ <>
 THEN max(prim(list).ultAcceso, mayorUltimoAcceso(fin(list))) ELSE 0 FI}

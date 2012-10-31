@@ -294,15 +294,17 @@ hijoChar((*p).hermano, c) FI}
 %ELSE hermanoChar((*p).hermano, c) FI}
 %~
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
-Para representar el DiccString, hemos elegido la estructura mostrada anteriormente (que representa a un trie) ya que nos permite acceder al contenido del mismo con la complejidad requerida para realizar los algoritmos de otros m\'odulos. Dicha estructura se explica de la siguiente manera:\\
+Para representar el DiccString, hemos elegido la estructura mostrada anteriormente (que representa a un trie) ya que nos permite acceder al contenido del mismo con la complejidad requerida para realizar los algoritmos de otros m\'odulos. Dicha estructura se explica de la siguiente manera:
 \begin{itemize}
-\item $trie$ es un puntero al primer char del primer string añadido.\\
-\item $hijo$ y $hermano$ son punteros que nos sirven para poder recorrer el trie e ir formando los strings que se van almacenando en el trie. \\ \tab $hermano$ nos dice que esos dos caracteres(tanto el que se representa con el nodo que lo contiene como el nodo al que \'este apunta) comparten el mismo string como prefijo.\\
-\tab $hijo$ nos dice que el string contin\'ua (en el caso en el que $hijo$ no es $NULL$) o que finaliza ah\'i (en el caso contrario).\\
-\item $elem$ es un puntero al significado de la palabra, por lo que el $elem$ de un char puede o no ser NULL (dependiendo de si la palabra lleg\'o o no a su fin).\\
-\item $letra$ es el char que representa ese nodo.\\
+	\item $trie$ es un puntero al primer char del primer string a\~{n}adido.
+	\item $hijo$ y $hermano$ son punteros que nos sirven para poder recorrer el trie e ir formando los strings que se van almacenando en el trie.
+	\begin{itemize}
+	  \item[hermano] nos dice que esos dos caracteres (tanto el que se representa con el nodo que lo contiene como el nodo al que \'este apunta) comparten el mismo string como prefijo.
+	  \item[hijo] nos dice que el string contin\'ua (en el caso en el que $hijo$ no es $NULL$) o que finaliza ah\'i (en el caso contrario).
+	\end{itemize}
+	\item $elem$ es un puntero al significado de la palabra, por lo que el $elem$ de un char puede o no ser NULL (dependiendo de si la palabra lleg\'o o no a su fin).
+	\item $letra$ es el char que representa ese nodo.
 \end{itemize}
-
 
 
 \modTitulo{Operacion Auxiliar}

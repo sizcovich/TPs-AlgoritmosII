@@ -952,13 +952,19 @@ La estructura elegida se puede explicar de la siguiente manera:
 Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que relaciona los m\'odulos necesarios para definirla respetando las complejidades requeridas. Dicha representaci\'on se explica de la siguiente manera:
 
 \begin{itemize}
-	\item $aCategorias$ es el \'arbol de categor\'ias del sistema.\\
-	\item $linksPorCat$ es un vector de lista en el que se encuentran todos los punteros a $infoLink$.\\
-	\item $infoLinks$ es un DiccString que guarda, para cada categor\'ia, su $infoLink$.\\
-	\item $link$ es el link del que queremos observar la informaci\'on.\\
-	\item $categoria$ es la categor\'ia del link que se encuentra en el primer elemento de la tupla.\\
-	\item $ultAcceso$ es la fecha de la \'ultima visita realizada a ese link.\\
-	\item $accesos$ es un vector de 3 posiciones en el que se guarda la cantidad de visitas de los 3 \'ultimos d\'ias (respectivamente) para el link pasado como primer elemento de la tupla.\\
+  \item en estr
+  \begin{itemize}
+	\item $aCategorias$ es el \'arbol de categor\'ias del sistema.
+	\item $linksPorCat$ es un vector en donde cada uno de sus \'indices representa el ID de la categor\'ia a la que su lista de links pertenecen. No solo tienen sus links, sino tambi\'en los links de sus hijos. Cuando me refiero a link, nos estamos refiriendo en verdad a un \TipoVariable{puntero(InfoLink)}.
+	\item $infoLinks$ es un DiccString que guarda, para cada link, sus datos representados por un $infoLink$.
+  \end{itemize}
+  \item en infoLink
+  \begin{itemize}
+	\item $link$ es el link del que queremos observar la informaci\'on.
+	\item $categoria$ es la categor\'ia del link que estamos observando.
+	\item $ultAcceso$ es la fecha de la \'ultima visita realizada a ese link.
+	\item $accesos$ es un vector de 3 posiciones en el que se guarda la cantidad de visitas de los 3 \'ultimos d\'ias (respectivamente) para el link observado.
+  \end{itemize}
 \end{itemize}
 
 \subsection{Iterador}

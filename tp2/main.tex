@@ -222,8 +222,7 @@
 
 \begin{enumerate}
   \item Todos los nodos cuyo hijo sea NULL, tienen elem distinto de NULL.\\
-        {\bf Formalmente:} $(\forall p:puntero(nodo), p \in ePunteros(e.trie))
-        \ ((*p).hijo = NULL) \Rightarrow (*p).elem \neq NULL$
+        {\bf Formalmente:} $(\forall p:puntero(nodo))(p \in ePunteros(e.trie))) \impluego (((*p).hijo = NULL) \Rightarrow (*p).elem \neq NULL$)
 
   \item No existen dos \TipoVariable{punteros(nodo)} iguales.\\
         {\bf Formalmente:} $sinRepetidos(ePunteros(e.trie))$
@@ -233,9 +232,9 @@
 %        ePunteros(e.trie),\ q \in Punteros(e.trie),\ (*q) = (*p).hermano)\\
 %        (*q).letra \neq (*p).letra$
 
-  \item No existen dos hermanos con la misma letra\\
-        {\bf Formalmente:} $ (\forall p:puntero(nodo),\ p \in
-        ePunteros(e.trie))\ sinRepetidos(letrasHermanos(p))$
+  \item No existen dos hermanos conteniendo la misma letra.\\
+        {\bf Formalmente:} $(\forall p:puntero(nodo))p \in
+        ePunteros(e.trie) \impluego sinRepetidos(letrasHermanos(p))$
 
 \end{enumerate}
 ~
@@ -262,10 +261,10 @@ letrasHermanos((*p).hermano) FI}
 \tadAxioma{sinRepetidos(a)}{$\neg$esta?(prim(a),fin(a)) $\land$ sinRepetidos(fin(a))}
 ~
 \tadAlinearAxiomas{Abs(e)}
-\AbsFc{diccString($\alpha$)}{($\forall$ c:\ string)def?(c, e)
-$\Leftrightarrow$ ((e.trie $\not=$ NULL) $\impluego$ (c $\in$
-eClavesTrie(*(e.trie), c))) $\land$ ($\forall$ d:\ vector(char), def?(d, e))
-obtener(d, e) $\Leftrightarrow$ dameSignif(d,e.trie)}
+\AbsFc{diccString($\alpha$)}{($\forall$ c:\ string)(def?(c, e)
+$\Leftrightarrow$ ((e.trie $\not=$ NULL)) $\impluego$ (c $\in$
+eClavesTrie(*(e.trie), c))) $\land$ ($\forall$ d:\ vector(char))def?(d, e)) \impluego
+(obtener(d, e) $\Leftrightarrow$ dameSignif(d,e.trie))}
 ~
 \tadAlinearAxiomas{eClavesTrie(n, pal)}
 \tadOperacion{eClavesTrie}{nodo, string}{conj(string)}{}

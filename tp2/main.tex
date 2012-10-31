@@ -859,7 +859,7 @@ La estructura elegida se puede explicar de la siguiente manera:
 \tadOperacion{secuInfoLinks}{lli\ s, categoria\ c}{secu(tupla(link, categoria, Nat))}{est\'a?(c, categorias(s))}
 \tadAxioma{secuInfoLinks(s, c)}{infoLinks(s, c, linksOrdenadosPorAccesos(s, c))}
 ~
-\tadOperacion{infoLinks}{lli\ s, categoria\ c, secu(link)\ ls}{secu(tupla(link, categoria, Nat))}{est\'a?(c, categorias(s)) $\land$ ($\forall$ l:link)(est\'a?(l, ls) $\Rightarrow$ l $\in$ links(s) $\land$ esSubCategoria(categorias(s), c, categoriaLink(s, l)))}
+\tadOperacion{infoLinks}{lli\ s, categoria\ c, secu(link)\ ls}{secu(tupla(link, categoria, Nat))}{est\'a?(c, categorias(s)) $\land$ ($\forall$ l:link)(est\'a?(l, ls) $\Rightarrow$ l $\in$ links(s) $\land$ esSubCategoria(s.aCategorias, c, categoriaLink(s.aCategorias, l)))}
 \tadAlinearAxiomas{infoLinks(s, c, ls)}
 \tadAxioma{infoLinks(s, c, ls)}{\IF Vacia(ls) THEN <> ELSE
 				tupla(prim(ls), categoriaLink(s, prim(ls)), accesosRecientes(s, c, prim(ls))) $\bullet$ infoLinks(s, c, fin(ls))
@@ -868,7 +868,7 @@ La estructura elegida se puede explicar de la siguiente manera:
 \modTitulo{Operaciones del iterador}
 
 	\InterfazFuncion{CrearItLinks}{\In{ls}{lista(infoLink)}, \In{f}{fecha}, \In{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
-	  [$(\forall\ l:infoLink)(\emph{est\'a}?(l, ls) \Rightarrow l.ultAcceso \leq f)$]
+	  [$(\forall\ l:infoLink)(\emph{est\'a}?(l, ls) \Rightarrow l.ultAcceso \leq f \land esSubCategoria(s.aCategorias, c, l.categoria))$]
 	  {$res \igobs CrearItUni(secuInfoLinks(s, c))$}
 	  [$O(1)$]
 	  [Genera un iterador de links que permite verse a si mismo, observar su categor\'ia y la cantidad de accesos recientes.]
@@ -1023,7 +1023,7 @@ Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que rel
 ~
 \tadAlinearFunciones{Abs}{estr\ e}
 \tadAlinearAxiomas{Abs(e)}
-\AbsFc{itL}{}
+\AbsFc{itUni}{it:itUni $|$ Siguientes(it) $\igobs$ }
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 

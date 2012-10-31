@@ -956,7 +956,17 @@ La estructura elegida se puede explicar de la siguiente manera:
 ~
 \tadAlinearFunciones{Abs}{estr\ e}
 \tadAlinearAxiomas{Abs(e)}
-\AbsFc{lli}{}
+\AbsFc{lli}{$l : lli $|$ categorias(l) = e.categorias \land links(l) = cjtoLinks() \land (\forall link:link)link \in links(l) \impluego categoriaLink(l,link) = obtener(link, e.linksPorCat).categoria \land fechaActual(l) = mayorUltimoAcceso \land (\forall link:link)link \in links(l) \impluego fechaUltimoAcceso(l,link) = obtener(e.infoLinks, link).ultAcceso \land  (\forall link:link)link \in links(l) \impluego (\forall fecha:nat) accesosRecientesDia(l, link, fecha) \impluego $}
+~
+\tadAlinearFunciones{cjtoLinks}{cjto(links)}
+\tadAlinearAxiomas{cjtoLinks(a)}
+\tadOperacion{cjtoLinks}{acat}{conj(link)}{}
+\tadAxioma{cjtoLinks(a)}{}
+~
+\tadAlinearFunciones{mayorUltimoAcceso}{nat}
+\tadAlinearAxiomas{mayorUltimoAcceso}
+\tadOperacion{mayorUltimoAcceso}{DiccString}{fecha}{}
+\tadAxioma{mayorUltimoAcceso(d)}{}
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que relaciona los m\'odulos necesarios para definirla respetando las complejidades requeridas. Dicha representaci\'on se explica de la siguiente manera:

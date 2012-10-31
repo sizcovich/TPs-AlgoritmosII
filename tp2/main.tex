@@ -622,6 +622,16 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 	\item Tener un puntero a la categor\'ia padre nos permite luego hacer un iterador de padres.
 \end{itemize}
 
+La estructura elegida se puede explicar de la siguiente manera:
+\begin{itemize}
+	\item $categorias$ es un DiccString que almacena cada categor\'ia junto con su informaci\'on. 
+	\item $raiz$ es la categor\'ia raiz del Trie.
+	\item $ultId$ es el $id$ de la \'ultima categor\'ia agregada al Trie.
+	\item $id$ es el id de la categor\'ia cuya $catInfo$ est\'a siendo observada.
+	\item $padre$ es un puntero a la informaci\'on del padre de la categor\'ia que est\'a siendo observada.
+	\item $hijas$ es la lista de hijas directas de la categor\'ia.
+\end{itemize}
+
 \subsection{Iterador}
 
 	\begin{Estructura}{itAbCat}

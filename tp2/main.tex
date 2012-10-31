@@ -1032,11 +1032,16 @@ Esta estructura contiene una lista de links para los cuales se puede saber su ca
 \modTitulo{Operacion Auxiliar}
 
 
-\InterfazFuncion{puntajeDelLink}{\In{s}{LinkLinkIt}, \In{il}{infoLink}, \In{ultAccesoCat}{fecha}}{Nat}
+\InterfazFuncion{puntajeDelLink}{\In{il}{infoLink}, \In{ultAccesoCat}{fecha}}{Nat}
   [$il.ultAcceso \leq f$]
-  {$res \igobs accesosRecientes(s, il.categoria, il.link)$}
+  {$res \igobs puntajeDelLink(il, ultAccesoCat)$}
   [$\Theta(1)$]
   [Devuelve el puntaje del link. Esta funci\'on es privada ya que recibe una estructura interna.]
+\\
+\tadAlinearFunciones{puntajeDelLink}{infoLink\ il, fecha\ f}
+\tadAlinearAxiomas{puntajeDelLink(il, f)}
+\tadOperacion{puntajeDelLink}{infoLink\ il, fecha\ f}{Nat}{il.ultAcceso \leq f}
+\tadAxioma{puntajeDelLink(il, f)}{\IF $il.ultAcceso + 3 > f$ THEN 0 ELSE indice(il.accesos, f - il.ultAcceso) + puntajeDelLink(il.ultAcceso, f + 1) FI}
 
 \subsection{Algoritmos}
 
@@ -1167,7 +1172,7 @@ Esta estructura contiene una lista de links para los cuales se puede saber su ca
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption*{iPuntajeDelLink(\In{s}{LinkLinkIt}, \In{il}{infoLink}, \In{ultAccesoCat}{fecha}) $\DRef res$ : \TipoVariable{Nat}}
+\caption*{iPuntajeDelLink(\In{il}{infoLink}, \In{ultAccesoCat}{fecha}) $\DRef res$ : \TipoVariable{Nat}}
 \begin{algorithmic}[1]
     \State $res \gets 0$\Comment{$O(1)$}
     \State $i \gets 3$\Comment{$O(1)$}

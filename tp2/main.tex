@@ -770,7 +770,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
     \InterfazFuncion{puntajeDelLink}{\In{il}{infoLink}, \In{f}{fecha}}{Nat}
 	  [$il.ultAcceso \leq f$]
-	  {$res \igobs ???$}
+	  {$res \igobs accesosRecientes($?`$s?, infoLink.categoria, infoLink.link)$}
 	  [$\Theta(1)$]
 	  [Devuelve el puntaje del link. Esta funci\'on es privada ya que recibe una estructura interna.]
 
@@ -1186,11 +1186,11 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
     
 \tadAlinearFunciones{Rep}{estr}
 \tadAlinearAxiomas{Rep(e)}
-\Rep[estr][e]{true}\mbox{}
+\Rep{true}\mbox{}
 
 \tadAlinearFunciones{Abs}{estr\ e}
-\tadAlinearAxiomas{Abs}
-\AbsFc[estr]{itUni}{}
+\tadAlinearAxiomas{Abs(e)}
+\AbsFc{iteradorUni($\alpha$)}{it:iteradorUni($\alpha$) $|$ Siguientes(it) $\igobs$ Siguientes(e.it)}
 
 \modTitulo{Justificaci\'on}
 Para representar el iterador unidireccional de la lista, decidimos usar el iterador bidireccional que nos provee la lista enlazada y obtener, del iterador, las operaciones que necesitamos.

@@ -280,7 +280,7 @@ En este auxiliar y en los auxiliares que llama, supongo que la clave existe.
 \tadAlinearAxiomas{dameSignifAux(a, n, p)}
 \tadOperacion{dameSignifAux}{vector(char), nat,
 puntero(nodo)}{puntero($\alpha$)}{}
-\tadAxioma{dameSignifAux(a, n, p)}{\IF n = longitud(a)-1 THEN (*p).elem
+\tadAxioma{dameSignifAux(a, n, p)}{\IF n = long(a)-1 THEN (*p).elem
 ELSE dameSignifAux(a, n+1, hijoChar(p, a[n])) FI}
 ~
 \tadAlinearAxiomas{hijoChar(p, c)}

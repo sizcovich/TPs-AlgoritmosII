@@ -921,7 +921,7 @@ La estructura elegida se puede explicar de la siguiente manera:
 
 \tadAlinearFunciones{Rep}{estr}
 \tadAlinearAxiomas{Rep(e)}
-\Rep{$1 \land 2$}\mbox{}
+\Rep{$1 \land 2 \land (\forall pil:puntero(infoLink))(pil \in aplanar(e.linksPorCat) \impluego 3 \yluego 4)$}\mbox{}
 
 {\bf Donde:}
 
@@ -929,20 +929,30 @@ La estructura elegida se puede explicar de la siguiente manera:
   \item La longitud de linksPorCat es igual a la cantidad de categor\'ias existentes.\\
 		{\bf Formalmente:} $\#e.linksPorCat \igobs \#categorias(e.aCategorias)$
 
+  \item Todo infoLink definido en $infoLinks$ aparece en la lista que le corresponde de $linksPorCat$ seg\'un el ID de su categor\'ia y las categor\'ias padres a ella.\\
+		{\bf Formalmente:} $(\forall l:link, il:infoLink)(def?(e.infoLinks, link) \yluego obtener(e.infoLinks, link) \igobs il \Rightarrow (\forall c:Nat)(c \in eCategoriasPadres(e.aCategorias, il) \impluego esta?(\&il, indice(e.linksPorCat, c))))$
+
   \item Todo infoLink en linksPorCat debe estar definido en infoLinks con la clave igual a su link.\\
-		{\bf Formalmente:} $(\forall pil:puntero(infoLink))(pil \in aplanar(e.linksPorCat) \impluego (pil \neq NULL \yluego \&obtener(e.infoLinks, (*pil).link) \igobs pil))$
+		{\bf Formalmente:} $pil \neq NULL \yluego \&obtener(e.infoLinks, (*pil).link) \igobs pil$
 
-  \item El vector accesos de todo infoLink tiene longitud 3.\\
-		{\bf Formalmente:} 
-
-  \item Todo infoLink definido en infoLinks aparece en la lista que le corresponde seg\'un el ID de su categor\'ia y las categor\'ias padres a ella.\\
-		{\bf Formalmente:}
+  \item El vector $accesos$ de todo infoLink tiene longitud 3.\\
+		{\bf Formalmente:} $\#(*pil).accesos \igobs 3$
 \end{enumerate}
 
+\tadAlinearFunciones{eCategoriasPadres}{abCat\ ac, infoLink\ il}
+\tadAlinearAxiomas{eCategoriasPadres(ac, il)}
+\tadOperacion{eCategoriasPadres}{abCat\ ac, infoLink\ il}{conj(Nat)}{il.categoria $\in$ categorias(ac)}
+\tadAxioma{eCategoriasPadres(ac, il)}{Ag(id(ac, il.categoria), \IF il.padre $\neq$ NULL THEN eCategoriasPadres(*il.padre) ELSE $\emptyset$ FI)}
+~
 \tadAlinearFunciones{aplanar}{secu(secu($\alpha$))}
 \tadAlinearAxiomas{aplanar(ss)}
 \tadOperacion{aplanar}{secu(secu($\alpha$))}{secu($\alpha$)}{}
-\tadAxioma{aplanar(ss)}{\IF vacia?(ss) THEN <> ELSE prim(ss) $\bullet$ fin(ss) FI}
+\tadAxioma{aplanar(ss)}{\IF vacia?(ss) THEN <> ELSE prim(ss) \& aplanar(fin(ss)) FI}
+~
+\tadAlinearFunciones{indice}{secu($\alpha$)\ s, Nat\ i}
+\tadAlinearAxiomas{indice(s, i)}
+\tadOperacion{indice}{secu($\alpha$)\ s, Nat\ i}{$\alpha$}{i < \#s}
+\tadAxioma{indice(s, i)}{\IF i = 0 THEN prim(s) ELSE indice(fin(s), i - 1) FI}
 ~
 \tadAlinearFunciones{Abs}{estr\ e}
 \tadAlinearAxiomas{Abs(e)}
@@ -955,7 +965,7 @@ Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que rel
   \item en estr
   \begin{itemize}
 	\item $aCategorias$ es el \'arbol de categor\'ias del sistema.
-	\item $linksPorCat$ es un vector de lista de links. Los \'indices de dicho vector representan al Id de la categor\'ia correspondiente a cada lista de links. Las listas de links no tienen \'unicamente sus links sino que tambi\'en contienen los links de sus categor\'ias hijas. Cuando hablamos de link, nos estamos refiriendo en realidad a un \TipoVariable{puntero(InfoLink)}. 
+	\item $linksPorCat$ es un vector de lista de links. Los \'indices de dicho vector representan al ID de la categor\'ia correspondiente a cada lista de links. Las listas de links no tienen \'unicamente sus links sino que tambi\'en contienen los links de sus categor\'ias hijas. Cuando hablamos de link, nos estamos refiriendo en realidad a un \TipoVariable{puntero(InfoLink)}. 
 	\item $infoLinks$ es un DiccString que guarda, para cada link, sus datos representados por un $infoLink$.
   \end{itemize}
   \item en infoLink
@@ -1001,7 +1011,7 @@ Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que rel
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 
-Esta estructura contiene una lista de links para los cuales (en orden) se puede saber qu\'e link es, su categor\'ia y su ``accesosRecientes''. Para este \'ultimo dato es que necesitamos tener una copia del sistema y saber la \'ultima fecha a la cual fue accedido alguno de estos links, que guardamos en $utlAcceso$ para poder accederla r\'apidamente.
+Esta estructura contiene una lista de links para los cuales se puede saber su categor\'ia y su ``accesosRecientes'', uno por uno. Para este \'ultimo dato, necesitamos tener una copia del sistema y saber la \'ultima fecha en la cual se accedi\'o alguno de estos links, \'esta la guardamos en $utlAcceso$ para poder tenerla r\'apidamente.
 
 \modTitulo{Operacion Auxiliar}
 

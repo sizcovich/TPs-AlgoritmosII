@@ -957,15 +957,16 @@ La estructura elegida se puede explicar de la siguiente manera:
 \tadAlinearFunciones{Abs}{estr\ e}
 \tadAlinearAxiomas{Abs(e)}
 \AbsFc{lli}{s : lli $|$ categorias(s) = e.categorias $\land$ links(s) =
-cjtoLinks() $\land$ ($\forall$ l:link) l $\in$ links(s) \impluego
+cjtoLinks(s.infoLinks) $\land$ ($\forall$ l:link) l $\in$ links(s) \impluego
 categoriaLink(s, l) = obtener(l, e.linksPorCat).categoria $\land$ fechaActual(s)
 = mayorUltimoAcceso $\land$ ($\forall$ k:link) k $\in$ links(s) $\impluego$
 fechaUltimoAcceso(s, k) = obtener(e.infoLinks, k).ultAcceso $\land$  ($\forall$
 l:link) l $\in$ links(s) \impluego ($\forall$ f:fecha)
-accesosRecientesDia(s, l, f) $\impluego$ } ~
-\tadAlinearFunciones{cjtoLinks}{acat}
+accesosRecientesDia(s, l, f) $\impluego$ } 
+~
+\tadAlinearFunciones{cjtoLinks}{diccString(infolink)}
 \tadAlinearAxiomas{cjtoLinks(a)}
-\tadOperacion{cjtoLinks}{acat}{conj(link)}{}
+\tadOperacion{cjtoLinks}{diccString(infolink)}{conj(link)}{}
 \tadAxioma{cjtoLinks(a)}{}
 ~
 \tadAlinearFunciones{mayorUltimoAcceso}{Diccstring}

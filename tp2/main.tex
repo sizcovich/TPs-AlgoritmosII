@@ -336,6 +336,29 @@ Para representar el DiccString, hemos elegido la estructura mostrada anteriormen
 \end{algorithm}
 
 \begin{algorithm}[H]
+\caption*{iObtener(\Inout{d}{diccString($\alpha$)}, \In{k}{string} $\DRef res$ : \TipoVariable{$\alpha$}}
+\begin{algorithmic}[1]
+	\State $nodo \gets *d.trie$\Comment{O(1)}
+	\State $i \gets 0$\Comment{O(1)}
+	\Statex
+	\While{$i < \Call{Longitud}{k}$}\Comment{$256 * O(|k|) * O(1) = O(|k|)$}					
+		\If {$nodo.letra = k[i]$}\Comment{O(1)}
+    		\If {$i + 1 = \Call{Longitud}{k}$}\Comment{O(1)}
+				\State $res \gets *nodo.elem$\Comment{O(1)}
+			\Else    			
+				\State $nodo \gets *nodo.hijo$\Comment{O(1)}	
+    		\EndIf
+			\State $i \gets i + 1$\Comment{O(1)}
+		\Else
+			\State $nodo \gets *nodo.hermano$\Comment{O(1)}
+		\EndIf
+ 	\EndWhile
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $2O(1) + O(|k|) = O(|k|)$
+\par \tab La complejidad del bucle se encuentra explicada en el algoritmo iDefinir.
+\end{algorithm}
+
+\begin{algorithm}[H]
 \caption*{iDefinir(\Inout{d}{diccString($\alpha$)}, \In {k}{string}, \In{s}{$\alpha$)}}
 \begin{algorithmic}[1]
 	\State $cargoTodo \gets d.trie = \TipoVariable{NULL}$\Comment{O(1)}
@@ -426,29 +449,6 @@ Para representar el DiccString, hemos elegido la estructura mostrada anteriormen
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $2O(1) + O(|k|) = O(|k|)$
 \par \tab La complejidad del bucle se encuentra explicada en el algoritmo anterior.
-\end{algorithm}
-
-\begin{algorithm}[H]
-\caption*{iObtener(\Inout{d}{diccString($\alpha$)}, \In{k}{string} $\DRef res$ : \TipoVariable{$\alpha$}}
-\begin{algorithmic}[1]
-	\State $nodo \gets *d.trie$\Comment{O(1)}
-	\State $i \gets 0$\Comment{O(1)}
-	\Statex
-	\While{$i < \Call{Longitud}{k}$}\Comment{$256 * O(|k|) * O(1) = O(|k|)$}					
-		\If {$nodo.letra = k[i]$}\Comment{O(1)}
-    		\If {$i + 1 = \Call{Longitud}{k}$}\Comment{O(1)}
-				\State $res \gets *nodo.elem$\Comment{O(1)}
-			\Else    			
-				\State $nodo \gets *nodo.hijo$\Comment{O(1)}	
-    		\EndIf
-			\State $i \gets i + 1$\Comment{O(1)}
-		\Else
-			\State $nodo \gets *nodo.hermano$\Comment{O(1)}
-		\EndIf
- 	\EndWhile
-\end{algorithmic}
-\textbf{C\'alculo de complejidad}: $2O(1) + O(|k|) = O(|k|)$
-\par \tab La complejidad del bucle se encuentra explicada en el algoritmo iDefinir.
 \end{algorithm}
  
 \subsection{Servicios Usados}
@@ -704,6 +704,16 @@ La estructura elegida se puede explicar de la siguiente manera:
 \end{algorithm}
 
 \begin{algorithm}[H]
+\caption*{iPadres(\In{ac}{abCat}, \In{hija}{categoria}) $\DRef res$ : \TipoVariable{itAbCat}}
+\begin{algorithmic}[1]
+    \State $nodoHija \gets \Call{Obtener}{ac.categorias, hija}$\Comment{O(|$hija$|)}
+    \State $iterador \gets \&nodoHija$\Comment{O(1)}
+    \State $res \gets iterador$\Comment{O(1)}
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $O(|hija|) + 2O(1) = O(|hija|)$
+\end{algorithm}
+
+\begin{algorithm}[H]
 \caption*{iAgregar(\Inout{ac}{abCat}, \In{padre}{categoria}, \In{hija}{categoria})}
 \begin{algorithmic}[1]
 	\State $ac.ultID \gets ac.ultID + 1$\Comment{O(1)}
@@ -727,16 +737,6 @@ La estructura elegida se puede explicar de la siguiente manera:
 	\State $res \gets \Call{crearIterador}{nodoHijo.hijas}$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(|padre|) + O(1) = O(|padre|)$
-\end{algorithm}
-
-\begin{algorithm}[H]
-\caption*{iPadres(\In{ac}{abCat}, \In{hija}{categoria}) $\DRef res$ : \TipoVariable{itAbCat}}
-\begin{algorithmic}[1]
-    \State $nodoHija \gets \Call{Obtener}{ac.categorias, hija}$\Comment{O(|$hija$|)}
-    \State $iterador \gets \&nodoHija$\Comment{O(1)}
-    \State $res \gets iterador$\Comment{O(1)}
-\end{algorithmic}
-\textbf{C\'alculo de complejidad}: $O(|hija|) + 2O(1) = O(|hija|)$
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -1131,6 +1131,19 @@ Esta estructura contiene una lista de links para los cuales se puede saber su ca
 \end{algorithm}
 
 \begin{algorithm}[H]
+\caption*{iPuntajeDelLink(\In{il}{infoLink}, \In{ultAccesoCat}{fecha}) $\DRef res$ : \TipoVariable{Nat}}
+\begin{algorithmic}[1]
+    \State $res \gets 0$\Comment{$O(1)$}
+    \State $i \gets 3$\Comment{$O(1)$}
+    \While{$ultAccesoCat - il.ultAcceso < i$}\Comment{gracias a la Pre $(ultAccesoCat - il.ultAcceso) > 0 \Rightarrow 3O(1) = O(1)$}
+        \State $i \gets i - 1$\Comment{$O(1)$}
+        \State $res \gets res + il.accesos[i]$\Comment{$O(1)$}
+    \EndWhile
+\end{algorithmic}
+\textbf{C\'alculo de complejidad}: $3O(1) = O(1)$
+\end{algorithm}
+
+\begin{algorithm}[H]
 \caption*{iLinksOrdenadosPorAccesos(\Inout{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{\hyperlink{itLinks}{itLinks}}}
 \begin{algorithmic}[1]
     \State $categoriaID \gets \Call{ID}{s.aCategorias, c}$\Comment{$O(|c|)$}
@@ -1178,19 +1191,6 @@ Esta estructura contiene una lista de links para los cuales se puede saber su ca
 	\State $res \gets \Call{crearItLinks}{listaOrdenada, f, s}$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(|c|) + 2O(n) + O(n^2) + 11O(1)= O(|c| + n^2)$
-\end{algorithm}
-
-\begin{algorithm}[H]
-\caption*{iPuntajeDelLink(\In{il}{infoLink}, \In{ultAccesoCat}{fecha}) $\DRef res$ : \TipoVariable{Nat}}
-\begin{algorithmic}[1]
-    \State $res \gets 0$\Comment{$O(1)$}
-    \State $i \gets 3$\Comment{$O(1)$}
-    \While{$ultAccesoCat - il.ultAcceso < i$}\Comment{gracias a la Pre $(ultAccesoCat - il.ultAcceso) > 0 \Rightarrow 3O(1) = O(1)$}
-        \State $i \gets i - 1$\Comment{$O(1)$}
-        \State $res \gets res + il.accesos[i]$\Comment{$O(1)$}
-    \EndWhile
-\end{algorithmic}
-\textbf{C\'alculo de complejidad}: $3O(1) = O(1)$
 \end{algorithm}
 
 \subsubsection{Algoritmos del Iterador}

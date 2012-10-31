@@ -769,24 +769,24 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 	\InterfazFuncion{agregarLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{c}{categoria}}{}
 	  [$s \igobs s_0$ $\land$ $l \notin links(s)$ $\land$ \emph{est\'a}?$(c, categorias(s))$]
 	  {$s \igobs nuevoLink(s_0, l, c)$}
-	  [$\Theta(|l| + |c| + h)$]
+	  [$O(|l| + |c| + h)$]
 	  [Agrega un link a la categor\'ia se\~{n}alada.]
 
 	\InterfazFuncion{accederLink}{\Inout{s}{LinkLinkIt}, \In{l}{link}, \In{f}{fecha}}{}
 	  [$s \igobs s_0$ $\land$ $l \in$ links($s$) $\land$ $f \geq$ fechaActual($s$)]
 	  {$s \igobs acceso(s_0, l, f)$}
-	  [$\Theta(|l|)$]
+	  [$O(|l|)$]
 	  [Registra un acceso al link provisto.]
 
 	\InterfazFuncion{cantLinks}{\In{s}{LinkLinkIt}, \In{c}{categoria}}{Nat}
 	  {$res \igobs cantLinks(s, c)$}
-	  [$\Theta(|c|)$]
+	  [$O(|c|)$]
 	  [Devuelve la cantidad de links que tiene una categor\'ia y sus hijas.]
 
     \InterfazFuncion{linksOrdenadosPorAccesos}{\Inout{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
 	  [$\emph{est\'a}?(c, categorias(s))$]
 	  {$res \igobs CrearItUni(secuInfoLinks(s, c))$}
-	  [$\Theta(|c| + n^2)$]
+	  [$O(|c| + n^2)$]
 	  [Devuelve la cantidad de links que tiene una categor\'ia.]
 
 \modTitulo{Funciones auxiliares}

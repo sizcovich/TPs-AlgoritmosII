@@ -222,7 +222,7 @@
 
 \begin{enumerate}
   \item Todos los nodos cuyo hijo sea NULL, tienen elem distinto de NULL.\\
-        {\bf Formalmente:} $(\forall p:puntero(nodo))(p \in ePunteros(<>, e.trie) \impluego (*p).hijo = NULL \Rightarrow (*p).elem \neq NULL)$
+        {\bf Formalmente:} $(\forall p:puntero(nodo))(p \in ePunteros(<>, e.trie) \impluego ( (*p).hijo = NULL \Rightarrow (*p).elem \neq NULL) )$
 
   \item No existen dos \TipoVariable{punteros(nodo)} que apunten al mismo.\\
         {\bf Formalmente:} $SinRepetidos(ePunteros(<>, e.trie))$
@@ -771,12 +771,6 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 	  [$\Theta(|c| + n^2)$]
 	  [Devuelve la cantidad de links que tiene una categor\'ia.]
 
-    \InterfazFuncion{puntajeDelLink}{\In{il}{infoLink}, \In{f}{fecha}}{Nat}
-	  [$il.ultAcceso \leq f$]
-	  {$res \igobs accesosRecientes($?`$s?, infoLink.categoria, infoLink.link)$}
-	  [$\Theta(1)$]
-	  [Devuelve el puntaje del link. Esta funci\'on es privada ya que recibe una estructura interna.]
-
 \modTitulo{Funciones auxiliares}
 
 \tadAlinearFunciones{secuInfoLinks}{lli\ s, categoria\ c, secu(link)\ ls}
@@ -876,17 +870,16 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
 \tadAlinearFunciones{Rep}{estr}
 \tadAlinearAxiomas{Rep(e)}
-\Rep{$1 \land 2$}\mbox{}
+\Rep{$(\forall p:puntero(infoLink)) (p \in Siguientes(e.it) \impluego (1 \yluego 2))$}\mbox{}
 
 {\bf Donde:}
 
 \begin{enumerate}
-  \item falta\\
-   {\bf Formalmente:} 
+  \item Ning\'un puntero puede ser NULL.\\
+		{\bf Formalmente:} $p \neq NULL$
 
-  \item falta \\
-        {\bf Formalmente:} 
-
+  \item ultAcceso debe representar el mayor \'ultimo acceso de todos los links.\\
+		{\bf Formalmente:} $(*p).ultAcceso \leq e.ultAcceso$
 \end{enumerate}
 
 ~
@@ -894,6 +887,15 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \tadAlinearAxiomas{Abs(e)}
 \AbsFc{itL}{}
 
+\modTitulo{Justificaci\'on de la elecci\'on de la estructura}
+
+\modTitulo{Operacion Auxiliar}
+
+\InterfazFuncion{puntajeDelLink}{\In{il}{infoLink}, \In{f}{fecha}}{Nat}
+  [$il.ultAcceso \leq f$]
+  {$res \igobs accesosRecientes($?`$s?, infoLink.categoria, infoLink.link)$}
+  [$\Theta(1)$]
+  [Devuelve el puntaje del link. Esta funci\'on es privada ya que recibe una estructura interna.]
 
 \subsection{Algoritmos}
 

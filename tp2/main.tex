@@ -871,7 +871,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
 \tadAlinearFunciones{Rep}{estr}
 \tadAlinearAxiomas{Rep(e)}
-\Rep{$(\forall p:puntero(infoLink)) (p \in Siguientes(e.it) \impluego (1 \yluego 2)) \land 3$}\mbox{}
+\Rep{$(\forall p:puntero(infoLink)) (p \in Siguientes(e.it) \impluego (1 \yluego (2 \land 3)))$}\mbox{}
 
 {\bf Donde:}
 
@@ -882,7 +882,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
   \item ultAcceso debe representar el mayor \'ultimo acceso de todos los links.\\
 		{\bf Formalmente:} $(*p).ultAcceso \leq e.ultAcceso$
 
-  \item El infoLink existe en el sistema.\\
+  \item Todos los infoLinks existen en el sistema.\\
 		{\bf Formalmente:} $def?(e.s.infoLinks, (*p).link) \yluego \&obtener(e.s.infoLinks, (*p).link) \igobs p$
 \end{enumerate}
 

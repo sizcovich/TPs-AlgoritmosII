@@ -780,6 +780,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 	  [Registra un acceso al link provisto.]
 
 	\InterfazFuncion{cantLinks}{\In{s}{LinkLinkIt}, \In{c}{categoria}}{Nat}
+	  [\emph{est\'a}?(c, categorias(s))]
 	  {$res \igobs cantLinks(s, c)$}
 	  [$O(|c|)$]
 	  [Devuelve la cantidad de links que tiene una categor\'ia y sus hijas.]
@@ -866,18 +867,15 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
 \begin{enumerate}
   \item La longitud de linksPorCat es igual a la cantidad de categor\'ias existentes.\\
-		{\bf Formalmente:} 
+		{\bf Formalmente:} $\#e.linksPorCat \igobs \#categorias(e.aCategorias)$
 
-  \item Todo infoLink en linksPorCat existe en infoLinks.\\
-		{\bf Formalmente:} 
+  \item Todo infoLink en linksPorCat debe estar definido en infoLinks con la clave igual a su link.\\
+		{\bf Formalmente:} $(\forall pil:puntero(infoLink))(pil \in ePunterosInfoLink(e.linksPorCat) \impluego (pil \neq NULL \yluego \&obtener(e.infoLinks, (*pil).link) \igobs pil))$
 
   \item El vector accesos de todo infoLink tiene longitud 3.\\
 		{\bf Formalmente:} 
 
-  \item Todo infoLink definido en infoLinks aparece en la lista que le corresponda seg\'un el ID de su categor\'ia y las categor\'ias padres a ella.\\
-		{\bf Formalmente:}
-
-  \item Todo infoLink definido en infoLinks debe tener el campo link igual a la clave con la cual se obtiene.\\
+  \item Todo infoLink definido en infoLinks aparece en la lista que le corresponde seg\'un el ID de su categor\'ia y las categor\'ias padres a ella.\\
 		{\bf Formalmente:}
 \end{enumerate}
 

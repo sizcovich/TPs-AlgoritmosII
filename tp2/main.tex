@@ -1030,7 +1030,7 @@ Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que rel
 ~
 \tadAlinearFunciones{eInfoLinksAUniTupla}{secu(puntero(infoLink))\ spil, fecha\ f}
 \tadAlinearAxiomas{eInfoLinksAUniTupla(spil, f)}
-\tadOperacion{eInfoLinksAUniTupla}{secu(puntero(infoLink))\ spil, fecha\ f}{secu(tupla(link, categoria, Nat))}{$(\forall pil:puntero(infoLink))(esta?(pil, spil) \Rightarrow pil \neq NULL \yluego (*pil).ultAcceso \leq f)$}
+\tadOperacion{eInfoLinksAUniTupla}{secu(puntero(infoLink))\ spil, fecha\ f}{secu(tupla(link, categoria, Nat))}{$(\forall pil:puntero(infoLink))(esta?(pil, spil) \Rightarrow (pil \neq NULL \yluego (*pil).ultAcceso \leq f))$}
 \tadAxioma{eInfoLinksAUniTupla(spil, f)}{\IF vacio?(spil) THEN <> ELSE tupla((*prim(spil)).link, (*prim(spil)).categoria, puntajeDelLink(*prim(spil), f)) $\bullet$ eInfoLinksAUniTupla(fin(spil), f) FI}
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}

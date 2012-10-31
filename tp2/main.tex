@@ -963,9 +963,9 @@ claves(s.infoLinks) $\land$\\ ($\forall$ l:link) l $\in$ links(s) \impluego
 categoriaLink(s, l) = obtener(l, e.linksPorCat).categoria $\land$\\
 fechaActual(s) = mayorUltimoAcceso(indice(s.linksPorCat, 1)) $\land$\\ ($\forall$ k:link) k
 $\in$ links(s) $\impluego$ fechaUltimoAcceso(s, k) = obtener(e.infoLinks, k).ultAcceso
-$\land$\\  ($\forall$ l:link) l $\in$ links(s) \impluego ($\forall$ f:fecha)
-accesosRecientesDia(s, l, f) $\impluego$ cantAccesosEnFecha(obtener(e.infoLinks,
-l), f) $\land$\\
+$\land$\\  ($\forall$ l:link) l $\in$ links(s) \impluego (($\forall$ f:fecha)
+accesosRecientesDia(s, l, f) = cantAccesosEnFecha(obtener(e.infoLinks,
+l), f)) $\land$\\
 ($\forall$ k: link) k $\in$ links(s) \impluego categoriaLink(s, k) =
 obtener(e.infoLinks, k).categoria}
 ~

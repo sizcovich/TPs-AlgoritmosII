@@ -274,8 +274,7 @@ obtener(d, e) $\Leftrightarrow$ dameSignif(d,e.trie)}
 								 \IF n.hijo = NULL THEN $\emptyset$ ELSE eClavesTrie(*n.hijo, pal $\circ$ n.letra) FI}
 ~
 
-\Statex	En este auxiliar y en los auxiliares que llama, supongo que la clave
- existe.
+\Statex	En este auxiliar y en los auxiliares que llama, supongo que la clave existe.
 \tadAlinearAxiomas{dameSignif(a, p)}
 \tadOperacion{dameSignif}{vector(char), puntero(nodo)}{puntero($\alpha$)}{}
 \tadAxioma{dameSignif(a, p)}{dameSignifAux(a, 0, p)}
@@ -283,19 +282,19 @@ obtener(d, e) $\Leftrightarrow$ dameSignif(d,e.trie)}
 \tadAlinearAxiomas{dameSignifAux(a, n, p)}
 \tadOperacion{dameSignifAux}{vector(char), nat,
 puntero(nodo)}{puntero($\alpha$)}{}
-\tadAxioma{dameSignifAux(a, n, p)}{\IF n = longitud(a) THEN hijo(p, a[n]).elem
+\tadAxioma{dameSignifAux(a, n, p)}{\IF n = longitud(a)-1 THEN (*p).elem
 ELSE dameSignifAux(a, n+1, hijoChar(p, a[n])) FI}
 ~
 \tadAlinearAxiomas{hijoChar(p, c)}
 \tadOperacion{hijoChar}{puntero(nodo), char}{puntero(nodo)}{}
-\tadAxioma{hijoChar(p, c)}{\IF (*p).hijo.letra = c THEN (*p).hijo ELSE
-hermanoChar((*p).hijo, c) FI}
+\tadAxioma{hijoChar(p, c)}{\IF (*p).letra = c THEN (*p).hijo ELSE
+hijoChar((*p).hermano, c) FI}
 ~
-\tadAlinearAxiomas{hermanoChar(p, c)}
-\tadOperacion{hermanoChar}{puntero(nodo), char}{puntero(nodo)}{}
-\tadAxioma{hermanoChar(p, c)}{\IF (*p).hermano.letra = c THEN (*p).hermano
-ELSE hermanoChar((*p).hermano, c) FI}
-~
+%\tadAlinearAxiomas{hermanoChar(p, c)}
+%\tadOperacion{hermanoChar}{puntero(nodo), char}{puntero(nodo)}{}
+%\tadAxioma{hermanoChar(p, c)}{\IF (*p).letra = c THEN (*p).hermano
+%ELSE hermanoChar((*p).hermano, c) FI}
+%~
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 Para representar el DiccString, hemos elegido la estructura mostrada anteriormente (que representa a un trie) ya que nos permite acceder al contenido del mismo con la complejidad requerida para realizar los algoritmos de otros m\'odulos. Dicha estructura se explica de la siguiente manera:\\
 \begin{itemize}

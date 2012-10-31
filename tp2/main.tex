@@ -279,7 +279,7 @@ Para representar el DiccString, hemos elegido la estructura mostrada anteriormen
 \begin{itemize}
 \item $trie$ es un puntero al primer char del primer string añadido.\\
 \item $hijo$ y $hermano$ son punteros que nos sirven para poder recorrer el trie e ir formando los strings que se van almacenando en el trie. \\ \tab $hermano$ nos dice que esos dos caracteres(tanto el que se representa con el nodo que lo contiene como el nodo al que \'este apunta) comparten el mismo string como prefijo.\\
-\tab $hijo$ nos dice que el string continua (en el caso de que $hijo$ no sea $NULL$) o que el string finaliza ah\'i (en el caso contrario).\\
+\tab $hijo$ nos dice que el string contin\'ua (en el caso en el que $hijo$ no es $NULL$) o que finaliza ah\'i (en el caso contrario).\\
 \item $elem$ es un puntero al significado de la palabra, por lo que el $elem$ de un char puede o no ser NULL (dependiendo de si la palabra lleg\'o o no a su fin).\\
 \item $letra$ es el char que representa ese nodo.\\
 \end{itemize}

@@ -858,12 +858,20 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 {\bf Donde:}
 
 \begin{enumerate}
-  \item falta\\
-   {\bf Formalmente:} 
+  \item La longitud de linksPorCat es igual a la cantidad de categor\'ias existentes.\\
+		{\bf Formalmente:} 
 
-  \item falta \\
-        {\bf Formalmente:} 
+  \item Todo infoLink en linksPorCat existe en infoLinks.\\
+		{\bf Formalmente:} 
 
+  \item El vector accesos de todo infoLink tiene longitud 3.\\
+		{\bf Formalmente:} 
+
+  \item Todo infoLink definido en infoLinks aparece en la lista que le corresponda seg\'un el ID de su categor\'ia y las categor\'ias padres a ella.\\
+		{\bf Formalmente:}
+
+  \item Todo infoLink definido en infoLinks debe tener el campo link igual a la clave con la cual se obtiene.\\
+		{\bf Formalmente:}
 \end{enumerate}
 
 ~

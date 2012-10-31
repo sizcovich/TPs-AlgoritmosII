@@ -1183,7 +1183,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
 	\begin{Estructura}{iteradorUni($\alpha$)}
 		\begin{Tupla}
-			\tupItem{itList}{itLista($\alpha$)}
+			\tupItem{it}{itLista($\alpha$)}
 		\end{Tupla}
 	\end{Estructura}
     
@@ -1193,7 +1193,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 
 \tadAlinearFunciones{Abs}{estr\ e}
 \tadAlinearAxiomas{Abs(e)}
-\AbsFc{iteradorUni($\alpha$)}{it:iteradorUni($\alpha$) $|$ Siguientes(it) $\igobs$ Siguientes(e.itList)}
+\AbsFc{iteradorUni($\alpha$)}{it:iteradorUni($\alpha$) $|$ Siguientes(it) $\igobs$ Siguientes(e.it)}
 
 \modTitulo{Justificaci\'on}
 Para representar el iterador unidireccional de la lista, decidimos usar el iterador bidireccional que nos provee la lista enlazada y obtener, del iterador, las operaciones que necesitamos.

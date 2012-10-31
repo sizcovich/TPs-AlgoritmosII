@@ -910,7 +910,7 @@ La estructura elegida se puede explicar de la siguiente manera:
 		{\bf Formalmente:} $\#e.linksPorCat \igobs \#categorias(e.aCategorias)$
 
   \item Todo infoLink en linksPorCat debe estar definido en infoLinks con la clave igual a su link.\\
-		{\bf Formalmente:} $(\forall pil:puntero(infoLink))(pil \in ePunterosInfoLink(e.linksPorCat) \impluego (pil \neq NULL \yluego \&obtener(e.infoLinks, (*pil).link) \igobs pil))$
+		{\bf Formalmente:} $(\forall pil:puntero(infoLink))(pil \in aplanar(e.linksPorCat) \impluego (pil \neq NULL \yluego \&obtener(e.infoLinks, (*pil).link) \igobs pil))$
 
   \item El vector accesos de todo infoLink tiene longitud 3.\\
 		{\bf Formalmente:} 
@@ -919,6 +919,10 @@ La estructura elegida se puede explicar de la siguiente manera:
 		{\bf Formalmente:}
 \end{enumerate}
 
+\tadAlinearFunciones{aplanar}{secu(secu($\alpha$))}
+\tadAlinearAxiomas{aplanar(ss)}
+\tadOperacion{aplanar}{secu(secu($\alpha$))}{secu($\alpha$)}{}
+\tadAxioma{aplanar(ss)}{\IF vacia?(ss) THEN <> ELSE prim(ss) $\bullet$ fin(ss) FI}
 ~
 \tadAlinearFunciones{Abs}{estr\ e}
 \tadAlinearAxiomas{Abs(e)}

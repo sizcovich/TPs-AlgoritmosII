@@ -794,30 +794,36 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 	  [$(\forall\ l:infoLink)(\emph{est\'a}?(l, ls) \Rightarrow l.ultAcceso \leq f)$]
 	  {$res \igobs \Pi_1(Actual(it))$}
 	  [$O(1)$]
+	  [Genera un iterador de links que permite verse a si mismo, observar su categor\'ia y la cantidad de accesos recientes.]
 
 	\InterfazFuncion{SiguienteLink}{\In{it}{itLinks}}{link}
 	  [$HayMas?(it)$]
 	  {$res \igobs \Pi_1(Actual(it))$}
 	  [$O(1)$]
+	  [Devuelve el siguiente link.]
 
 	\InterfazFuncion{SiguienteCategoria}{\In{it}{itLinks}}{categoria}
 	  [$HayMas?(it)$]
 	  {$res \igobs \Pi_2(Actual(it))$}
 	  [$O(1)$]
+	  [Devuelve la categor\'ia del siguiente link.]
 
 	\InterfazFuncion{SiguienteAccesosRecientes}{\In{it}{itLinks}}{Nat}
 	  [$HayMas?(it)$]
 	  {$res \igobs \Pi_3(Actual(it))$}
 	  [$O(1)$]
+	  [Devuelve los accesos recientes de siguiente.]
 
 	\InterfazFuncion{HaySiguiente}{\In{it}{itLinks}}{Bool}
 	  {$res \igobs HayMas?(it)$}
 	  [$O(1)$]
+	  [Informa si hay un link siguiente.]
 
 	\InterfazFuncion{Avanzar}{\Inout{it}{itLinks}}{}
 	  [$it = it_0 \land HayMas?(it)$]
 	  {$it \igobs Avanzar(it_0)$}
 	  [$O(1)$]
+	  [Avanza al siguiente link.]
 
 \subsection{Representaci\'on}
 

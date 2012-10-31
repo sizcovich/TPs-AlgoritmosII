@@ -867,8 +867,8 @@ La estructura elegida se puede explicar de la siguiente manera:
 
 \modTitulo{Operaciones del iterador}
 
-	\InterfazFuncion{CrearItLinks}{\In{ls}{lista(infoLink)}, \In{f}{fecha}, \In{s}{LinkLinkIt}, \In{c}{categoria}}{itLinks}
-	  [$(\forall\ l:infoLink)(\emph{est\'a}?(l, ls) \Rightarrow l.ultAcceso \leq f \land esSubCategoria(s.aCategorias, c, l.categoria))$]
+	\InterfazFuncion{CrearItLinks}{\In{ls}{lista(infoLink)}, \In{f}{fecha}}{itLinks}
+	  [$(\forall\ l:infoLink)(\emph{est\'a}?(l, ls) \Rightarrow l.ultAcceso \leq f)$]
 	  {$res \igobs CrearItUni(secuInfoLinks(s, c))$}
 	  [$O(1)$]
 	  [Genera un iterador de links que permite verse a si mismo, observar su categor\'ia y la cantidad de accesos recientes.]
@@ -995,13 +995,12 @@ Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que rel
 	\begin{Tupla}
 		\tupItem{it}{itLista(puntero(infoLink))}
 		\tupItem{ultAcceso}{fecha}
-		\tupItem{s}{LinkLinkIt}
 	\end{Tupla}
 \end{Estructura}
 
 \tadAlinearFunciones{Rep}{estr}
 \tadAlinearAxiomas{Rep(e)}
-\Rep{$(\forall p:puntero(infoLink)) (p \in Siguientes(e.it) \impluego (1 \yluego (2 \land 3)))$}\mbox{}
+\Rep{$(\forall p:puntero(infoLink)) (p \in Siguientes(e.it) \impluego (1 \yluego 2))$}\mbox{}
 
 {\bf Donde:}
 
@@ -1011,15 +1010,17 @@ Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que rel
 
   \item ultAcceso debe representar el mayor \'ultimo acceso de todos los links.\\
 		{\bf Formalmente:} $(*p).ultAcceso \leq e.ultAcceso$
-
-  \item Todos los infoLinks existen en el sistema.\\
-		{\bf Formalmente:} $def?(e.s.infoLinks, (*p).link) \yluego \&obtener(e.s.infoLinks, (*p).link) \igobs p$
 \end{enumerate}
 
 ~
 \tadAlinearFunciones{Abs}{estr\ e}
 \tadAlinearAxiomas{Abs(e)}
-\AbsFc{itUni}{it:itUni $|$ Siguientes(it) $\igobs$ }
+\AbsFc{itUni}{it:itUni $|$ Siguientes(it) $\igobs$ eInfoLinksAUniTupla(Siguientes(e.it), f)}
+~
+\tadAlinearFunciones{eInfoLinksAUniTupla}{secu(puntero(infoLink))\ spil, fecha\ f}
+\tadAlinearAxiomas{eInfoLinksAUniTupla(spil, f)}
+\tadOperacion{eInfoLinksAUniTupla}{secu(puntero(infoLink))\ spil, fecha\ f}{secu(tupla(link, categoria, Nat))}{$(\forall pil:puntero(infoLink))(esta?(pil, spil) \Rightarrow pil \neq NULL \yluego (*pil).ultAcceso \leq f)$}
+\tadAxioma{eInfoLinksAUniTupla(spil, f)}{\IF vacio?(spil) THEN <> ELSE tupla((*prim(spil)).link, (*prim(spil)).categoria, puntajeDelLink(*prim(spil), f)) $\bullet$ eInfoLinksAUniTupla(fin(spil), f) FI}
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 
@@ -1183,11 +1184,10 @@ Esta estructura contiene una lista de links para los cuales se puede saber su ca
 \subsubsection{Algoritmos del Iterador}
 
 \begin{algorithm}[H]
-\caption*{iCrearItLinks(\In{ls}{lista(infoLink)}, \In{fecha}{fecha}, \In{s}{LinkLinkIt}, \In{c}{categoria}) $\DRef res$ : \TipoVariable{\hyperlink{itLinks}{itLinks}}}
+\caption*{iCrearItLinks(\In{ls}{lista(infoLink)}, \In{fecha}{fecha}) $\DRef res$ : \TipoVariable{\hyperlink{itLinks}{itLinks}}}
 \begin{algorithmic}[1]
 	\State $res.it \gets \Call{crearIt}{ls}$\Comment{O(1)}
 	\State $res.ultAcceso \gets fecha$\Comment{O(1)}
-	\State $res.s \gets s$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(1)$
 \end{algorithm}

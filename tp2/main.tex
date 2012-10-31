@@ -261,10 +261,10 @@ letrasHermanos((*p).hermano) FI}
 \tadAxioma{sinRepetidos(a)}{$\neg$esta?(prim(a),fin(a)) $\land$ sinRepetidos(fin(a))}
 ~
 \tadAlinearAxiomas{Abs(e)}
-\AbsFc{diccString($\alpha$)}{($\forall$ c:\ string)(def?(c, e)
+\AbsFc{diccString($\alpha$)}{d: DiccString $|$ ($\forall$ c:\ string)(def?(c, d)
 $\Leftrightarrow$ ((e.trie $\not=$ NULL)) $\impluego$ (c $\in$
-eClavesTrie(*(e.trie), c))) $\land$ ($\forall$ d:\ vector(char))def?(d, e)) \impluego
-(obtener(d, e) $\Leftrightarrow$ dameSignif(d,e.trie))}
+eClavesTrie(*(e.trie), c))) $\land$ ($\forall$ v:\ vector(char))def?(v, d)) \impluego
+(obtener(v, d) $\Leftrightarrow$ dameSignif(v,e.trie))}
 ~
 \tadAlinearAxiomas{eClavesTrie(n, pal)}
 \tadOperacion{eClavesTrie}{nodo, string}{conj(string)}{}

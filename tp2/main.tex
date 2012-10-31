@@ -273,8 +273,7 @@ obtener(d, e) $\Leftrightarrow$ dameSignif(d,e.trie)}
 								 \IF n.hermano = NULL THEN $\emptyset$ ELSE eClavesTrie(*n.hermano, pal) FI $\cup$ \\
 								 \IF n.hijo = NULL THEN $\emptyset$ ELSE eClavesTrie(*n.hijo, pal $\circ$ n.letra) FI}
 ~
-
-\Statex	En este auxiliar y en los auxiliares que llama, supongo que la clave existe.
+En este auxiliar y en los auxiliares que llama, supongo que la clave existe.
 \tadAlinearAxiomas{dameSignif(a, p)}
 \tadOperacion{dameSignif}{vector(char), puntero(nodo)}{puntero($\alpha$)}{}
 \tadAxioma{dameSignif(a, p)}{dameSignifAux(a, 0, p)}

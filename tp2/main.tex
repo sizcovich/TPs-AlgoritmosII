@@ -169,7 +169,7 @@
 
 	\textbf{par\'ametro formal}: \TipoVariable{$\alpha$}.
 
-	\textbf{usa}: \TipoVariable{Nat}, \TipoVariable{Bool}, \TipoVariable{String}, \TipoVariable{Puntero($\alpha$)}.
+	\textbf{usa}: \TipoVariable{Nat}, \TipoVariable{Bool}, \TipoVariable{String}, \TipoVariable{Puntero($\alpha$)},\TipoVariable{vector($\alpha$)}.
 
 	\textbf{se explica con}: \TipoVariable{Diccionario(String, $\alpha$)}.
 
@@ -415,7 +415,7 @@ Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a 
 
     \textbf{usa}: \TipoVariable{Nat}, \TipoVariable{String}, \TipoVariable{diccString($\alpha$)}, \TipoVariable{lista($\alpha$)}, \TipoVariable{iteradorUni($\alpha$)}, \TipoVariable{puntero($\alpha$)}.
 
-	\textbf{se explica con}: \TipoVariable{ArbolCategorias}, \TipoVariable{Iterador Unidireccional($\alpha$)}.
+	\textbf{se explica con}: \TipoVariable{ArbolCategorias}, \TipoVariable{Iterador Unidireccional($\alpha$)}, \TipoVariable{Vector($\alpha$)}.
 
 	\textbf{g\'eneros}: \TipoVariable{abCat}, \TipoVariable{itAbCat}.
 
@@ -746,6 +746,14 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \section{M\'odulo LinkLinkIt}
 
 \subsection{Interfaz}
+	
+	\textbf{usa}: \TipoVariable{Nat}, \TipoVariable{Bool}, \TipoVariable{String}, \TipoVariable{Puntero($\alpha$)}, \TipoVariable{abCat}, \TipoVariable{itAbCat}, \TipoVariable{diccString($\alpha$)}, \TipoVariable{vector($\alpha$)}, \TipoVariable{lista($\alpha$)}, \TipoVariable{itLista($\alpha$)}.
+
+	\textbf{se explica con}: \TipoVariable{linkLinkIt, ArbolCategorias, Iterador Unidireccional, tupla}.
+
+	\textbf{g\'eneros}: \TipoVariable{LinkLinkIt}.
+
+	\modTitulo{Operaciones b\'asicas}
 	
 	\InterfazFuncion{crearLinkLinkIt}{\In{ac}{abCat}}{LinkLinkIt}
 	  {$res \igobs iniciar(ac)$}

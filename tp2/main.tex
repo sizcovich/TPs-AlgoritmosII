@@ -1036,6 +1036,7 @@ Esta estructura contiene una lista de links para los cuales (en orden) se puede 
 	\State $info.link \gets l$\Comment{O(|l|)}
 	\State $info.categoria \gets c$\Comment{O(|c|)}
     \State $info.ultAcceso \gets 0$\Comment{O(1)}
+    \State $info.accesos \gets \Call{Vacia}{\null}$\Comment{O(1)}
     \For{$i = 1 \to 3$}\Comment{3O(1) = O(1)}
         \State $\Call{AgregarAtras}{info.accesos, 0}$\Comment{O(1)}
     \EndFor
@@ -1045,11 +1046,11 @@ Esta estructura contiene una lista de links para los cuales (en orden) se puede 
 	\State $it \gets \Call{padres}{s.aCategorias, c}$\Comment{O(|c|)}
 	\While{$\Call{HayMasPadres?}{it}$}\Comment{$(O(h) + O(1)) * 3O(1) = O(h)$}
     	\State $\Call{Subir}{it}$\Comment{O(1)}
-    	\State $categoriaID \gets \Call{ActualID}{s, categoriaID}$\Comment{$O(1)$}
+    	\State $categoriaID \gets \Call{ActualID}{it}$\Comment{$O(1)$}
 		\State $\Call{AgregarAtras}{s.linksPorCat[categoriaID-1], \&info}$\Comment{$O(1)$}
 	\EndWhile
 \end{algorithmic}
-\textbf{C\'alculo de complejidad}: $O(1) + 3O(|c|) + 2O(|l|) + O(h) = O(|c|) + O(|l|) + O(h) = O(|c| + |l| + h)$
+\textbf{C\'alculo de complejidad}: $4O(1) + 3O(|c|) + 2O(|l|) + O(h) = O(|c|) + O(|l|) + O(h) = O(|c| + |l| + h)$
 \par \tab El bucle tiene $h$ iteraciones ya que inicia en un nodo y luego, en cada ciclo, se va subiendo hasta la raiz del \'arbol.
 \end{algorithm}
 

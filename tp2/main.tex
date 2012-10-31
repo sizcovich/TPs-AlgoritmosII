@@ -955,7 +955,7 @@ Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que rel
   \item en estr
   \begin{itemize}
 	\item $aCategorias$ es el \'arbol de categor\'ias del sistema.
-	\item $linksPorCat$ es un vector en donde cada uno de sus \'indices representa el ID de la categor\'ia a la que su lista de links pertenecen. No solo tienen sus links, sino tambi\'en los links de sus hijos. Cuando me refiero a link, nos estamos refiriendo en verdad a un \TipoVariable{puntero(InfoLink)}.
+	\item $linksPorCat$ es un vector de lista de links. Los \'indices de dicho vector representan al Id de la categor\'ia correspondiente a cada lista de links. Las listas de links no tienen \'unicamente sus links sino que tambi\'en contienen los links de sus categor\'ias hijas. Cuando hablamos de link, nos estamos refiriendo en realidad a un \TipoVariable{puntero(InfoLink)}. 
 	\item $infoLinks$ es un DiccString que guarda, para cada link, sus datos representados por un $infoLink$.
   \end{itemize}
   \item en infoLink

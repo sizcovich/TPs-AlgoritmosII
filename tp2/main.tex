@@ -277,12 +277,14 @@ lertasHermanosAux((*p).hermano)) FI}
 
 
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
-Para representar el DiccString, hemos elegido la estructura mostrada anteriormente ya que nos permite acceder al contenido del trie con la complejidad requerida para realizar los algoritmos de otros m\'odulos. Dicha estructura se explica de la siguiente manera:\\
-$\bullet$ $trie$ es un puntero al primer char del primer string añadido.\\
-$\bullet$ $hijo$ es un puntero al hijo del char.\\
-$\bullet$ $hermano$ es un puntero al hermano del char.\\
-$\bullet$ $elem$ es un puntero al significado de la palabra, por lo que el $elem$ de un char puede o no ser NULL (dependiendo de si la palabra lleg\'o o no a su fin).\\
-$\bullet$ $letra$ es el char al que apunta el puntero $trie$.\\
+Para representar el DiccString, hemos elegido la estructura mostrada anteriormente (que representa a un trie) ya que nos permite acceder al contenido del mismo con la complejidad requerida para realizar los algoritmos de otros m\'odulos. Dicha estructura se explica de la siguiente manera:\\
+\begin{itemize}
+\item $trie$ es un puntero al primer char del primer string añadido.\\
+\item $hijo$ es un puntero al hijo del char.\\
+\item $hermano$ es un puntero al hermano del char.\\
+\item $elem$ es un puntero al significado de la palabra, por lo que el $elem$ de un char puede o no ser NULL (dependiendo de si la palabra lleg\'o o no a su fin).\\
+\item $letra$ es el char al que apunta el puntero $trie$.\\
+\end{itemize}
 
 
 \modTitulo{Operacion Auxiliar}

@@ -232,9 +232,9 @@
 \tadOperacion{ePunteros}{puntero(nodo)}{secu(puntero(nodo))}{}
 \tadAxioma{ePunteros(p)}{\IF p = NULL THEN <> ELSE p $\bullet$ ePunteros((*p).hermano) \& ePunteros((*p).hijo) FI}
 ~
-\tadAlinearAxiomas{sinRepetidos}
-\tadOperacion{sinRepetidos}{$\alpha$}{secu($\alpha$)}{}
-\tadAxioma{sinRepetidos(a)}{esta?(prim(a),fin(a)) $\land$ sinRepetidos(fin(a))}
+\tadAlinearAxiomas{sinRepetidos(a)}
+\tadOperacion{sinRepetidos}{secu($\alpha$)}{bool}{}
+\tadAxioma{sinRepetidos(a)}{$\neg$esta?(prim(a),fin(a)) $\land$ sinRepetidos(fin(a))}
 ~
 \AbsFc{diccString($\alpha$)}{($\forall$ c:string)def?(c, t) $\Leftrightarrow$ ((e.trie $\not=$ NULL) $\impluego$ (c $\in$ eClavesTrie(*(e.trie), c)))) $\land$ ($\forall$ )}
 ~

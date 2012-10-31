@@ -934,7 +934,7 @@ La estructura elegida se puede explicar de la siguiente manera:
   \item Todo infoLink definido en $infoLinks$ aparece en la lista que le corresponde de $linksPorCat$ seg\'un el ID de su categor\'ia y las categor\'ias padres a ella.\\
 		{\bf Formalmente:} $(\forall l:link, il:infoLink)(def?(e.infoLinks, link) \yluego obtener(e.infoLinks, link) \igobs il \Rightarrow (\forall c:Nat)(c \in eCategoriasPadres(e.aCategorias, il) \impluego esta?(\&il, indice(e.linksPorCat, c))))$
 
-  \item Todo infoLink en linksPorCat debe estar definido en infoLinks con la clave igual a su link.\\
+  \item Todo infoLink en linksPorCat debe obtenerse y ser el mismo en infoLinks con la clave igual a su link.\\
 		{\bf Formalmente:} $pil \neq NULL \yluego \&obtener(e.infoLinks, (*pil).link) \igobs pil$
 
   \item El vector $accesos$ de todo infoLink tiene longitud 3.\\

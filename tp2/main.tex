@@ -216,13 +216,13 @@
 	\end{Estructura}
 
 \tadAlinearAxiomas{Rep(e)}
-\Rep[estr][e]{$1 \land 2$}\mbox{}
+\Rep{$1 \land 2$}\mbox{}
 
 {\bf Donde:}
 
 \begin{enumerate}
   \item Todos los nodos cuyo hijo sea NULL, tienen elem distinto de NULL.\\
-        {\bf Formalmente:} $(\forall p:puntero(nodo))(p \in ePunteros(<>, e.trie) \Rightarrow p.hijo = NULL \Rightarrow p.elem \neq NULL)$
+        {\bf Formalmente:} $(\forall p:puntero(nodo))(p \in ePunteros(<>, e.trie) \impluego p.hijo = NULL \Rightarrow p.elem \neq NULL)$
 
   \item No existen dos \TipoVariable{punteros(nodo)} que apunten al mismo.\\
         {\bf Formalmente:} $SinRepetidos(ePunteros(<>, e.trie))$
@@ -232,7 +232,7 @@
 \tadOperacion{ePunteros}{puntero(nodo)}{secu(puntero(nodo))}{}
 \tadAxioma{ePunteros(p)}{\IF p = NULL THEN <> ELSE p $\bullet$ ePunteros((*p).hermano) \& ePunteros((*p).hijo) FI}
 ~
-\AbsFc[estr]{diccString($\alpha$)}{($\forall$ c:string)def?(c, t) $\Leftrightarrow$ ((e.trie $\not=$ NULL) $\impluego$ (c $\in$ eClavesTrie(*(e.trie), c)))) $\land$ ($\forall$ )}
+\AbsFc{diccString($\alpha$)}{($\forall$ c:string)def?(c, t) $\Leftrightarrow$ ((e.trie $\not=$ NULL) $\impluego$ (c $\in$ eClavesTrie(*(e.trie), c)))) $\land$ ($\forall$ )}
 ~
 \tadAlinearAxiomas{eClavesTrie(n, pal)}
 \tadOperacion{eClavesTrie}{nodo, string}{conj(string)}{}

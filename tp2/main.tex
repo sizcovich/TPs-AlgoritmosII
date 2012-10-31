@@ -283,7 +283,7 @@ Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a 
 		\State $nodo \gets *d.trie$\Comment{O(1)}
 	\EndIf
 	\Statex	
-	\Statex // Se toma el primer nodo. Si $cargoTodo$, entonces en el bucle se crear\'an todos los nodos hasta formar $k$. En caso contrario se ir\'a recorriendo todo el \'arbol hasta encontrar el lugar donde habr\'a que colocar el resto de los caracteres de $k$ que no est\'en en el \'arbol.	
+	\Statex // Si al tomar el primer nodo, $cargoTodo$ es $true$, entonces en el bucle se crear\'an todos los nodos necesarios hasta formar $k$. En el caso contrario, se ir\'a recorriendo el \'arbol entero hasta encontrar el lugar donde colocar el resto de los caracteres de $k$ que no se encuentran en el \'arbol.	
 	\Statex
 	\While{$i < \Call{Longitud}{k}$}\Comment{$256 * O(|k|) * O(1) = O(|k|)$}
 		\If{cargoTodo}
@@ -318,7 +318,7 @@ Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a 
 	\State $nodo.elem \gets \&s$ \Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $3O(1) + O(|k|) = O(|k|)$
-\par \tab El bucle, en el peor caso (donde $\neg$cargoTodo y la letra a buscar es la \'unica que me falta agregar en ese nivel), tiene 256 iteraciones y \'este, al ser un valor constante, no altera la complejidad.
+\par \tab En el peor caso, que es en el que $cargoTodo$ es $false$ y la letra a buscar es la \'unica faltante en ese nivel, el bucle tiene 256 iteraciones y, al ser un valor constante, no altera la complejidad.
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -359,7 +359,7 @@ Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a 
  	\EndWhile
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $2O(1) + O(|k|) = O(|k|)$
-\par \tab La complejidad del bucle se explica en el algoritmo anterior.
+\par \tab La complejidad del bucle se encuentra explicada en el algoritmo anterior.
 \end{algorithm}
 
 \begin{algorithm}[H]
@@ -382,7 +382,7 @@ Hemos decidido realizar este m\'odulo como un trie ya que nos permite acceder a 
  	\EndWhile
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $2O(1) + O(|k|) = O(|k|)$
-\par \tab La complejidad del bucle se explica en el algoritmo iDefinir.
+\par \tab La complejidad del bucle se encuentra explicada en el algoritmo iDefinir.
 \end{algorithm}
  
 \subsection{Servicios Usados}

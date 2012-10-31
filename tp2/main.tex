@@ -225,12 +225,16 @@
         {\bf Formalmente:} $(\forall p:puntero(nodo))(p \in ePunteros(<>, e.trie) \impluego ( (*p).hijo = NULL \Rightarrow (*p).elem \neq NULL) )$
 
   \item No existen dos \TipoVariable{punteros(nodo)} que apunten al mismo.\\
-        {\bf Formalmente:} $SinRepetidos(ePunteros(<>, e.trie))$
+        {\bf Formalmente:} $sinRepetidos(ePunteros(e.trie))$
 \end{enumerate}
 ~
 \tadAlinearAxiomas{ePunteros(p)}
 \tadOperacion{ePunteros}{puntero(nodo)}{secu(puntero(nodo))}{}
 \tadAxioma{ePunteros(p)}{\IF p = NULL THEN <> ELSE p $\bullet$ ePunteros((*p).hermano) \& ePunteros((*p).hijo) FI}
+~
+\tadAlinearAxiomas{sinRepetidos}
+\tadOperacion{sinRepetidos}{$\alpha$}{secu($\alpha$)}{}
+\tadAxioma{sinRepetidos(a)}{esta?(prim(a),fin(a)) $\land$ sinRepetidos(fin(a))}
 ~
 \AbsFc{diccString($\alpha$)}{($\forall$ c:string)def?(c, t) $\Leftrightarrow$ ((e.trie $\not=$ NULL) $\impluego$ (c $\in$ eClavesTrie(*(e.trie), c)))) $\land$ ($\forall$ )}
 ~

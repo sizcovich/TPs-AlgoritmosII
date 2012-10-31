@@ -873,7 +873,7 @@ La estructura elegida se puede explicar de la siguiente manera:
 	  [$(\forall\ l:infoLink)(\emph{est\'a}?(l, ls) \Rightarrow l.ultAcceso \leq f)$]
 	  {$res \igobs CrearItUni(eInfoLinksAUniTupla(ls, f))$}
 	  [$O(1)$]
-	  [Genera un iterador de links que permite verse a si mismo, observar su categor\'ia y la cantidad de accesos recientes.]
+	  [Genera un iterador de links que permite verse a si mismo, observar su categor\'ia y la cantidad de accesos recientes. eInfoLinksAUniTupla est\'a axiomatizado en la p\'agina~\pageref{eInfoLinksAUniTupla}.]
 
 	\InterfazFuncion{SiguienteLink}{\In{it}{itLinks}}{link}
 	  [$HayMas?(it)$]
@@ -1030,6 +1030,7 @@ Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que rel
 ~
 \tadAlinearFunciones{eInfoLinksAUniTupla}{secu(puntero(infoLink))\ spil, fecha\ f}
 \tadAlinearAxiomas{eInfoLinksAUniTupla(spil, f)}
+\label{eInfoLinksAUniTupla}
 \tadOperacion{eInfoLinksAUniTupla}{secu(puntero(infoLink))\ spil, fecha\ f}{secu(tupla(link, categoria, Nat))}{$(\forall pil:puntero(infoLink))(esta?(pil, spil) \Rightarrow (pil \neq NULL \yluego (*pil).ultAcceso \leq f))$}
 \tadAxioma{eInfoLinksAUniTupla(spil, f)}{\IF vacio?(spil) THEN <> ELSE tupla((*prim(spil)).link, (*prim(spil)).categoria, puntajeDelLink(*prim(spil), f)) $\bullet$ eInfoLinksAUniTupla(fin(spil), f) FI}
 

@@ -265,15 +265,37 @@ letrasHermanos((*p).hermano) FI}
 \AbsFc{diccString($\alpha$)}{($\forall$ c:\ string)def?(c, e)
 $\Leftrightarrow$ ((e.trie $\not=$ NULL) $\impluego$ (c $\in$
 eClavesTrie(*(e.trie), c))) $\land$ ($\forall$ d:\ vector(char), def?(d, e))
-obtener(d, e) $\Leftrightarrow$ }
+obtener(d, e) $\Leftrightarrow$ dameSignif(d,e.trie)}
 ~
 \tadAlinearAxiomas{eClavesTrie(n, pal)}
 \tadOperacion{eClavesTrie}{nodo, string}{conj(string)}{}
 \tadAxioma{eClavesTrie(n, pal)}{\IF n.elem = NULL THEN $\emptyset$ ELSE Ag(pal $\circ$ n.letra, $\emptyset$) FI $\cup$ \\
 								 \IF n.hermano = NULL THEN $\emptyset$ ELSE eClavesTrie(*n.hermano, pal) FI $\cup$ \\
 								 \IF n.hijo = NULL THEN $\emptyset$ ELSE eClavesTrie(*n.hijo, pal $\circ$ n.letra) FI}
+~
 
-
+\Statex	En este auxiliar y en los auxiliares que llama, supongo que la clave
+ existe.
+\tadAlinearAxiomas{dameSignif(a, p)}
+\tadOperacion{dameSignif}{vector(char), puntero(nodo)}{puntero($\alpha$)}{}
+\tadAxioma{dameSignif(a, p)}{dameSignifAux(a, 0, p)}
+~
+\tadAlinearAxiomas{dameSignifAux(a, n, p)}
+\tadOperacion{dameSignifAux}{vector(char), nat,
+puntero(nodo)}{puntero($\alpha$)}{}
+\tadAxioma{dameSignifAux(a, n, p)}{\IF n = longitud(a) THEN hijo(p, a[n]).elem
+ELSE dameSignifAux(a, n+1, hijoChar(p, a[n])) FI}
+~
+\tadAlinearAxiomas{hijoChar(p, c)}
+\tadOperacion{hijoChar}{puntero(nodo), char}{puntero(nodo)}{}
+\tadAxioma{hijoChar(p, c)}{\IF (*p).hijo.letra = c THEN (*p).hijo ELSE
+hermanoChar((*p).hijo, c) FI}
+~
+\tadAlinearAxiomas{hermanoChar(p, c)}
+\tadOperacion{hermanoChar}{puntero(nodo), char}{puntero(nodo)}{}
+\tadAxioma{hermanoChar(p, c)}{\IF (*p).hermano.letra = c THEN (*p).hermano
+ELSE hermanoChar((*p).hermano, c) FI}
+~
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 Para representar el DiccString, hemos elegido la estructura mostrada anteriormente (que representa a un trie) ya que nos permite acceder al contenido del mismo con la complejidad requerida para realizar los algoritmos de otros m\'odulos. Dicha estructura se explica de la siguiente manera:\\
 \begin{itemize}

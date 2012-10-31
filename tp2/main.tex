@@ -976,8 +976,8 @@ THEN max(prim(list).ultAcceso, mayorUltimoAcceso(fin(list))) ELSE 0 FI}
 \tadAlinearFunciones{cantAccesosEnFecha}{infoLink, fecha}{}
 \tadAlinearAxiomas{cantAccesosEnFecha(info, f)}
 \tadOperacion{cantAccesosEnFecha}{infoLink, fecha}{nat}{}
-\tadAxioma{cantAccesosEnFecha(info, f)}{\IF f < info.ultAcceso -2
-THEN 0 ELSE magia FI}
+\tadAxioma{cantAccesosEnFecha(info, f)}{\IF (f < info.ultAcceso -2) $\lor$ (f >
+info.ultAcceso) THEN 0 ELSE indice(info.accesos,f-info.ultAcceso) FI}
 ~
 \modTitulo{Justificaci\'on de la elecci\'on de la estructura}
 Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que relaciona los m\'odulos necesarios para definirla respetando las complejidades requeridas. Dicha representaci\'on se explica de la siguiente manera:

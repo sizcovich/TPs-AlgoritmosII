@@ -1040,7 +1040,7 @@ Esta estructura contiene una lista de links para los cuales se puede saber su ca
 \\
 \tadAlinearFunciones{puntajeDelLink}{infoLink\ il, fecha\ f}
 \tadAlinearAxiomas{puntajeDelLink(il, f)}
-\tadOperacion{puntajeDelLink}{infoLink\ il, fecha\ f}{Nat}{il.ultAcceso \leq f}
+\tadOperacion{puntajeDelLink}{infoLink\ il, fecha\ f}{Nat}{il.ultAcceso $\leq$ f}
 \tadAxioma{puntajeDelLink(il, f)}{\IF $il.ultAcceso + 3 > f$ THEN 0 ELSE indice(il.accesos, f - il.ultAcceso) + puntajeDelLink(il.ultAcceso, f + 1) FI}
 
 \subsection{Algoritmos}

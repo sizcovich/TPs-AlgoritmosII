@@ -235,7 +235,7 @@
 
   \item No existen dos hermanos con la misma letra\\
         {\bf Formalmente:} $ (\forall p:puntero(nodo),\ p \in
-        ePunteros(e.trie))\ esta?((*p).letra,\ letrasHermanos(p))$
+        ePunteros(e.trie))\ sinRepetidos(letrasHermanos(p))$
 
 \end{enumerate}
 ~
@@ -248,15 +248,10 @@
 %\tadAxioma{hermanos(p)}{\IF p = NULL THEN <> ELSE p $\bullet$
 %hermanos((*p).hermano)) FI} 
 ~
-\tadAlinearAxiomas{lertasHermanos(p)}
-\tadOperacion{lertasHermanos}{puntero(nodo)}{secu(puntero(nodo))}{}
-\tadAxioma{lertasHermanos(p)}{\IF p = NULL THEN <> ELSE
-lertasHermanosAux((*p).hermano)) FI} 
-~
-\tadAlinearAxiomas{lertasHermanosAux(p)}
-\tadOperacion{lertasHermanosAux}{puntero(nodo)}{secu(puntero(nodo))}{}
-\tadAxioma{lertasHermanosAux(p)}{\IF p = NULL THEN <> ELSE p.letra $\bullet$
-lertasHermanosAux((*p).hermano)) FI} 
+\tadAlinearAxiomas{letrasHermanos(p)}
+\tadOperacion{letrasHermanos}{puntero(nodo)}{secu(char)}{}
+\tadAxioma{letrasHermanos(p)}{\IF p = NULL THEN <> ELSE p $\bullet$ 
+letrasHermanos((*p).hermano) FI} 
 ~
 \tadAlinearAxiomas{ePunteros(p)}
 \tadOperacion{ePunteros}{puntero(nodo)}{secu(puntero(nodo))}{}
@@ -267,7 +262,10 @@ lertasHermanosAux((*p).hermano)) FI}
 \tadAxioma{sinRepetidos(a)}{$\neg$esta?(prim(a),fin(a)) $\land$ sinRepetidos(fin(a))}
 ~
 \tadAlinearAxiomas{Abs(e)}
-\AbsFc{diccString($\alpha$)}{($\forall$ c:string)def?(c, t) $\Leftrightarrow$ ((e.trie $\not=$ NULL) $\impluego$ (c $\in$ eClavesTrie(*(e.trie), c)))) $\land$ ($\forall$ )}
+\AbsFc{diccString($\alpha$)}{($\forall$ c:\ string)def?(c, e)
+$\Leftrightarrow$ ((e.trie $\not=$ NULL) $\impluego$ (c $\in$
+eClavesTrie(*(e.trie), c))) $\land$ ($\forall$ d:\ vector(char), def?(d, e))
+obtener(d, e) $\Leftrightarrow$ }
 ~
 \tadAlinearAxiomas{eClavesTrie(n, pal)}
 \tadOperacion{eClavesTrie}{nodo, string}{conj(string)}{}

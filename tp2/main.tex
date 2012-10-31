@@ -222,11 +222,41 @@
 
 \begin{enumerate}
   \item Todos los nodos cuyo hijo sea NULL, tienen elem distinto de NULL.\\
-        {\bf Formalmente:} $(\forall p:puntero(nodo))(p \in ePunteros(<>, e.trie) \impluego ( (*p).hijo = NULL \Rightarrow (*p).elem \neq NULL) )$
+        {\bf Formalmente:} $(\forall p:puntero(nodo), p \in ePunteros(e.trie))
+        \ ((*p).hijo = NULL) \Rightarrow (*p).elem \neq NULL$
 
-  \item No existen dos \TipoVariable{punteros(nodo)} que apunten al mismo.\\
+  \item No existen dos \TipoVariable{punteros(nodo)} iguales.\\
         {\bf Formalmente:} $sinRepetidos(ePunteros(e.trie))$
+        
+% \item No existen dos hermanos con la misma letra\\
+%        {\bf Formalmente:} $ (\forall p,q:puntero(nodo),\ p \in
+%        ePunteros(e.trie),\ q \in Punteros(e.trie),\ (*q) = (*p).hermano)\\
+%        (*q).letra \neq (*p).letra$
+
+  \item No existen dos hermanos con la misma letra\\
+        {\bf Formalmente:} $ (\forall p:puntero(nodo),\ p \in
+        ePunteros(e.trie))\ esta?((*p).letra,\ letrasHermanos(p))$
+
 \end{enumerate}
+~
+\tadAlinearAxiomas{ePunteros(p)}
+\tadOperacion{ePunteros}{puntero(nodo)}{secu(puntero(nodo))}{}
+\tadAxioma{ePunteros(p)}{\IF p = NULL THEN <> ELSE p $\bullet$ ePunteros((*p).hermano) \& ePunteros((*p).hijo) FI}
+~
+%\tadAlinearAxiomas{hermanos(p)}
+%\tadOperacion{hermanos}{puntero(nodo)}{secu(puntero(nodo))}{}
+%\tadAxioma{hermanos(p)}{\IF p = NULL THEN <> ELSE p $\bullet$
+%hermanos((*p).hermano)) FI} 
+~
+\tadAlinearAxiomas{lertasHermanos(p)}
+\tadOperacion{lertasHermanos}{puntero(nodo)}{secu(puntero(nodo))}{}
+\tadAxioma{lertasHermanos(p)}{\IF p = NULL THEN <> ELSE
+lertasHermanosAux((*p).hermano)) FI} 
+~
+\tadAlinearAxiomas{lertasHermanosAux(p)}
+\tadOperacion{lertasHermanosAux}{puntero(nodo)}{secu(puntero(nodo))}{}
+\tadAxioma{lertasHermanosAux(p)}{\IF p = NULL THEN <> ELSE p.letra $\bullet$
+lertasHermanosAux((*p).hermano)) FI} 
 ~
 \tadAlinearAxiomas{ePunteros(p)}
 \tadOperacion{ePunteros}{puntero(nodo)}{secu(puntero(nodo))}{}

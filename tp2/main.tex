@@ -928,6 +928,19 @@ La estructura elegida se puede explicar de la siguiente manera:
 \tadAlinearAxiomas{Abs(e)}
 \AbsFc{lli}{}
 
+\modTitulo{Justificaci\'on de la elecci\'on de la estructura}
+Para representar al sistema LinkLinkIt elegimos esta representaci\'on ya que relaciona los m\'odulos necesarios para definirla respetando las complejidades requeridas. Dicha representaci\'on se explica de la siguiente manera:
+
+\begin{itemize}
+	\item $aCategorias$ es el \'arbol de categor\'ias del sistema.\\
+	\item $linksPorCat$ es un vector de lista en el que se encuentran todos los punteros a $infoLink$.\\
+	\item $\infoLinks$ es un DiccString que guarda, para cada categor\'ia, su $infoLink$.\\
+	\item $link$ es el link del que queremos observar la informaci\'on.\\
+	\item $categoria$ es la categor\'ia del link que se encuentra en el primer elemento de la tupla.\\
+	\item $ultAcceso$ es la fecha de la \'ultima visita realizada a ese link.
+	\item $accesos$ es un vector de 3 posiciones en el que se guarda la cantidad de visitas de los 3 \'ultimos d\'ias (respectivamente) para el link pasado como primer elemento de la tupla.
+\end{itemize}
+
 \subsection{Iterador}
 
 \begin{Estructura}{itLinks}

@@ -861,7 +861,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \begin{Estructura}{itLinks}
 	\begin{Tupla}
 		\tupItem{it}{itLista(puntero(infoLink))}
-		\tupItem{fecha}{fecha}
+		\tupItem{ultAcceso}{fecha}
 	\end{Tupla}
 \end{Estructura}
 
@@ -988,7 +988,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 		\State $ultPuntaje \gets \Call{puntajeDelLink}{\Call{Siguiente}{it}, f}$\Comment{2O(1)}
 	\EndWhile
 	\If{$estaOrdenada$}
-		\State \Return $res \gets \Call{crearItLinks}{lista}$\Comment{O(1)}
+		\State \Return $res \gets \Call{crearItLinks}{lista, f}$\Comment{O(1)}
 	\EndIf
 	\Statex
 	\Statex // Ordeno agregando $n$ veces el de m\'as accesos que encuentre.
@@ -1008,7 +1008,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 	\EndWhile
 	\Statex
 	\State $s.linksPorCat[categoriaID-1] \gets listaOrdenada$\Comment{O(1)}
-	\State $res \gets \Call{crearItLinks}{listaOrdenada}$\Comment{O(1)}
+	\State $res \gets \Call{crearItLinks}{listaOrdenada, f}$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(|c|) + 2O(n) + O(n^2) + 11O(1)= O(|c| + n^2)$
 \end{algorithm}
@@ -1029,10 +1029,10 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \subsubsection{Algoritmos del Iterador}
 
 \begin{algorithm}[H]
-\caption*{iCrearItLinks(\In{ls}{lista(link)}, fecha) $\DRef res$ : \TipoVariable{\hyperlink{itLinks}{itLinks}}}
+\caption*{iCrearItLinks(\In{ls}{lista(link)}, \In{fecha}{fecha}) $\DRef res$ : \TipoVariable{\hyperlink{itLinks}{itLinks}}}
 \begin{algorithmic}[1]
 	\State $res.it \gets \Call{crearIt}{ls}$\Comment{O(1)}
-	\State $res.fecha \gets fecha$\Comment{O(1)}
+	\State $res.ultAcceso \gets fecha$\Comment{O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(1)$
 \end{algorithm}
@@ -1064,7 +1064,7 @@ Para representar el \'arbol de categor\'ias elegimos esta estructura por los sig
 \begin{algorithm}[H]
 \caption*{iHaySiguiente?(\In{itl}{itLinks}) $\DRef res$ : \TipoVariable{Bool}}
 \begin{algorithmic}[1]
-	\State $res \gets \Call{HaySiguiente?}{itl.it} \yluego \Call{puntajeDelLink}{\Call{Siguiente}{itl.it}, itl.fecha} > 0$\Comment{3O(1) = O(1)}
+	\State $res \gets \Call{HaySiguiente?}{itl.it} \yluego \Call{puntajeDelLink}{\Call{Siguiente}{itl.it}, itl.utlAcceso} > 0$\Comment{3O(1) = O(1)}
 \end{algorithmic}
 \textbf{C\'alculo de complejidad}: $O(1)$
 \end{algorithm}

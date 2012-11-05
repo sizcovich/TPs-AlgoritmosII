@@ -5,7 +5,13 @@ void driverCtor() {
 	Driver d;
 }
 
-void driverPuedeAgregarCategorias() {
+/**
+ * Testea:
+ * 		ArbolCategorias::
+ * 			ArbolCategorias(raiz)
+ * 			agregar(padre, hija)
+ */
+Driver crearArbolDePrueba() {
 	Driver d;
     /**
      * cat1
@@ -18,9 +24,32 @@ void driverPuedeAgregarCategorias() {
     d.agregarCategoria("cat1","cat3");
     d.agregarCategoria("cat3","cat4");
 
+    return d;
+}
+
+/**
+ * Testea:
+ * 		ArbolCategorias::
+ * 			hijas(cat)
+ * 			IteradorHijas::
+ * 				IteradorHijas(lista)
+ * 				HaySiguiente()
+ * 				Avanzar()
+ */
+void agregarCategorias() {
+	Driver d = crearArbolDePrueba();
+
     ASSERT_EQ(d.cantCategoriasHijas("cat1"), 2);
     ASSERT_EQ(d.cantCategoriasHijas("cat2"), 0);
     ASSERT_EQ(d.cantCategoriasHijas("cat3"), 1);
+}
+
+/**
+ * Testea:
+ * 		ArbolCategorias::id(cat)
+ */
+void agregaCategoriasConId() {
+	Driver d = crearArbolDePrueba();
 
     ASSERT_EQ(d.id("cat1"), 1);
     ASSERT_EQ(d.id("cat2"), 2);
@@ -31,7 +60,9 @@ void driverPuedeAgregarCategorias() {
 
 int main(void) {
     RUN_TEST(driverCtor);
-    RUN_TEST(driverPuedeAgregarCategorias);
+    RUN_TEST(crearArbolDePrueba);
+    RUN_TEST(agregarCategorias);
+    RUN_TEST(agregaCategoriasConId);
 
 	return 0;
 }

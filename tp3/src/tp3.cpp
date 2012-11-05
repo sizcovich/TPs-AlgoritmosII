@@ -21,6 +21,11 @@ void driverPuedeAgregarCategorias() {
     ASSERT_EQ(d.cantCategoriasHijas("cat1"), 2);
     ASSERT_EQ(d.cantCategoriasHijas("cat2"), 0);
     ASSERT_EQ(d.cantCategoriasHijas("cat3"), 1);
+
+    ASSERT_EQ(d.id("cat1"), 1);
+    ASSERT_EQ(d.id("cat2"), 2);
+    ASSERT_EQ(d.id("cat3"), 3);
+    ASSERT_EQ(d.id("cat4"), 4);
 }
 
 

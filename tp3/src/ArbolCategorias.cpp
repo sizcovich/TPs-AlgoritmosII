@@ -8,6 +8,12 @@ ArbolCategorias::ArbolCategorias(const Categoria& raiz) :
 }
 
 ArbolCategorias::~ArbolCategorias() {
+	Lista<CatInfo*> infoCats = _categorias.significados();
+	Lista<CatInfo*>::Iterador it = infoCats.CrearIt();
+	while (it.HaySiguiente()) {
+		delete it.Siguiente();
+		it.Avanzar();
+	}
 }
 
 const Categoria ArbolCategorias::raiz() const {

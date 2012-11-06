@@ -24,6 +24,7 @@ public:
 	virtual ~DiccString();
 
 	Lista<String> claves() const;
+	Lista<T> significados() const;
 	void definir(const String& k, T& s);
 	bool definido(const String& k) const;
 	T& obtener(const String& k) const;
@@ -40,6 +41,12 @@ DiccString<T>::~DiccString() {
 
 template<class T>
 Lista<String> DiccString<T>::claves() const {
+	return Lista<String>();
+}
+
+template<class T>
+Lista<T> DiccString<T>::significados() const {
+	return Lista<T>();
 }
 
 template<class T>

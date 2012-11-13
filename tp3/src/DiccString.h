@@ -46,7 +46,62 @@ Lista<String> DiccString<T>::claves() const {
 
 template<class T>
 Lista<T> DiccString<T>::significados() const {
-	return Lista<T>();
+	/* FUNCIONO RECURSIVA (FACIL) LA DEJO XQ ES LINDA :p
+	 * if _trie == NULL
+	 * 		return <>;
+	 * else
+	 * 	{
+	 * 		Lista<T> res;
+	 * 		if _hermano != NULL
+	 * 			res && significadosAux(_hermano);
+	 * 		if _hijo != NULL
+	 * 			res && significadoAux(_hijo);
+	 * 		else
+	 * 			res.AgregarAtras(_trie->_elem);
+	 * 	}
+	 * 	return res
+	 * */
+
+	Nodo* nodo = _trie;
+	Lista<Nodo*> anteriores;
+	Lista<T> res;
+	bool condicion = false;
+	while(nodo != NULL && ((nodo->_hermano != NULL or nodo->_hijo != NULL) and anteriores.EsVacia()))  //VERIFICAR
+	{
+		if(nodo->_hijo != NULL) //si tiene hijo, guardo el padre y avanzo hacia abajo
+		{
+			anteriores.AgregarAtras(nodo);
+			nodo = nodo->_hijo;
+		}
+		else
+		{
+			res.AgregarAtras(nodo->_elem); //si no tiene hijo, tiene informacion.
+
+			if(nodo->_hermano != NULL) //si tiene hermano, sigo recorriendo este nivel.
+			{
+				nodo = nodo->_hermano;
+			}
+			else //si no tiene hijo ni hermano, tengo que volver hacia arriba.
+			{
+				if(anteriores.Ultimo() != NULL)
+				{
+					if(anteriores.Ultimo()->_hermano != NULL)
+						nodo = anteriores.Ultimo()->_hermano;
+					else //si el padre al q volvi no tiene hermano, tengo q ir a su padre
+					{
+						while(anteriores.Ultimo() != NULL && anteriores.Ultimo()->_hermano != NULL)
+							if(!(anteriores.EsVacia()))
+								anteriores.Comienzo();
+					}
+				}
+				//else //no tiene hijos, ni hermanos, ni padre a quien volver.
+					//break; //de todas formas, si llego aca se cumple la negacion de la guarda.
+
+
+			}
+		}
+	}
+	return res;
 }
 
 template<class T>

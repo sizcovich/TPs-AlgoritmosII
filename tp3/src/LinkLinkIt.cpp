@@ -13,7 +13,7 @@ Nat LinkLinkIt::cantLinks(const Categoria& c) {
     return _linksPorCat[categoriaID].Longitud();
 }
 
-/*
+
 void LinkLinkIt::agregarLink(const Link& l, const Categoria& c) {
     int categoriaID = _aCategorias.id(c);
 
@@ -27,14 +27,14 @@ void LinkLinkIt::agregarLink(const Link& l, const Categoria& c) {
     _infoLinks->definir(l,*info);
     _linksPorCat[categoriaID-1].AgregarAtras(info);
 
-    _aCategorias.IteradorPadres it = _aCategorias.padres(c);
+    ArbolCategorias::IteradorPadres it = _aCategorias.padres(c);
     while (it.HaySiguiente())
     {
-        it.Subir();
-        categoriaID = it.ActualID();
+        it.Avanzar();
+        categoriaID = it.HaySiguiente();
         _linksPorCat[categoriaID-1].AgregarAtras(info);
     }
-}*/
+}
 
 void LinkLinkIt::accederLink(const Link& l, const Fecha& f) {
     InfoLink link = _infoLinks->obtener(l);

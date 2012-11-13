@@ -48,7 +48,7 @@ Lista<String> DiccString<T>::claves() const {
 	 * 	{
 	 * 		Lista<T> res;
 	 * 		if _hermano != NULL
-	 * 			res && clavesAux(_hermano,_trie->_letra);
+	 * 			res && clavesAux(_hermano,'');
 	 * 		if _hijo != NULL
 	 * 			res && clavesAux(_hijo,_trie->_letra);
 	 * 		else
@@ -62,16 +62,18 @@ Lista<String> DiccString<T>::claves() const {
 template<class T>
 Lista<String> DiccString<T>::clavesAux(const Nodo* nodo, const string prefijo) const {
 	 * 	{
+	 * 		Lista<String> res;
 	 * 		if _hermano != NULL
-	 * 			res && clavesAux(_hermano,prefijo ++ nodo->_letra);
+	 * 			res && clavesAux(_hermano,prefijo);
 	 * 		if _hijo != NULL
 	 * 			res && clavesAux(_hijo,prefijo ++ nodo->_letra);
 	 * 		else
-	 * 			return (prefijo ++ nodo->_letra);
+	 * 			res.AgregarAtras(prefijo ++ nodo->_letra);
 	 * 	}
-	 * 	return res
+	 * 	return res;
 }
 	 * */
+
 	return Lista<String>();
 }
 

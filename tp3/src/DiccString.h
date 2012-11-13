@@ -41,6 +41,37 @@ DiccString<T>::~DiccString() {
 
 template<class T>
 Lista<String> DiccString<T>::claves() const {
+	/* FUNCIONO RECURSIVA (FACIL) LA DEJO XQ ES LINDA :p
+	 * if _trie == NULL
+	 * 		return <>;
+	 * else
+	 * 	{
+	 * 		Lista<T> res;
+	 * 		if _hermano != NULL
+	 * 			res && clavesAux(_hermano,_trie->_letra);
+	 * 		if _hijo != NULL
+	 * 			res && clavesAux(_hijo,_trie->_letra);
+	 * 		else
+	 * 			res.AgregarAtras(_trie->_letra);
+	 * 	}
+	 * 	return res
+}
+	 * */
+
+	/*
+template<class T>
+Lista<String> DiccString<T>::clavesAux(const Nodo* nodo, const string prefijo) const {
+	 * 	{
+	 * 		if _hermano != NULL
+	 * 			res && clavesAux(_hermano,prefijo ++ nodo->_letra);
+	 * 		if _hijo != NULL
+	 * 			res && clavesAux(_hijo,prefijo ++ nodo->_letra);
+	 * 		else
+	 * 			return (prefijo ++ nodo->_letra);
+	 * 	}
+	 * 	return res
+}
+	 * */
 	return Lista<String>();
 }
 
@@ -61,13 +92,12 @@ Lista<T> DiccString<T>::significados() const {
 	 * 	}
 	 * 	return res
 	 * */
-
 	Nodo* nodo = _trie;
 	Lista<Nodo*> anteriores;
 	Lista<T> res;
 	bool condicion = false;
 	while(nodo != NULL && ((nodo->_hermano != NULL or nodo->_hijo != NULL) and anteriores.EsVacia()))  //VERIFICAR
-	{
+	{//NULL es para cuando miro la raiz, y el resto es sin interrupciones xq se tiene q cummplir todo para q haya llegado al final
 		if(nodo->_hijo != NULL) //si tiene hijo, guardo el padre y avanzo hacia abajo
 		{
 			anteriores.AgregarAtras(nodo);
@@ -96,8 +126,6 @@ Lista<T> DiccString<T>::significados() const {
 				}
 				//else //no tiene hijos, ni hermanos, ni padre a quien volver.
 					//break; //de todas formas, si llego aca se cumple la negacion de la guarda.
-
-
 			}
 		}
 	}

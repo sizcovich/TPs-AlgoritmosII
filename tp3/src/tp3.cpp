@@ -5,6 +5,18 @@ void driverCtor() {
 	Driver d;
 }
 
+void pruebaDiccString() {
+	DiccString<Nat> dicc = DiccString<Nat>();
+	dicc.definir("Barabas, Ariel", 77511);
+	dicc.definir("Izcovich, Sabrina", 55011);
+	dicc.definir("Otero, Fernando", 42411);
+	dicc.definir("Vita, Sebastián", 14911);
+
+	ASSERT_EQ(dicc.obtener("Barabas, Ariel"), 77511);
+	ASSERT_EQ(dicc.significados().Longitud(), 4);
+	ASSERT_EQ(dicc.claves().Longitud(), 4);
+}
+
 /**
  * Testea:
  * 		ArbolCategorias::
@@ -60,6 +72,7 @@ void agregaCategoriasConId() {
 
 int main(void) {
     RUN_TEST(driverCtor);
+    RUN_TEST(pruebaDiccString);
     RUN_TEST(crearArbolDePrueba);
     RUN_TEST(agregarCategorias);
     RUN_TEST(agregaCategoriasConId);

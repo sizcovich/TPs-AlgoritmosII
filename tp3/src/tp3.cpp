@@ -63,6 +63,5 @@ int main(void) {
     RUN_TEST(crearArbolDePrueba);
     RUN_TEST(agregarCategorias);
     RUN_TEST(agregaCategoriasConId);
-
 	return 0;
 }

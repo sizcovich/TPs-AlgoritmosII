@@ -47,12 +47,13 @@ Lista<String> DiccString<T>::claves() const {
 	 * else
 	 * 	{
 	 * 		Lista<T> res;
+	 * 		if _elem != NULL
+	 * 			res.AgregarAtras(_trie->_letra.toString());
 	 * 		if _hermano != NULL
 	 * 			res && clavesAux(_hermano,'');
 	 * 		if _hijo != NULL
 	 * 			res && clavesAux(_hijo,_trie->_letra);
-	 * 		else
-	 * 			res.AgregarAtras(_trie->_letra);
+
 	 * 	}
 	 * 	return res
 }
@@ -63,12 +64,12 @@ template<class T>
 Lista<String> DiccString<T>::clavesAux(const Nodo* nodo, const string prefijo) const {
 	 * 	{
 	 * 		Lista<String> res;
+	 *		if _elem != NULL
+	 * 			res.AgregarAtras(prefijo ++ nodo->_letra.toString());
 	 * 		if _hermano != NULL
 	 * 			res && clavesAux(_hermano,prefijo);
 	 * 		if _hijo != NULL
-	 * 			res && clavesAux(_hijo,prefijo ++ nodo->_letra);
-	 * 		else
-	 * 			res.AgregarAtras(prefijo ++ nodo->_letra);
+	 * 			res && clavesAux(_hijo,prefijo ++ nodo->_letra.toString());
 	 * 	}
 	 * 	return res;
 }
@@ -85,12 +86,13 @@ Lista<T> DiccString<T>::significados() const {
 	 * else
 	 * 	{
 	 * 		Lista<T> res;
+	 * 		if _elem != NULL
+	 * 			res.AgregarAtras(_trie->_elem);
 	 * 		if _hermano != NULL
 	 * 			res && significadosAux(_hermano);
 	 * 		if _hijo != NULL
 	 * 			res && significadoAux(_hijo);
-	 * 		else
-	 * 			res.AgregarAtras(_trie->_elem);
+	 *
 	 * 	}
 	 * 	return res
 	 * */
@@ -100,6 +102,10 @@ Lista<T> DiccString<T>::significados() const {
 	bool condicion = false;
 	while(nodo != NULL && ((nodo->_hermano != NULL or nodo->_hijo != NULL) and anteriores.EsVacia()))  //VERIFICAR
 	{//NULL es para cuando miro la raiz, y el resto es sin interrupciones xq se tiene q cummplir todo para q haya llegado al final
+
+		if(nodo->_elem != NULL)
+			res.AgregarAtras(nodo->_elem);
+
 		if(nodo->_hijo != NULL) //si tiene hijo, guardo el padre y avanzo hacia abajo
 		{
 			anteriores.AgregarAtras(nodo);
@@ -107,7 +113,7 @@ Lista<T> DiccString<T>::significados() const {
 		}
 		else
 		{
-			res.AgregarAtras(nodo->_elem); //si no tiene hijo, tiene informacion.
+			//res.AgregarAtras(nodo->_elem); //si no tiene hijo, tiene informacion. MAL
 
 			if(nodo->_hermano != NULL) //si tiene hermano, sigo recorriendo este nivel.
 			{

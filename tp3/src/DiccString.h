@@ -25,6 +25,7 @@ public:
 
 	Lista<String> claves() const;
 	Lista<T> significados() const;
+	void definir(const char* k, T s);
 	void definir(const String& k, T& s);
 	bool definido(const String& k) const;
 	T& obtener(const String& k) const;
@@ -138,6 +139,13 @@ Lista<T> DiccString<T>::significados() const {
 		}
 	}
 	return res;
+}
+
+template<class T>
+void DiccString<T>::definir(const char* k, T s) {
+	String key = k;
+
+	definir(key, s);
 }
 
 template<class T>

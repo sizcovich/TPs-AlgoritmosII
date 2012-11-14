@@ -38,6 +38,8 @@ namespace aed2{
         ~Lista();
         /// Operacion de asignacion
         Lista<T>& operator=(const Lista<T>& otra);
+        /// Operacion de concatenacion
+        Lista<T>& concatenar(Lista<T>& otra);
 
         /// Opreaciones básicas
         bool EsVacia() const;

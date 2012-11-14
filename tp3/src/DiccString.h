@@ -80,30 +80,51 @@ Lista<String> DiccString<T>::clavesAux(const Nodo* nodo, const string prefijo) c
 }
 
 template<class T>
-Lista<T> DiccString<T>::significados() const {
-	/* FUNCIONO RECURSIVA (FACIL) LA DEJO XQ ES LINDA :p
-	 * if _trie == NULL
-	 * 		return <>;
-	 * else
-	 * 	{
-	 * 		Lista<T> res;
-	 * 		if _elem != NULL
-	 * 			res.AgregarAtras(_trie->_elem);
-	 * 		if _hermano != NULL
-	 * 			res && significadosAux(_hermano);
-	 * 		if _hijo != NULL
-	 * 			res && significadoAux(_hijo);
-	 *
-	 * 	}
-	 * 	return res
-	 * */
+Lista<T> DiccString<T>::significados() const
+/*
+{
+	// FUNCIONO RECURSIVA
+	Lista<T> res;
+    if (_trie == NULL)
+        {return res;}
+    else
+    {
+        if (_trie->_elem != NULL)
+            {res.AgregarAtras(_trie->_elem);}
+        if (_trie->_hermano != NULL)
+            {res.concatenar(significadoAux(_trie->_hermano));}
+        if (_trie->_hijo != NULL)
+            {res.concatenar(significadoAux(_trie->_hijo));}
+    }
+    return res;
+}
+
+template<class T>
+Lista<T> DiccString<T>::significadoAux(const Nodo* nodo) const {
+	Lista<T> res;
+    if (nodo == NULL)
+        {return res;}
+    else
+    {
+        if (nodo->_elem != NULL)
+            {res.AgregarAtras(nodo->_elem);}
+        if (nodo->_hermano != NULL)
+            {res.concatenar(significadoAux(nodo->_hermano));}
+        if (nodo->_hijo != NULL)
+            {res.concatenar(significadoAux(nodo->_hijo));}
+    }
+    return res;
+}*/
+
+{
 	Nodo* nodo = _trie;
 	Lista<Nodo*> anteriores;
 	Lista<T> res;
+	bool condicion = false;
 	while(nodo != NULL && ((nodo->_hermano != NULL or nodo->_hijo != NULL) and anteriores.EsVacia()))  //VERIFICAR
 	{//NULL es para cuando miro la raiz, y el resto es sin interrupciones xq se tiene q cummplir todo para q haya llegado al final
 
-		if(nodo->_elem != NULL)
+		if(nodo->_elem != NULL)             // MAL   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			res.AgregarAtras(nodo->_elem);
 
 		if(nodo->_hijo != NULL) //si tiene hijo, guardo el padre y avanzo hacia abajo

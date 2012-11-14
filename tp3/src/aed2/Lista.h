@@ -13,6 +13,18 @@ namespace aed2{
     template <typename T>
     class Lista
     {
+        struct Nodo
+        {
+            Nodo(const T& d) : dato(d), anterior(NULL), siguiente(NULL) {};
+            
+            T dato;
+            Nodo* anterior;
+            Nodo* siguiente;
+        };
+        
+        Nodo* primero;
+        Nat longitud;
+        
     public:
         //forward declarations
         class Iterador;
@@ -147,19 +159,6 @@ namespace aed2{
         /// Creación del const_Iterador
         Iterador CrearIt();
         Iterador CrearItUlt();
-
-    private:
-        struct Nodo
-        {
-            Nodo(const T& d) : dato(d), anterior(NULL), siguiente(NULL) {};
-
-            T dato;
-            Nodo* anterior;
-            Nodo* siguiente;
-        };
-
-        Nodo* primero;
-        Nat longitud;
     };
 
     template<class T>

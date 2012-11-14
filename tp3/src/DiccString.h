@@ -9,9 +9,10 @@ template<class T>
 class DiccString {
 
 	struct Nodo {
-		Nodo(char letra) : _letra(letra), _hermano(NULL), _hijo(NULL) {};
+		Nodo(char letra) : _letra(letra), _hermano(NULL), _hijo(NULL), _finPalabra(false) {};
 
 		T _elem;
+		bool _finPalabra;
 		char _letra;
 		Nodo* _hermano;
 		Nodo* _hijo;
@@ -206,6 +207,7 @@ void DiccString<T>::definir(const String& k, T& s) {
 	}
 
 	nodo->_elem = s;
+	nodo->_finPalabra = true;
 }
 
 template<class T>

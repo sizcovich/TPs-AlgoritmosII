@@ -100,7 +100,6 @@ Lista<T> DiccString<T>::significados() const {
 	Nodo* nodo = _trie;
 	Lista<Nodo*> anteriores;
 	Lista<T> res;
-	bool condicion = false;
 	while(nodo != NULL && ((nodo->_hermano != NULL or nodo->_hijo != NULL) and anteriores.EsVacia()))  //VERIFICAR
 	{//NULL es para cuando miro la raiz, y el resto es sin interrupciones xq se tiene q cummplir todo para q haya llegado al final
 

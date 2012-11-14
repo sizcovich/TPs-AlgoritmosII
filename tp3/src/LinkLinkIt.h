@@ -13,7 +13,7 @@ class LinkLinkIt {
 	};
 
 	ArbolCategorias& _aCategorias;
-	Lista<InfoLink*> _linksPorCat[];
+	Lista<InfoLink*>* _linksPorCat;
 	DiccString<InfoLink>* _infoLinks;
 
 public:

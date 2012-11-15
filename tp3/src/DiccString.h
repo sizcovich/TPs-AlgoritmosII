@@ -50,7 +50,7 @@ Lista<String> DiccString<T>::claves() const {
 	 * 	{
 	 * 		Lista<T> res;
 	 * 		if _elem != NULL
-	 * 			res.AgregarAtras(_trie->_letra.toString());
+	 *              res.AgregarAtras(_trie->_letra.toString());
 	 * 		if _hermano != NULL
 	 * 			res && clavesAux(_hermano,'');
 	 * 		if _hijo != NULL
@@ -211,11 +211,11 @@ void DiccString<T>::definir(const String& k, T& s) {
 
 template<class T>
 bool DiccString<T>::definido(const String& k) const {
-	Nodo* nodo;
+	Nodo* nodo; //una posibilidad de error es que a nodo no le asignamos ningun valor al declararlo entonces tira problema en el if
 	Nat i = 0;
 
 	while (i < k.size()) {
-		if (nodo->_letra == k[i]) {
+		if (nodo->_letra == k[i]) { //aca me tira que tenemos un problema con la memoria
 			if (++i == k.size()) {
 				return true;
 			} else {

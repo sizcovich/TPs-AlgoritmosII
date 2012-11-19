@@ -2,6 +2,7 @@
 #define LINKLINKIT_H_
 
 #include "ArbolCategorias.h"
+#include "aed2/Lista.h"
 
 class LinkLinkIt {
 
@@ -13,14 +14,16 @@ class LinkLinkIt {
 	};
 
 	ArbolCategorias& _aCategorias;
-	Lista<InfoLink*>* _linksPorCat;
+	Lista<InfoLink*> _linksPorCat[];
 	DiccString<InfoLink>* _infoLinks;
 
 public:
 
 	class IteradorLinks {
+	    Iterador(lista<InfoLink*>) _it;
+	    Fecha _ultAcceso;
 	private:
-		IteradorLinks();
+		IteradorLinks(Lista<InfoLink>, Fecha);
 		friend IteradorLinks linksOrdenadosPorAccesos(const Categoria&);
 	public:
 		void Avanzar();

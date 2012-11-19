@@ -17,7 +17,7 @@ void pruebaDiccString() {
 	ASSERT_EQ(dicc.claves().Longitud(), 4);
 //    ASSERT_EQ(dicc.definido("Izcovich, Sabrina"), true);
 //    ASSERT_EQ(dicc.definido("Arroz con pollo"), false);
-    
+
 }
 
 /**
@@ -38,7 +38,6 @@ Driver crearArbolDePrueba() {
     d.agregarCategoria("cat1","cat2");
     d.agregarCategoria("cat1","cat3");
     d.agregarCategoria("cat3","cat4");
-
     return d;
 }
 
@@ -74,10 +73,10 @@ void agregaCategoriasConId() {
 
 
 int main(void) {
-    //RUN_TEST(driverCtor);
+    RUN_TEST(driverCtor);
     RUN_TEST(pruebaDiccString);
-    //RUN_TEST(crearArbolDePrueba);
-    //RUN_TEST(agregarCategorias);
-    //RUN_TEST(agregaCategoriasConId);
+    RUN_TEST(crearArbolDePrueba);
+    RUN_TEST(agregarCategorias);
+    RUN_TEST(agregaCategoriasConId);
 	return 0;
 }

@@ -124,7 +124,7 @@ Lista<T> DiccString<T>::significadoAux(const Nodo* nodo) const {
 	while(nodo != NULL && ((nodo->_hermano != NULL || nodo->_hijo != NULL) and anteriores.EsVacia()))  //VERIFICAR
 	{//NULL es para cuando miro la raiz, y el resto es sin interrupciones xq se tiene q cummplir todo para q haya llegado al final
 
-		if(nodo->_elem != NULL)             // MAL   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		if(nodo->_finPalabra == true)
 			res.AgregarAtras(nodo->_elem);
 
 		if(nodo->_hijo != NULL) //si tiene hijo, guardo el padre y avanzo hacia abajo

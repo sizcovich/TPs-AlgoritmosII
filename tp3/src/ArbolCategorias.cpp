@@ -1,3 +1,6 @@
+#ifndef ARBOLCATEGORIAS_H
+#define ARBOLCATEGORIAS_H
+
 #include "ArbolCategorias.h"
 
 
@@ -84,3 +87,6 @@ bool ArbolCategorias::IteradorPadres::HaySiguiente() const {
 Nat ArbolCategorias::IteradorPadres::Siguiente() const {
 	return _catInfo->_id;
 }
+
+
+#endif /* ARBOLCATEGORIAS_H */

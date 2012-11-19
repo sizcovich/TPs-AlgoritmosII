@@ -1,9 +1,3 @@
-/*#ifndef AED2_LISTA_H_INCLUDED
-#define AED2_LISTA_H_INCLUDED
-
-FERNANDO: a mi con esto descomentado me anda, sino me tira 307 errores y 84 warnings
-
-#include "Lista.h"*/
 /// Implementación
 
 template <typename T>
@@ -358,5 +352,3 @@ bool operator==(const Lista<T>& l1, const Lista<T>& l2)
     }
     return not it1.HaySiguiente() and not it2.haySiguiente();
 }
-
-//#endif // AED2_LISTA_H_INCLUDED

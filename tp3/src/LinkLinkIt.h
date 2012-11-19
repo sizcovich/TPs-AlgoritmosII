@@ -2,36 +2,31 @@
 #define LINKLINKIT_H_
 
 #include "ArbolCategorias.h"
+#include "aed2/Arreglo.h"
 #include "aed2/Lista.h"
 
 class LinkLinkIt {
 
 	struct InfoLink {
+		InfoLink(Link l, Categoria c) : link(l), categoria(c), ultAcceso(0), accesos(Arreglo<Nat>(3)) {
+		    for (int i = 0; i < 3; i++)
+		        accesos[i] = 0;
+		};
 		Link link;
 		Categoria categoria;
 		Fecha ultAcceso;
-		Nat accesos[];
+		Arreglo<Nat> accesos;
+
+		Nat puntajeDelLink(Fecha f) const;
 	};
 
 	ArbolCategorias& _aCategorias;
-	Lista<InfoLink*> _linksPorCat[];
-	DiccString<InfoLink>* _infoLinks;
+	Arreglo<Lista<InfoLink*> > _linksPorCat;
+	DiccString<InfoLink*> _infoLinks;
 
 public:
 
-	class IteradorLinks {
-	    Iterador(lista<InfoLink*>) _it;
-	    Fecha _ultAcceso;
-	private:
-		IteradorLinks(Lista<InfoLink>, Fecha);
-		friend IteradorLinks linksOrdenadosPorAccesos(const Categoria&);
-	public:
-		void Avanzar();
-		bool HaySiguiente() const;
-		Link SiguienteLink() const;
-		Link SiguienteCategoria() const;
-		Link SiguienteAccesosRecientes() const;
-	};
+	class IteradorLinks;
 
 	LinkLinkIt(ArbolCategorias& abCat);
 	virtual ~LinkLinkIt();
@@ -40,6 +35,20 @@ public:
 	void accederLink(const Link& l, const Fecha& f);
 	Nat cantLinks(const Categoria& c);
 	IteradorLinks linksOrdenadosPorAccesos(const Categoria& c);
+
+	class IteradorLinks {
+	    Lista<InfoLink*>::Iterador _it;
+	    Fecha _ultAcceso;
+	private:
+		IteradorLinks(Lista<InfoLink*>& ls, Fecha f);
+		friend LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& c);
+	public:
+		bool HaySiguiente() const;
+		Link SiguienteLink() const;
+		Categoria SiguienteCategoria() const;
+		Nat SiguienteAccesosRecientes() const;
+		void Avanzar();
+	};
 };
 
 #endif /* LINKLINKIT_H_ */

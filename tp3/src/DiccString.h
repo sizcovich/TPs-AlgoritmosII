@@ -20,12 +20,16 @@ class DiccString {
 
 	Nodo* _trie;
 
+
 public:
+	int elementosEnTrie;  //PARA HACER TESTS
+
 	DiccString();
 	virtual ~DiccString();
 
 	Lista<String> claves() const;
 	Lista<T> significados() const;
+  //  Lista<T> significadoAux(const Nodo* nodo) const;
 	void definir(const char* k, T s);
 	void definir(const String& k, T& s);
 	bool definido(const String& k) const;
@@ -34,7 +38,8 @@ public:
 
 
 template<class T>
-DiccString<T>::DiccString() : _trie(NULL) {
+DiccString<T>::DiccString() : _trie(NULL), elementosEnTrie(0) {
+
 }
 
 template<class T>
@@ -84,13 +89,13 @@ template<class T>
 Lista<T> DiccString<T>::significados() const
 /*
 {
-	// FUNCIONO RECURSIVA
+	// FUNCION RECURSIVA
 	Lista<T> res;
     if (_trie == NULL)
         {return res;}
     else
     {
-        if (_trie->_elem != NULL)
+        if (_trie->_finPalabra = true)
             {res.AgregarAtras(_trie->_elem);}
         if (_trie->_hermano != NULL)
             {res.concatenar(significadoAux(_trie->_hermano));}
@@ -107,7 +112,7 @@ Lista<T> DiccString<T>::significadoAux(const Nodo* nodo) const {
         {return res;}
     else
     {
-        if (nodo->_elem != NULL)
+        if (_trie->_finPalabra = true)
             {res.AgregarAtras(nodo->_elem);}
         if (nodo->_hermano != NULL)
             {res.concatenar(significadoAux(nodo->_hermano));}
@@ -121,10 +126,10 @@ Lista<T> DiccString<T>::significadoAux(const Nodo* nodo) const {
 	Nodo* nodo = _trie;
 	Lista<Nodo*> anteriores;
 	Lista<T> res;
-	while(nodo != NULL && ((nodo->_hermano != NULL || nodo->_hijo != NULL) and anteriores.EsVacia()))  //VERIFICAR
+	while(((nodo->_hermano != NULL or nodo->_hijo != NULL) or anteriores.EsVacia()))  //VERIFICAR
 	{//NULL es para cuando miro la raiz, y el resto es sin interrupciones xq se tiene q cummplir todo para q haya llegado al final
 
-		if(nodo->_finPalabra == true)
+	//	if(nodo->_finPalabra == true)
 			res.AgregarAtras(nodo->_elem);
 
 		if(nodo->_hijo != NULL) //si tiene hijo, guardo el padre y avanzo hacia abajo
@@ -142,7 +147,7 @@ Lista<T> DiccString<T>::significadoAux(const Nodo* nodo) const {
 			}
 			else //si no tiene hijo ni hermano, tengo que volver hacia arriba.
 			{
-				if(anteriores.Ultimo() != NULL)
+				if(!(anteriores.EsVacia()))
 				{
 					if(anteriores.Ultimo()->_hermano != NULL)
 						nodo = anteriores.Ultimo()->_hermano;
@@ -158,6 +163,7 @@ Lista<T> DiccString<T>::significadoAux(const Nodo* nodo) const {
 			}
 		}
 	}
+	cout << res << endl;
 	return res;
 }
 
@@ -207,6 +213,7 @@ void DiccString<T>::definir(const String& k, T& s) {
 
 	nodo->_elem = s;
 	nodo->_finPalabra = true;
+	elementosEnTrie++;
 }
 
 template<class T>

@@ -19,8 +19,10 @@ void pruebaDiccString() {
 	ASSERT_EQ(dicc.obtener("Otero, Fernando"), 42411);
 	ASSERT_EQ(dicc.obtener("Vita, Sebastian"), 14911);
 	ASSERT_EQ(dicc.obtener("Barabas, Ariel"), 77511);
-	ASSERT_EQ(dicc.significados().Longitud(), dicc.elementosEnTrie);
-//	ASSERT_EQ(dicc.claves().Longitud(), 4);
+	ASSERT_EQ(dicc.significados().Longitud(), dicc._elementosEnTrie);
+	ASSERT_EQ(dicc.claves().Longitud(), 4);
+	ASSERT_EQ(dicc.claves().Primero(), "Barabas, Ariel");
+	ASSERT_EQ(dicc.significados().Primero(), 77511);
 }
 
 /**

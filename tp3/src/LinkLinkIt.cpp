@@ -62,7 +62,7 @@ Nat max(Nat a, Nat b) {
 }
 
 
-Nat LinkLinkIt::puntajeDelLink(InfoLink il, Fecha f) const {
+Nat LinkLinkIt::InfoLink::puntajeDelLink(Fecha f) const {
 	return 0;
 }
 
@@ -129,6 +129,6 @@ bool LinkLinkIt::IteradorLinks::HaySiguiente() const {
     return _it.HaySiguiente() && _it.Siguiente()->puntajeDelLink(_ultAcceso) > 0;
 }
 
-LinkLinkIt::IteradorLinks::Avanzar() {
+void LinkLinkIt::IteradorLinks::Avanzar() {
 	_it.Avanzar();
 }

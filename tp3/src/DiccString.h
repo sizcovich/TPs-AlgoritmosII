@@ -195,8 +195,11 @@ void DiccString<T>::definir(const String& k, T& s) {
 
 template<class T>
 bool DiccString<T>::definido(const String& k) const {
-	Nodo* nodo; //una posibilidad de error es que a nodo no le asignamos ningun valor al declararlo entonces tira problema en el if
+	Nodo* nodo = _trie; //una posibilidad de error es que a nodo no le asignamos ningun valor al declararlo entonces tira problema en el if
 	Nat i = 0;
+
+	if (nodo == NULL)
+		return false;
 
 	while (i < k.size()) {
 		if (nodo->_letra == k[i]) { //aca me tira que tenemos un problema con la memoria

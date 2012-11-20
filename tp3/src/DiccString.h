@@ -20,6 +20,7 @@ class DiccString {
 
 	Nodo* _trie;
 
+	void borrarNodo(Nodo* nodo);
 
 public:
     Lista<T> _significados;
@@ -45,6 +46,23 @@ DiccString<T>::DiccString() : _trie(NULL), _elementosEnTrie(0) {
 
 template<class T>
 DiccString<T>::~DiccString() {
+	if (_trie != NULL) {
+		borrarNodo(_trie);
+		delete _trie;
+	}
+}
+
+template<class T>
+void DiccString<T>::borrarNodo(Nodo* nodo) {
+	if (nodo->_hermano != NULL) {
+		borrarNodo(nodo->_hermano);
+		delete nodo->_hermano;
+	}
+
+	if (nodo->_hijo != NULL) {
+		borrarNodo(nodo->_hijo);
+		delete nodo->_hijo;
+	}
 }
 
 template<class T>

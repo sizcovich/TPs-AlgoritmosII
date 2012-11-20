@@ -63,7 +63,14 @@ Nat max(Nat a, Nat b) {
 
 
 Nat LinkLinkIt::InfoLink::puntajeDelLink(Fecha f) const {
-	return 0;
+	Nat res = 0;
+	int i = 3;
+	while ((f - ultAcceso) < i) {
+        i--;
+        res += accesos[i];
+	}
+
+	return res;
 }
 
 

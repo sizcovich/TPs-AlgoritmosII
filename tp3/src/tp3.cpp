@@ -12,7 +12,7 @@ void pruebaDiccString() {
 	dicc.definir("Otero, Fernando", 42411);
 	dicc.definir("Vita, Sebastian", 14911);
 
-    ASSERT_EQ(dicc.definido("Izcovich, Sabrina"), true); // TIRA ERROR!!!!!
+    ASSERT_EQ(dicc.definido("Izcovich, Sabrina"), true);
     ASSERT_EQ(dicc.definido("Barabas, Ariel"), true);
     ASSERT_EQ(dicc.definido("Arroz con pollo"), false);
 	ASSERT_EQ(dicc.obtener("Izcovich, Sabrina"), 55011);

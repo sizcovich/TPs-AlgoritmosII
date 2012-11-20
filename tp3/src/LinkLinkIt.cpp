@@ -39,13 +39,13 @@ void LinkLinkIt::accederLink(const Link& l, const Fecha& f) {
     int diff = f - link->ultAcceso;
 
     int i = 0;
-    while(i < (3 - diff)) {
+    while (i < (3 - diff)) {
         link->accesos[i] = link->accesos[i + diff];
         i++;
     }
 
     i = 0;
-    while(i < diff && i < 3) {
+    while (i < diff && i < 3) {
         link->accesos[2 - i] = 0;
         i++;
     }
@@ -88,13 +88,13 @@ LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& 
 
     it = lista.CrearIt();
     bool estaOrdenada = true;
-    Fecha ultPuntaje = 0;
+    Nat ultPuntaje = 0;
     while(it.HaySiguiente() && estaOrdenada) {
-        if (ultPuntaje > -1)
+        if (ultPuntaje > 0)
             estaOrdenada = ultPuntaje >= it.Siguiente()->puntajeDelLink(f);
         ultPuntaje = it.Siguiente()->puntajeDelLink(f);
     }
-    if(estaOrdenada)
+    if (estaOrdenada)
         return IteradorLinks(lista, f);
 
     Lista<InfoLink*> listaOrdenada = Lista<InfoLink*>();

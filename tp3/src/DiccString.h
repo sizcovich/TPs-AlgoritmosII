@@ -11,10 +11,10 @@ class DiccString {
 	struct Nodo {
 		Nodo(char letra) : _letra(letra), _hermano(NULL), _hijo(NULL), _finPalabra(false) {};
 
-		bool _finPalabra;
 		char _letra;
 		Nodo* _hermano;
 		Nodo* _hijo;
+		bool _finPalabra;
         T _elem;
 	};
 

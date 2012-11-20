@@ -36,7 +36,7 @@ void ArbolCategorias::agregar(const Categoria& padre, const Categoria& hija) {
 
 ArbolCategorias::IteradorHijas ArbolCategorias::hijas(const Categoria& padre) const {
 	CatInfo* nodoPadre = _categorias.obtener(padre);
-	return ArbolCategorias::IteradorHijas(&nodoPadre->_hijas);
+	return IteradorHijas(&nodoPadre->_hijas);
 }
 
 ArbolCategorias::IteradorPadres ArbolCategorias::padres(const Categoria& hija) const {

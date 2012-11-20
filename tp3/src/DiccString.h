@@ -22,14 +22,16 @@ class DiccString {
 
 
 public:
-	int elementosEnTrie;  //PARA HACER TESTS
+    Lista<T> _significados;
+    Lista<String> _claves;
+	int _elementosEnTrie;  //PARA HACER TESTS
 
 	DiccString();
 	virtual ~DiccString();
 
 	Lista<String> claves() const;
 	Lista<T> significados() const;
-  //  Lista<T> significadoAux(const Nodo* nodo) const;
+    Lista<T> significadoAux(const Nodo* nodo) const;
 	void definir(const char* k, T s);
 	void definir(const String& k, T& s);
 	bool definido(const String& k) const;
@@ -38,8 +40,7 @@ public:
 
 
 template<class T>
-DiccString<T>::DiccString() : _trie(NULL), elementosEnTrie(0) {
-
+DiccString<T>::DiccString() : _trie(NULL), _elementosEnTrie(0) {
 }
 
 template<class T>
@@ -48,42 +49,15 @@ DiccString<T>::~DiccString() {
 
 template<class T>
 Lista<String> DiccString<T>::claves() const {
-	/* FUNCIONO RECURSIVA (FACIL) LA DEJO XQ ES LINDA :p
-	 * if _trie == NULL
-	 * 		return <>;
-	 * else
-	 * 	{
-	 * 		Lista<T> res;
-	 * 		if _elem != NULL
-	 *              res.AgregarAtras(_trie->_letra.toString());
-	 * 		if _hermano != NULL
-	 * 			res && clavesAux(_hermano,'');
-	 * 		if _hijo != NULL
-	 * 			res && clavesAux(_hijo,_trie->_letra);
-
-	 * 	}
-	 * 	return res
+    return _claves;
 }
-	 * */
 
 	/*
 template<class T>
 Lista<String> DiccString<T>::clavesAux(const Nodo* nodo, const string prefijo) const {
-	 * 	{
-	 * 		Lista<String> res;
-	 *		if _elem != NULL
-	 * 			res.AgregarAtras(prefijo ++ nodo->_letra.toString());
-	 * 		if _hermano != NULL
-	 * 			res && clavesAux(_hermano,prefijo);
-	 * 		if _hijo != NULL
-	 * 			res && clavesAux(_hijo,prefijo ++ nodo->_letra.toString());
-	 * 	}
-	 * 	return res;
-}
-	 * */
 
-	return Lista<String>();
 }
+	  */
 
 template<class T>
 Lista<T> DiccString<T>::significados() const
@@ -95,7 +69,7 @@ Lista<T> DiccString<T>::significados() const
         {return res;}
     else
     {
-        if (_trie->_finPalabra = true)
+        if (_trie->_finPalabra == true)
             {res.AgregarAtras(_trie->_elem);}
         if (_trie->_hermano != NULL)
             {res.concatenar(significadoAux(_trie->_hermano));}
@@ -112,7 +86,7 @@ Lista<T> DiccString<T>::significadoAux(const Nodo* nodo) const {
         {return res;}
     else
     {
-        if (_trie->_finPalabra = true)
+        if (_trie->_finPalabra == true)
             {res.AgregarAtras(nodo->_elem);}
         if (nodo->_hermano != NULL)
             {res.concatenar(significadoAux(nodo->_hermano));}
@@ -120,16 +94,17 @@ Lista<T> DiccString<T>::significadoAux(const Nodo* nodo) const {
             {res.concatenar(significadoAux(nodo->_hijo));}
     }
     return res;
-}*/
-
+}
+*/
+/*
 {
 	Nodo* nodo = _trie;
 	Lista<Nodo*> anteriores;
 	Lista<T> res;
-	while(((nodo->_hermano != NULL or nodo->_hijo != NULL) or anteriores.EsVacia()))  //VERIFICAR
+	while(nodo != NULL && ((nodo->_hermano != NULL || nodo->_hijo != NULL) && anteriores.EsVacia()))  //VERIFICAR
 	{//NULL es para cuando miro la raiz, y el resto es sin interrupciones xq se tiene q cummplir todo para q haya llegado al final
 
-	//	if(nodo->_finPalabra == true)
+		if(nodo->_finPalabra == true)
 			res.AgregarAtras(nodo->_elem);
 
 		if(nodo->_hijo != NULL) //si tiene hijo, guardo el padre y avanzo hacia abajo
@@ -158,14 +133,14 @@ Lista<T> DiccString<T>::significadoAux(const Nodo* nodo) const {
 								anteriores.Comienzo();
 					}
 				}
-				//else //no tiene hijos, ni hermanos, ni padre a quien volver.
-					//break; //de todas formas, si llego aca se cumple la negacion de la guarda.
 			}
 		}
 	}
 	cout << res << endl;
 	return res;
-}
+}*/
+{ return _significados;}
+
 
 template<class T>
 void DiccString<T>::definir(const char* k, T s) {
@@ -213,7 +188,9 @@ void DiccString<T>::definir(const String& k, T& s) {
 
 	nodo->_elem = s;
 	nodo->_finPalabra = true;
-	elementosEnTrie++;
+	_elementosEnTrie++;
+	_significados.AgregarAtras(s);
+	_claves.AgregarAtras(k);
 }
 
 template<class T>

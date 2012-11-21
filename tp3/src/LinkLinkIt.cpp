@@ -9,6 +9,12 @@ LinkLinkIt::LinkLinkIt(ArbolCategorias& abCat) : _aCategorias(abCat) {
 }
 
 LinkLinkIt::~LinkLinkIt() {
+    Lista<InfoLink*> info = _infoLinks.significados();
+	Lista<InfoLink*>::Iterador it = info.CrearIt();
+	while (it.HaySiguiente()) {
+		delete it.Siguiente();
+		it.Avanzar();
+	}
 }
 
 Nat LinkLinkIt::cantLinks(const Categoria& c) {

@@ -6,6 +6,11 @@
 LinkLinkIt::LinkLinkIt(ArbolCategorias& abCat) : _aCategorias(abCat) {
 	_infoLinks = DiccString<InfoLink*>();
 	_linksPorCat = Arreglo<Lista<InfoLink*> >(abCat.cantCategorias());
+
+	for (Nat i = 0; i < abCat.cantCategorias(); i++) {
+		Lista<InfoLink*> a;
+		_linksPorCat.Definir(i, a);
+	}
 }
 
 LinkLinkIt::~LinkLinkIt() {
@@ -27,15 +32,13 @@ void LinkLinkIt::agregarLink(const Link& l, const Categoria& c) {
     int categoriaID = _aCategorias.id(c);
 
     InfoLink* info = new InfoLink(l, c);
-
     _infoLinks.definir(l, info);
-    _linksPorCat[categoriaID-1].AgregarAtras(info);
 
     ArbolCategorias::IteradorPadres it = _aCategorias.padres(c);
     while (it.HaySiguiente())
     {
         it.Avanzar();
-        categoriaID = it.HaySiguiente();
+        categoriaID = it.Siguiente();
         _linksPorCat[categoriaID-1].AgregarAtras(info);
     }
 }

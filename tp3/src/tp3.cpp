@@ -146,10 +146,9 @@ void obtenerIesimoLink(){
  */
 void obtenerCategoriaIesima(){
     Driver d = crearLinkLinkIt();
-    d.nuevoLink("http://www.gmail.com/", "cat2");
-    d.acceso("http://www.gmail.com/", 1);
+    d.acceso("http://www.9gag.com/", 1);
     d.acceso("http://www.9gag.com/", 2);
-    ASSERT_EQ(d.obtenerCategoriaIesimoLinkOrdenadoPorAccesos("cat1", 1), "cat2");
+    ASSERT_EQ(d.obtenerCategoriaIesimoLinkOrdenadoPorAccesos("cat1", 1), "cat4");
     ASSERT_EQ(d.obtenerCategoriaIesimoLinkOrdenadoPorAccesos("cat1", 2), "cat4");
 }
 
@@ -162,7 +161,6 @@ void obtenerCategoriaIesima(){
  *         Avanzar()
  *         SiguienteAccesosRecientes()
  */
-
 void obtenerCantidadAccesos(){
     Driver d = crearLinkLinkIt();
     d.acceso("http://www.9gag.com/", 1);

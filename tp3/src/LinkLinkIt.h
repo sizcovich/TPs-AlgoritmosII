@@ -10,7 +10,7 @@ class LinkLinkIt {
 	struct InfoLink {
 		InfoLink(Link l, Categoria c) : link(l), categoria(c), ultAcceso(0), accesos(Arreglo<Nat>(3)) {
 		    for (int i = 0; i < 3; i++)
-		        accesos[i] = 0;
+		    	accesos.Definir(i, 0);
 		};
 		Link link;
 		Categoria categoria;

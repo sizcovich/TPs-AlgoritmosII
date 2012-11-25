@@ -23,8 +23,8 @@ LinkLinkIt::~LinkLinkIt() {
 }
 
 Nat LinkLinkIt::cantLinks(const Categoria& c) {
-    int categoriaID = _aCategorias.id(c);
-    return _linksPorCat[categoriaID].Longitud();
+    Nat categoriaID = _aCategorias.id(c);
+    return _linksPorCat[categoriaID - 1].Longitud();
 }
 
 
@@ -33,6 +33,8 @@ void LinkLinkIt::agregarLink(const Link& l, const Categoria& c) {
 
     InfoLink* info = new InfoLink(l, c);
     _infoLinks.definir(l, info);
+
+    _linksPorCat[categoriaID-1].AgregarAtras(info);
 
     ArbolCategorias::IteradorPadres it = _aCategorias.padres(c);
     while (it.HaySiguiente())

@@ -105,7 +105,7 @@ Driver crearLinkLinkIt() {
 	return d;
 }
 
-Driver probarLinkLinkIt(){
+void probarLinkLinkIt(){
     Driver d = crearArbolDePrueba();
     ASSERT_EQ(d.cantLinks("cat1"), 4);
 }
@@ -118,5 +118,6 @@ int main(void) {
     RUN_TEST(agregarCategorias);
     RUN_TEST(agregaCategoriasConId);
     RUN_TEST(crearLinkLinkIt);
+    RUN_TEST(probarLinkLinkIt);
 	return 0;
 }

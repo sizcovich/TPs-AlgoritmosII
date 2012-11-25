@@ -89,7 +89,12 @@ void agregaCategoriasConId() {
     ASSERT_EQ(d.id("cat4"), 4);
 }
 
-
+/**
+ * Testea:
+ * 		LinkLinkIt::
+ * 			LinkLinkIt(ab)
+ * 			agregarLink(link, categoria)
+ */
 Driver crearLinkLinkIt() {
 	Driver d = crearArbolDePrueba();
 

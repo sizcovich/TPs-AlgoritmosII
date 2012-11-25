@@ -162,7 +162,7 @@ Lista<T> DiccString<T>::significadoAux(const Nodo* nodo) const {
 
 template<class T>
 void DiccString<T>::definir(const char* k, T s) {
-	String key = k;
+	String key = String(k);
 
 	definir(key, s);
 }
@@ -204,7 +204,7 @@ void DiccString<T>::definir(const String& k, T& s) {
 		}
 	}
 
-	nodo->_elem = s;
+	nodo->_elem = T(s);
 	nodo->_finPalabra = true;
 	_elementosEnTrie++;
 	_significados.AgregarAtras(s);

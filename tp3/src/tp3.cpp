@@ -105,9 +105,18 @@ Driver crearLinkLinkIt() {
 	return d;
 }
 
-void probarLinkLinkIt(){
-    Driver d = crearArbolDePrueba();
+
+/**
+ *Testea:
+ *     LinkLinkIt::
+ *         cantLinks(cat)
+ */
+void probarCantLinks(){
+    Driver d = crearLinkLinkIt();
     ASSERT_EQ(d.cantLinks("cat1"), 4);
+    ASSERT_EQ(d.cantLinks("cat4"), 1);
+    ASSERT_EQ(d.cantLinks("cat3"), 2);
+    ASSERT_EQ(d.cantLinks("cat2"), 1);
 }
 
 
@@ -118,6 +127,6 @@ int main(void) {
     RUN_TEST(agregarCategorias);
     RUN_TEST(agregaCategoriasConId);
     RUN_TEST(crearLinkLinkIt);
-    RUN_TEST(probarLinkLinkIt);
+    RUN_TEST(probarCantLinks);
 	return 0;
 }

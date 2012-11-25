@@ -102,7 +102,7 @@ Driver crearLinkLinkIt() {
 	d.nuevoLink("http://www.dc.uba.ar/",    "cat2");
 	d.nuevoLink("http://www.facebook.com/", "cat3");
 	d.nuevoLink("http://www.9gag.com/",     "cat4");
-
+    ASSERT_EQ(d.cantLinks("cat1"), 1);
 	return d;
 }
 

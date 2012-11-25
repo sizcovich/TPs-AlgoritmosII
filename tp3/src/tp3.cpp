@@ -124,6 +124,8 @@ void probarCantLinks(){
  *     LinkLinkIt::
  *         linksOrdenadosPorAccesos(cat)
  *         acceso(link, fecha)
+ *         Avanzar()
+ *         SiguienteLink()
  */
 void obtenerIesimoLink(){
     Driver d = crearLinkLinkIt();
@@ -139,6 +141,8 @@ void obtenerIesimoLink(){
  *     LinkLinkIt::
  *         linksOrdenadosPorAccesos(cat)
  *         acceso(link, fecha)
+ *         Avanzar()
+ *         SiguienteCategoria()
  */
 void obtenerCategoriaIesima(){
     Driver d = crearLinkLinkIt();
@@ -148,6 +152,16 @@ void obtenerCategoriaIesima(){
     ASSERT_EQ(d.obtenerCategoriaIesimoLinkOrdenadoPorAccesos("cat1", 1), "cat2");
     ASSERT_EQ(d.obtenerCategoriaIesimoLinkOrdenadoPorAccesos("cat1", 2), "cat4");
 }
+
+
+/**
+ *Testea:
+ *     LinkLinkIt::
+ *         linksOrdenadosPorAccesos(cat)
+ *         acceso(link, fecha)
+ *         Avanzar()
+ *         SiguienteAccesosRecientes()
+ */
 
 void obtenerCantidadAccesos(){
     Driver d = crearLinkLinkIt();

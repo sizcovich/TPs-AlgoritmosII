@@ -123,22 +123,30 @@ void probarCantLinks(){
  *Testea:
  *     LinkLinkIt::
  *         linksOrdenadosPorAccesos(cat)
+ *         acceso(link, fecha)
  */
 void obtenerIesimoLink(){
     Driver d = crearLinkLinkIt();
-    d.nuevoLink("http://www.gmail.com/", "cat1");
-    ASSERT_EQ(d.obtenerIesimoLinkOrdenadoPorAccesos("cat1", 0), "http://zuma.aws.af.cm/");
+    d.nuevoLink("http://www.gmail.com/", "cat2");
+    d.acceso("http://zuma.aws.af.cm/", 1);
+    d.acceso("http://www.gmail.com/", 1);
+    d.acceso("http://www.gmail.com/", 2);
+    ASSERT_EQ(d.obtenerIesimoLinkOrdenadoPorAccesos("cat2", 1), "http://www.gmail.com/");
 }
 
 /**
  *Testea:
  *     LinkLinkIt::
  *         linksOrdenadosPorAccesos(cat)
+ *         acceso(link, fecha)
  */
 void obtenerCategoriaIesima(){
     Driver d = crearLinkLinkIt();
-    d.nuevoLink("http://www.gmail.com/", "cat1");
-    ASSERT_EQ(d.obtenerCategoriaIesimoLinkOrdenadoPorAccesos("cat1", 1), "cat1");
+    d.nuevoLink("http://www.gmail.com/", "cat2");
+    d.acceso("http://www.gmail.com/", 1);
+    d.acceso("http://www.9gag.com/", 2);
+    ASSERT_EQ(d.obtenerCategoriaIesimoLinkOrdenadoPorAccesos("cat1", 1), "cat2");
+    ASSERT_EQ(d.obtenerCategoriaIesimoLinkOrdenadoPorAccesos("cat1", 2), "cat4");
 }
 
 
@@ -150,8 +158,7 @@ int main(void) {
     RUN_TEST(agregaCategoriasConId);
     RUN_TEST(crearLinkLinkIt);
     RUN_TEST(probarCantLinks);
-//    RUN_TEST(obtenerIesimoLink); creo que lo que puse para comparar esta mal porque no se bien que fecha me tiene que dar
-//    RUN_TEST(obtenerCategoriaIesima); lo mismo que lo de arriba, no estoy segura de que tiene que devolver
-    
+    RUN_TEST(obtenerIesimoLink);
+    RUN_TEST(obtenerCategoriaIesima);
 	return 0;
 }

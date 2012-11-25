@@ -119,6 +119,28 @@ void probarCantLinks(){
     ASSERT_EQ(d.cantLinks("cat2"), 1);
 }
 
+/**
+ *Testea:
+ *     LinkLinkIt::
+ *         linksOrdenadosPorAccesos(cat)
+ */
+void obtenerIesimoLink(){
+    Driver d = crearLinkLinkIt();
+    d.nuevoLink("http://www.gmail.com/", "cat1");
+    ASSERT_EQ(d.obtenerIesimoLinkOrdenadoPorAccesos("cat1", 0), "http://zuma.aws.af.cm/");
+}
+
+/**
+ *Testea:
+ *     LinkLinkIt::
+ *         linksOrdenadosPorAccesos(cat)
+ */
+void obtenerCategoriaIesima(){
+    Driver d = crearLinkLinkIt();
+    d.nuevoLink("http://www.gmail.com/", "cat1");
+    ASSERT_EQ(d.obtenerCategoriaIesimoLinkOrdenadoPorAccesos("cat1", 1), "cat1");
+}
+
 
 int main(void) {
     RUN_TEST(driverCtor);
@@ -128,5 +150,8 @@ int main(void) {
     RUN_TEST(agregaCategoriasConId);
     RUN_TEST(crearLinkLinkIt);
     RUN_TEST(probarCantLinks);
+//    RUN_TEST(obtenerIesimoLink); creo que lo que puse para comparar esta mal porque no se bien que fecha me tiene que dar
+//    RUN_TEST(obtenerCategoriaIesima); lo mismo que lo de arriba, no estoy segura de que tiene que devolver
+    
 	return 0;
 }

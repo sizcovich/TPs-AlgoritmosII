@@ -32,7 +32,7 @@ public:
 	ArbolCategorias(const Categoria& raiz);
 	virtual ~ArbolCategorias();
 
-	const Categoria raiz() const;
+	const Categoria& raiz() const;
 	void agregar(const Categoria& padre, const Categoria& hija);
 	IteradorHijas hijas(const Categoria& padre) const;
 	IteradorPadres padres(const Categoria& hija) const;
@@ -47,7 +47,7 @@ public:
 	public:
 		void Avanzar();
 		bool HaySiguiente() const;
-		Categoria Siguiente() const;
+		Categoria& Siguiente() const;
 	};
 
 	class IteradorPadres {

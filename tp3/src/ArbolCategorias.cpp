@@ -19,7 +19,7 @@ ArbolCategorias::~ArbolCategorias() {
 	}
 }
 
-const Categoria ArbolCategorias::raiz() const {
+const Categoria& ArbolCategorias::raiz() const {
 	return _raiz;
 }
 
@@ -66,7 +66,7 @@ bool ArbolCategorias::IteradorHijas::HaySiguiente() const {
 	return _it.HaySiguiente();
 }
 
-Categoria ArbolCategorias::IteradorHijas::Siguiente() const {
+Categoria& ArbolCategorias::IteradorHijas::Siguiente() const {
 	return _it.Siguiente();
 }
 

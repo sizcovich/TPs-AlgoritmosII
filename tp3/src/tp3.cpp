@@ -62,6 +62,7 @@ Driver crearArbolDePrueba() {
 /**
  * Testea:
  * 		ArbolCategorias::
+ * 			raiz()
  * 			hijas(cat)
  * 			IteradorHijas::
  * 				IteradorHijas(lista)
@@ -70,6 +71,8 @@ Driver crearArbolDePrueba() {
  */
 void agregarCategorias() {
 	Driver d = crearArbolDePrueba();
+
+	ASSERT_EQ(d.raiz(), "cat1");
 
     ASSERT_EQ(d.cantCategoriasHijas("cat1"), 2);
     ASSERT_EQ(d.cantCategoriasHijas("cat2"), 0);
@@ -100,49 +103,51 @@ Driver crearLinkLinkIt() {
 
 	d.nuevoLink("http://zuma.aws.af.cm/",   "cat1");
 	d.nuevoLink("http://www.dc.uba.ar/",    "cat2");
+    d.nuevoLink("http://www.gmail.com/",	"cat3");
 	d.nuevoLink("http://www.facebook.com/", "cat3");
 	d.nuevoLink("http://www.9gag.com/",     "cat4");
+
 	return d;
 }
 
-
 /**
- *Testea:
- *     LinkLinkIt::
- *         cantLinks(cat)
+ * Testea:
+ *		LinkLinkIt::cantLinks(cat)
  */
 void probarCantLinks(){
     Driver d = crearLinkLinkIt();
-    ASSERT_EQ(d.cantLinks("cat1"), 4);
+
+    ASSERT_EQ(d.cantLinks("cat1"), 5);
     ASSERT_EQ(d.cantLinks("cat4"), 1);
-    ASSERT_EQ(d.cantLinks("cat3"), 2);
+    ASSERT_EQ(d.cantLinks("cat3"), 3);
     ASSERT_EQ(d.cantLinks("cat2"), 1);
 }
 
 /**
- *Testea:
- *     LinkLinkIt::
- *         linksOrdenadosPorAccesos(cat)
- *         acceso(link, fecha)
- *         Avanzar()
- *         SiguienteLink()
+ * Testea:
+ *		LinkLinkIt::
+ *			linksOrdenadosPorAccesos(cat)
+ *			acceso(link, fecha)
+ *			Avanzar()
+ *			SiguienteLink()
  */
 void obtenerIesimoLink(){
     Driver d = crearLinkLinkIt();
-    d.nuevoLink("http://www.gmail.com/", "cat2");
-    d.acceso("http://zuma.aws.af.cm/", 1);
-    d.acceso("http://www.gmail.com/", 1);
-    d.acceso("http://www.gmail.com/", 2);
-    ASSERT_EQ(d.obtenerIesimoLinkOrdenadoPorAccesos("cat2", 1), "http://www.gmail.com/");
+
+    d.acceso("http://zuma.aws.af.cm/", 1); // cat1
+    d.acceso("http://www.gmail.com/",  1); // cat3
+    d.acceso("http://www.gmail.com/",  2); // cat3
+
+    ASSERT_EQ(d.obtenerIesimoLinkOrdenadoPorAccesos("cat1", 0), "http://www.gmail.com/");
 }
 
 /**
- *Testea:
- *     LinkLinkIt::
- *         linksOrdenadosPorAccesos(cat)
- *         acceso(link, fecha)
- *         Avanzar()
- *         SiguienteCategoria()
+ * Testea:
+ *		LinkLinkIt::
+ *			linksOrdenadosPorAccesos(cat)
+ *			acceso(link, fecha)
+ *			Avanzar()
+ *			SiguienteCategoria()
  */
 void obtenerCategoriaIesima(){
     Driver d = crearLinkLinkIt();
@@ -154,12 +159,12 @@ void obtenerCategoriaIesima(){
 
 
 /**
- *Testea:
- *     LinkLinkIt::
- *         linksOrdenadosPorAccesos(cat)
- *         acceso(link, fecha)
- *         Avanzar()
- *         SiguienteAccesosRecientes()
+ * Testea:
+ *		LinkLinkIt::
+ *			linksOrdenadosPorAccesos(cat)
+ *			acceso(link, fecha)
+ *			Avanzar()
+ *			SiguienteAccesosRecientes()
  */
 void obtenerCantidadAccesos(){
     Driver d = crearLinkLinkIt();
@@ -177,8 +182,8 @@ int main(void) {
     RUN_TEST(agregaCategoriasConId);
     RUN_TEST(crearLinkLinkIt);
     RUN_TEST(probarCantLinks);
-//    RUN_TEST(obtenerIesimoLink);
-//    RUN_TEST(obtenerCategoriaIesima);
-//    RUN_TEST(obtenerCantidadAccesos);
+    RUN_TEST(obtenerIesimoLink);
+    RUN_TEST(obtenerCategoriaIesima);
+    RUN_TEST(obtenerCantidadAccesos);
 	return 0;
 }

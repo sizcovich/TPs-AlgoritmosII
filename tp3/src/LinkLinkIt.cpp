@@ -29,8 +29,7 @@ Nat LinkLinkIt::cantLinks(const Categoria& c) {
 
 
 void LinkLinkIt::agregarLink(const Link& l, const Categoria& c) {
-    int categoriaID = _aCategorias.id(c);
-
+    Nat categoriaID = _aCategorias.id(c);
     InfoLink* info = new InfoLink(l, c);
     _infoLinks.definir(l, info);
 
@@ -86,8 +85,12 @@ Nat LinkLinkIt::InfoLink::puntajeDelLink(Fecha f) const {
 
 
 LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& c){
-    int categoriaID = _aCategorias.id(c);
+    Nat categoriaID = _aCategorias.id(c);
     Lista<InfoLink*> lista = _linksPorCat[categoriaID - 1];
+
+    if (lista.EsVacia()) {
+    	return IteradorLinks(lista, 0);
+    }
 
     Lista<InfoLink*>::Iterador it = lista.CrearIt();
     Fecha f = 0;
@@ -99,16 +102,16 @@ LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& 
 
     it = lista.CrearIt();
     bool estaOrdenada = true;
-    Nat ultPuntaje = 0;
+    Nat ultPuntaje = it.Siguiente()->puntajeDelLink(f);
     while(it.HaySiguiente() && estaOrdenada) {
-        if (ultPuntaje > 0)
-            estaOrdenada = ultPuntaje >= it.Siguiente()->puntajeDelLink(f);
+		estaOrdenada = ultPuntaje >= it.Siguiente()->puntajeDelLink(f);
         ultPuntaje = it.Siguiente()->puntajeDelLink(f);
+        it.Avanzar();
     }
     if (estaOrdenada)
         return IteradorLinks(lista, f);
 
-    Lista<InfoLink*> listaOrdenada = Lista<InfoLink*>();
+    Lista<InfoLink*> listaOrdenada;
     Lista<InfoLink*>::Iterador itOrd = listaOrdenada.CrearIt();
     while (!lista.EsVacia()) {
         Lista<InfoLink*>::Iterador itRes = lista.CrearIt(),
@@ -116,6 +119,7 @@ LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& 
         while (itRes.HaySiguiente()) {
             if (itRes.Siguiente()->puntajeDelLink(f) > itMaxAccesos.Siguiente()->puntajeDelLink(f))
                 itMaxAccesos = itRes;
+			itRes.Avanzar();
         }
         itOrd.AgregarComoAnterior(itMaxAccesos.Siguiente());
         itMaxAccesos.EliminarSiguiente();
@@ -125,16 +129,16 @@ LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& 
     return IteradorLinks(listaOrdenada, f);
 }
 
-LinkLinkIt::IteradorLinks::IteradorLinks(Lista<InfoLink*>& ls, Fecha f) {
+LinkLinkIt::IteradorLinks::IteradorLinks(Lista<InfoLink*> ls, Fecha f) {
     _it = ls.CrearIt();
     _ultAcceso = f;
 }
 
-Link LinkLinkIt::IteradorLinks::SiguienteLink() const {
+Link& LinkLinkIt::IteradorLinks::SiguienteLink() const {
     return _it.Siguiente()->link;
 }
 
-Categoria LinkLinkIt::IteradorLinks::SiguienteCategoria() const {
+Categoria& LinkLinkIt::IteradorLinks::SiguienteCategoria() const {
     return _it.Siguiente()->categoria;
 }
 

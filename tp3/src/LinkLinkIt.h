@@ -8,7 +8,7 @@
 class LinkLinkIt {
 
 	struct InfoLink {
-		InfoLink(Link l, Categoria c) : link(l), categoria(c), ultAcceso(0), accesos(Arreglo<Nat>(3)) {
+		InfoLink(const Link& l, const Categoria& c) : link(l), categoria(c), ultAcceso(0), accesos(Arreglo<Nat>(3)) {
 		    for (int i = 0; i < 3; i++)
 		    	accesos.Definir(i, 0);
 		};
@@ -40,12 +40,12 @@ public:
 	    Lista<InfoLink*>::Iterador _it;
 	    Fecha _ultAcceso;
 	private:
-		IteradorLinks(Lista<InfoLink*>& ls, Fecha f);
+		IteradorLinks(Lista<InfoLink*> ls, Fecha f);
 		friend LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& c);
 	public:
 		bool HaySiguiente() const;
-		Link SiguienteLink() const;
-		Categoria SiguienteCategoria() const;
+		Link& SiguienteLink() const;
+		Categoria& SiguienteCategoria() const;
 		Nat SiguienteAccesosRecientes() const;
 		void Avanzar();
 	};

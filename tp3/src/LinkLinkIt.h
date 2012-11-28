@@ -33,20 +33,20 @@ public:
 	virtual ~LinkLinkIt();
 
 	void agregarLink(const Link& l, const Categoria& c);
-	void accederLink(const Link& l, const Fecha& f);
+	void accederLink(const Link& l, const Fecha f);
 	Nat cantLinks(const Categoria& c);
 	IteradorLinks linksOrdenadosPorAccesos(const Categoria& c);
 
 	class IteradorLinks {
-	    Lista<InfoLink*>::Iterador _it;
+	    Lista<InfoLink*>::const_Iterador _it;
 	    Fecha _ultAcceso;
 	private:
-		IteradorLinks(Lista<InfoLink*> ls, Fecha f);
+		IteradorLinks(const Lista<InfoLink*>& ls, Fecha f);
 		friend LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& c);
 	public:
 		bool HaySiguiente() const;
-		Link& SiguienteLink() const;
-		Categoria& SiguienteCategoria() const;
+		const Link& SiguienteLink() const;
+		const Categoria& SiguienteCategoria() const;
 		Nat SiguienteAccesosRecientes() const;
 		void Avanzar();
 	};

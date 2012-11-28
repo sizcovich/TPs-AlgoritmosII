@@ -53,6 +53,7 @@ public:
     // Iteracion de links ordenados por accesos
 
     int cantLinks(const Categoria& c);
+    const Nat obtenerCantidadLinksOrdenadosPorAccesos(const Categoria& c);
     const Link& obtenerIesimoLinkOrdenadoPorAccesos(const Categoria& c, int i);
     const Categoria& obtenerCategoriaIesimoLinkOrdenadoPorAccesos(const Categoria& c, int i);
     int obtenerCantidadAccesosIesimoLinkOrdenadoPorAccesos(const Categoria& c, int i);

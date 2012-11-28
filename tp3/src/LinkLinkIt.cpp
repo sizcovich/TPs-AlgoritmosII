@@ -44,24 +44,47 @@ void LinkLinkIt::agregarLink(const Link& l, const Categoria& c) {
     }
 }
 
-void LinkLinkIt::accederLink(const Link& l, const Fecha& f) {
+void LinkLinkIt::accederLink(const Link& l, const Fecha f) {
     InfoLink* link = _infoLinks.obtener(l);
-    int diff = f - link->ultAcceso;
+ /*   Nat diff = f - link->ultAcceso;
 
-    int i = 0;
+    Nat i = 0;
     while (i < (3 - diff)) {
-        link->accesos[i] = link->accesos[i + diff];
+    	if (i + diff < 3 && i + diff >= 0 && i >= 0 && i < 3)
+    		link->accesos.Definir(i, link->accesos[i + diff]);
         i++;
     }
 
     i = 0;
     while (i < diff && i < 3) {
-        link->accesos[2 - i] = 0;
+    	link->accesos.Definir(2 - i, 0);
         i++;
+    }*/
+
+
+    if(f == link->ultAcceso + 1)
+    {
+    	link->accesos.Definir(0, link->accesos[1]);
+    	link->accesos.Definir(1, link->accesos[2]);
+    	link->accesos.Definir(2, 0);
+    }
+
+    if(f == link->ultAcceso + 2)
+    {
+    	link->accesos.Definir(0, link->accesos[2]);
+    	link->accesos.Definir(1, 0);
+    	link->accesos.Definir(2, 0);
+    }
+    if(f > link->ultAcceso + 2)
+    {
+    	link->accesos.Definir(0, 0);
+    	link->accesos.Definir(1, 0);
+    	link->accesos.Definir(2, 0);
     }
 
     link->ultAcceso = f;
-    link->accesos[2] += 1;
+    link->accesos.Definir(2, link->accesos[2] + 1);
+
 }
 
 
@@ -74,7 +97,7 @@ Nat max(Nat a, Nat b) {
 
 Nat LinkLinkIt::InfoLink::puntajeDelLink(Fecha f) const {
 	Nat res = 0;
-	int i = 3;
+	Nat i = 3;
 	while ((f - ultAcceso) < i) {
         i--;
         res += accesos[i];
@@ -85,7 +108,7 @@ Nat LinkLinkIt::InfoLink::puntajeDelLink(Fecha f) const {
 
 LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& c){
     Nat categoriaID = _aCategorias.id(c);
-    Lista<InfoLink*> lista = _linksPorCat[categoriaID - 1];
+    Lista<InfoLink*>& lista = _linksPorCat[categoriaID - 1];
 
     if (lista.EsVacia()) {
     	return IteradorLinks(lista, 0);
@@ -97,8 +120,8 @@ LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& 
     while(it.HaySiguiente()) {
         f = max(it.Siguiente()->ultAcceso, f);
         it.Avanzar();
-
     }
+
     it = lista.CrearIt();
     bool estaOrdenada = true;
     Nat ultPuntaje = it.Siguiente()->puntajeDelLink(f);
@@ -117,41 +140,39 @@ LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& 
         						   itMaxAccesos = lista.CrearIt();
         while (itRes.HaySiguiente()) {
             if (itRes.Siguiente()->puntajeDelLink(f) > itMaxAccesos.Siguiente()->puntajeDelLink(f))
-                itMaxAccesos = itRes;
+                itMaxAccesos = Lista<InfoLink*>::Iterador(itRes);
 			itRes.Avanzar();
         }
         itOrd.AgregarComoAnterior(itMaxAccesos.Siguiente());
         itMaxAccesos.EliminarSiguiente();
-
     }
+
     _linksPorCat[categoriaID - 1] = listaOrdenada;
-    return IteradorLinks(listaOrdenada, f);
+    return IteradorLinks(_linksPorCat[categoriaID - 1], f);
 }
 
-LinkLinkIt::IteradorLinks::IteradorLinks(Lista<InfoLink*> ls, Fecha f) {printf("fecha: %d ",f);
+LinkLinkIt::IteradorLinks::IteradorLinks(const Lista<InfoLink*>& ls, Fecha f) {
     _it = ls.CrearIt();
     _ultAcceso = f;
 }
 
-Link& LinkLinkIt::IteradorLinks::SiguienteLink() const {
+const Link& LinkLinkIt::IteradorLinks::SiguienteLink() const {
     return _it.Siguiente()->link;
 }
 
-Categoria& LinkLinkIt::IteradorLinks::SiguienteCategoria() const {
+const Categoria& LinkLinkIt::IteradorLinks::SiguienteCategoria() const {
     return _it.Siguiente()->categoria;
 }
-
 
 Nat LinkLinkIt::IteradorLinks::SiguienteAccesosRecientes() const {
     return _it.Siguiente()->puntajeDelLink(_ultAcceso);
 }
 
 bool LinkLinkIt::IteradorLinks::HaySiguiente() const {
-    if (_it.HaySiguiente())
+    if (_it.HaySiguiente() && _it.Siguiente() != NULL)
         return _it.Siguiente()->puntajeDelLink(_ultAcceso) > 0;
 
-    else
-        return false;
+    return false;
 }
 
 void LinkLinkIt::IteradorLinks::Avanzar() {

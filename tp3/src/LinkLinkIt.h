@@ -12,6 +12,7 @@ class LinkLinkIt {
 		    for (int i = 0; i < 3; i++)
 		    	accesos.Definir(i, 0);
 		};
+
 		Link link;
 		Categoria categoria;
 		Fecha ultAcceso;

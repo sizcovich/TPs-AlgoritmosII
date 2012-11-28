@@ -70,93 +70,10 @@ Lista<String> DiccString<T>::claves() const {
     return _claves;
 }
 
-	/*
-template<class T>
-Lista<String> DiccString<T>::clavesAux(const Nodo* nodo, const string prefijo) const {
-
-}
-	  */
 
 template<class T>
 Lista<T> DiccString<T>::significados() const
-/*
-{
-	// FUNCION RECURSIVA
-	Lista<T> res;
-    if (_trie == NULL)
-        {return res;}
-    else
-    {
-        if (_trie->_finPalabra == true)
-            {res.AgregarAtras(_trie->_elem);}
-        if (_trie->_hermano != NULL)
-            {res.concatenar(significadoAux(_trie->_hermano));}
-        if (_trie->_hijo != NULL)
-            {res.concatenar(significadoAux(_trie->_hijo));}
-    }
-    return res;
-}
 
-template<class T>
-Lista<T> DiccString<T>::significadoAux(const Nodo* nodo) const {
-	Lista<T> res;
-    if (nodo == NULL)
-        {return res;}
-    else
-    {
-        if (_trie->_finPalabra == true)
-            {res.AgregarAtras(nodo->_elem);}
-        if (nodo->_hermano != NULL)
-            {res.concatenar(significadoAux(nodo->_hermano));}
-        if (nodo->_hijo != NULL)
-            {res.concatenar(significadoAux(nodo->_hijo));}
-    }
-    return res;
-}
-*/
-/*
-{
-	Nodo* nodo = _trie;
-	Lista<Nodo*> anteriores;
-	Lista<T> res;
-	while(nodo != NULL && ((nodo->_hermano != NULL || nodo->_hijo != NULL) && anteriores.EsVacia()))  //VERIFICAR
-	{//NULL es para cuando miro la raiz, y el resto es sin interrupciones xq se tiene q cummplir todo para q haya llegado al final
-
-		if(nodo->_finPalabra == true)
-			res.AgregarAtras(nodo->_elem);
-
-		if(nodo->_hijo != NULL) //si tiene hijo, guardo el padre y avanzo hacia abajo
-		{
-			anteriores.AgregarAtras(nodo);
-			nodo = nodo->_hijo;
-		}
-		else
-		{
-			//res.AgregarAtras(nodo->_elem); //si no tiene hijo, tiene informacion. MAL
-
-			if(nodo->_hermano != NULL) //si tiene hermano, sigo recorriendo este nivel.
-			{
-				nodo = nodo->_hermano;
-			}
-			else //si no tiene hijo ni hermano, tengo que volver hacia arriba.
-			{
-				if(!(anteriores.EsVacia()))
-				{
-					if(anteriores.Ultimo()->_hermano != NULL)
-						nodo = anteriores.Ultimo()->_hermano;
-					else //si el padre al q volvi no tiene hermano, tengo q ir a su padre
-					{
-						while(anteriores.Ultimo() != NULL && anteriores.Ultimo()->_hermano != NULL)
-							if(!(anteriores.EsVacia()))
-								anteriores.Comienzo();
-					}
-				}
-			}
-		}
-	}
-	cout << res << endl;
-	return res;
-}*/
 { return _significados;}
 
 

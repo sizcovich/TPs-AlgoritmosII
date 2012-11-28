@@ -88,6 +88,7 @@ const Link& Driver::obtenerIesimoLinkOrdenadoPorAccesos(const Categoria& c, int 
     LinkLinkIt::IteradorLinks it = sistema->linksOrdenadosPorAccesos(c);
     while(j < i)
     {
+        assert(it.HaySiguiente());
         ++j;
         it.Avanzar();
     }
@@ -97,10 +98,12 @@ const Link& Driver::obtenerIesimoLinkOrdenadoPorAccesos(const Categoria& c, int 
 
 const Categoria& Driver::obtenerCategoriaIesimoLinkOrdenadoPorAccesos(const Categoria& c, int i)
 {
+
     int j = 0;
     LinkLinkIt::IteradorLinks it = sistema->linksOrdenadosPorAccesos(c);
     while(j < i)
     {
+        assert(it.HaySiguiente());
         ++j;
         it.Avanzar();
     }
@@ -113,6 +116,7 @@ int Driver::obtenerCantidadAccesosIesimoLinkOrdenadoPorAccesos(const Categoria& 
     LinkLinkIt::IteradorLinks it = sistema->linksOrdenadosPorAccesos(c);
     while(j < i)
     {
+        assert(it.HaySiguiente());
         ++j;
         it.Avanzar();
     }

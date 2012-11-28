@@ -137,8 +137,9 @@ void obtenerIesimoLink(){
     d.acceso("http://zuma.aws.af.cm/", 1); // cat1
     d.acceso("http://www.gmail.com/",  1); // cat3
     d.acceso("http://www.gmail.com/",  2); // cat3
+    d.acceso("http://www.gmail.com/",  3); // cat3
 
-    ASSERT_EQ(d.obtenerIesimoLinkOrdenadoPorAccesos("cat1", 0), "http://www.gmail.com/");
+    ASSERT_EQ(d.obtenerIesimoLinkOrdenadoPorAccesos("cat3", 2), "http://www.gmail.com/");
 }
 
 /**
@@ -173,6 +174,93 @@ void obtenerCantidadAccesos(){
     ASSERT_EQ(d.obtenerCantidadAccesosIesimoLinkOrdenadoPorAccesos("cat4", 1), 2);
 }
 
+void crearLinklinkitbis()
+{
+    ArbolCategorias r("Muebles");
+    r.agregar("Muebles","Sillas");
+    r.agregar("Muebles","Mesas");
+    r.agregar("Muebles","Armarios");
+    r.agregar("Armarios","Cajoneras");
+    r.agregar("Armarios","Roperos");
+    r.agregar("Sillas","Comedor");
+    r.agregar("Sillas","Playa");
+    r.agregar("Sillas","Living");
+    r.agregar("Living","Sillones");
+    r.agregar("Living","Sofa");
+    r.agregar("Sillones","Simples");
+    r.agregar("Sillones","Dobles");
+    LinkLinkIt llt(r);
+}
+
+void agregarLinksAnda()
+{
+    ArbolCategorias r2("Muebles");
+    r2.agregar("Muebles","Sillas");
+    r2.agregar("Muebles","Mesas");
+    r2.agregar("Muebles","Armarios");
+    r2.agregar("Armarios","Cajoneras");
+    r2.agregar("Armarios","Roperos");
+    r2.agregar("Sillas","Comedor");
+    r2.agregar("Sillas","Playa");
+    r2.agregar("Sillas","Living");
+    r2.agregar("Living","Sillones");
+    r2.agregar("Living","Sofa");
+    r2.agregar("Sillones","Simples");
+    r2.agregar("Sillones","Dobles");
+    LinkLinkIt llt2(r2);
+    llt2.agregarLink("pedro.com","Muebles");
+    llt2.agregarLink("sandro.com","Muebles");
+    llt2.agregarLink("romero.com","Cajoneras");
+    llt2.agregarLink("roco.com","Playa");
+    llt2.agregarLink("marcelo.com","Playa");
+    llt2.agregarLink("matias.com","Playa");
+    ASSERT(llt2.cantLinks("Muebles")==6);
+    ASSERT(llt2.cantLinks("Playa")==3);
+    ASSERT(llt2.cantLinks("Dobles")==0);
+}
+
+void losAccesosSonCorrectos()
+{
+    ArbolCategorias r2("Muebles");
+    r2.agregar("Muebles","Sillas");
+    r2.agregar("Muebles","Mesas");
+    r2.agregar("Muebles","Armarios");
+    r2.agregar("Armarios","Cajoneras");
+    r2.agregar("Armarios","Roperos");
+    r2.agregar("Sillas","Comedor");
+    r2.agregar("Sillas","Playa");
+    r2.agregar("Sillas","Living");
+    r2.agregar("Living","Sillones");
+    r2.agregar("Living","Sofa");
+    r2.agregar("Sillones","Simples");
+    r2.agregar("Sillones","Dobles");
+    LinkLinkIt llt2(r2);
+    llt2.agregarLink("pedro.com","Muebles");
+    llt2.agregarLink("sandro.com","Muebles");
+    llt2.agregarLink("romero.com","Cajoneras");
+    llt2.agregarLink("roco.com","Playa");
+    llt2.agregarLink("marcelo.com","Playa");
+    llt2.agregarLink("matias.com","Playa");
+    //El orden esperado es: sandro - romero - marcelo - matias
+    llt2.accederLink("matias.com",1);
+    llt2.accederLink("matias.com",1);
+    llt2.accederLink("matias.com",1);
+    llt2.accederLink("marcelo.com",3);
+    llt2.accederLink("marcelo.com",3);
+    llt2.accederLink("sandro.com",5);
+    llt2.accederLink("romero.com",5);
+    llt2.accederLink("sandro.com",6);
+    llt2.accederLink("sandro.com",7);
+    
+    
+//    LinkLinkIt::itOrdLlt it = llt2.linksOrdPorAccesoLlt("Muebles");
+//    ASSERT(it.nombreActualItLlt()=="sandro.com");
+//    it.siguienteItLlt();
+//    ASSERT(it.nombreActualItLlt()=="romero.com");
+    
+}
+
+
 
 int main(void) {
     RUN_TEST(driverCtor);
@@ -185,5 +273,9 @@ int main(void) {
     RUN_TEST(obtenerIesimoLink);
     RUN_TEST(obtenerCategoriaIesima);
     RUN_TEST(obtenerCantidadAccesos);
+    RUN_TEST(crearLinklinkitbis);
+    RUN_TEST(agregarLinksAnda);
+    RUN_TEST(losAccesosSonCorrectos);
+
 	return 0;
 }

@@ -40,55 +40,43 @@ void pruebaDiccString() {
 
 using namespace std;
 
-//erT("clave1") == "signif1");
-//ASSERT(d.definido("clave2"));
-//ASSERT(d.obtener("clave2") == "signif2");
-//ASSERT(!d.definidoT(Lista<string> l(const char* t1, ...) {
-/**	Lista<string> res;
-	va_list ap;
-	const char* t = t1;
-	va_start(ap,t1);
-	while (t != NULL) {
-		res.AgregarAtras(t);
-		t = va_arg(ap,const char *);
-	}
-	va_end(ap);
-	return res;
-}
+
                     
                     
 
                     
-                    
+using namespace std;
+
+
 void diccVacioEsVacio(){
-    diccT<string> d;
+    DiccString<string> d;
     ASSERT((d.claves()).EsVacia());
 }
-                    
-void construirDiccT(){
-    diccT<string> d;
+
+void construirDicc(){
+    DiccString<string> d;
     const string sign1 = "signif1";
-    d.agregar("clave2", "signif2");
-    d.agregar("clave1", sign1);
+    d.definir("clave2", "signif2");
+    d.definir("clave1", sign1);
     ASSERT(d.definido("clave1"));
-    ASSERT(d.obtener("clave3"));
-    ASSERT(d.claves() == l("clave1", "clave2", NULL));
+    ASSERT(d.definido("clave3"));
 }
-                    
+
 void signifNoConstEsModificable(){
-    diccT<string>* d = new diccT<string>;
-    d->agregarT("clave1", "signif1"); //Agrega bien
-    ASSERT(d->obtenerT("clave1") == "signif1");
-                        
-    d->obtenerT("clave1") = "mod!"; //Se pueden modificar los significados
+    DiccString<string>* d = new DiccString<string>;
+    d->definir("clave1", "signif1"); //Agrega bien
+    ASSERT(d->obtener("clave1") == "signif1");
+    
+    d->obtener("clave1") = "mod!"; //Se pueden modificar los significados
     ASSERT(d->obtener("clave1") == "mod!");
-                        
-    d->agregar("clave1", "pepe"); //No se pueden agregar claves repetidas
+    
+    d->definir("clave1", "pepe"); //No se pueden agregar claves repetidas
     ASSERT(d->obtener("clave1") == "mod!");
     
     delete d;
 }
 
+/*
 void iteradorFunciona()
     diccT<string> d;
     diccT<string>::ItDiccT itaux = d.agregarT("clave4", "signif4");//Devuelve un iterador correcto

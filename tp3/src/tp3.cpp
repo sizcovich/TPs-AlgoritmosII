@@ -37,6 +37,121 @@ void pruebaDiccString() {
 	ASSERT_EQ(dicc.claves().Primero(), "Barabas, Ariel");
 }
 
+//erT("clave1") == "signif1");
+//ASSERT(d.definido("clave2"));
+//ASSERT(d.obtener("clave2") == "signif2");
+//ASSERT(!d.definidoT(Lista<string> l(const char* t1, ...) {
+/**	Lista<string> res;
+	va_list ap;
+	const char* t = t1;
+	va_start(ap,t1);
+	while (t != NULL) {
+		res.AgregarAtras(t);
+		t = va_arg(ap,const char *);
+	}
+	va_end(ap);
+	return res;
+}
+                    
+                    
+using namespace std;
+                    
+                    
+void diccVacioEsVacio(){
+    diccT<string> d;
+    ASSERT((d.claves()).EsVacia());
+}
+                    
+void construirDiccT(){
+    diccT<string> d;
+    const string sign1 = "signif1";
+    d.agregar("clave2", "signif2");
+    d.agregar("clave1", sign1);
+    ASSERT(d.definido("clave1"));
+    ASSERT(d.obtener("clave3"));
+    ASSERT(d.claves() == l("clave1", "clave2", NULL));
+}
+                    
+void signifNoConstEsModificable(){
+    diccT<string>* d = new diccT<string>;
+    d->agregarT("clave1", "signif1"); //Agrega bien
+    ASSERT(d->obtenerT("clave1") == "signif1");
+                        
+    d->obtenerT("clave1") = "mod!"; //Se pueden modificar los significados
+    ASSERT(d->obtener("clave1") == "mod!");
+                        
+    d->agregar("clave1", "pepe"); //No se pueden agregar claves repetidas
+    ASSERT(d->obtener("clave1") == "mod!");
+    
+    delete d;
+}
+
+void iteradorFunciona()
+    diccT<string> d;
+    diccT<string>::ItDiccT itaux = d.agregarT("clave4", "signif4");//Devuelve un iterador correcto
+    ASSERT(itaux.ClaveActualItT() == "clave4");
+    ASSERT(itaux.SignificadoActualItT() == "signif4");
+    d.agregarT("clave3", "signif3");
+    itaux = d.agregarT("clave2", "signif2");//Devuelve un iterador correcto
+    ASSERT(itaux.ClaveActualItT() == "clave2");
+    ASSERT(itaux.SignificadoActualItT() == "signif2");
+    d.agregarT("clave1", "signif1");
+    diccT<string>::ItDiccT it = d.CrearItT();
+    ASSERT(it.HaySiguienteItT()==true);
+    ASSERT(it.ClaveActualItT() == "clave1");
+    ASSERT(it.SignificadoActualItT() == "signif1");
+    it.AvanzarItT();
+    ASSERT(it.ClaveActualItT() == "clave2");
+    ASSERT(it.SignificadoActualItT() == "signif2");
+    it.SignificadoActualItT() = "cambiado"; //Porque permite modificar el significado
+    ASSERT(it.SignificadoActualItT() == "cambiado");
+    it.AvanzarItT();
+    ASSERT(it.ClaveActualItT() == "clave3");
+    ASSERT(it.SignificadoActualItT() == "signif3");
+    it.AvanzarItT();
+    ASSERT(it.ClaveActualItT() == "clave4");
+    ASSERT(it.SignificadoActualItT() == "signif4");
+    it.AvanzarItT();
+    ASSERT(it.HaySiguienteItT()==false);
+}
+/*
+void iteradorConstFunciona()
+    diccT<string> d;
+    d.agregarT("clave4", "signif4");
+    d.agregarT("clave3", "signif3");
+    d.agregarT("clave2", "signif2");
+    d.agregarT("clave1", "signif1");
+    diccT<string>::ItDiccT_const it = d.CrearItT_const();
+    ASSERT(it.HaySiguienteItT()==true);
+    ASSERT(it.ClaveActualItT() == "clave1");
+    ASSERT(it.SignificadoActualItT() == "signif1");
+    it.AvanzarItT();
+    ASSERT(it.ClaveActualItT() == "clave2");
+    ASSERT(it.SignificadoActualItT() == "signif2");
+    //it.SignificadoActualItT() = "cambiado"; //SI SACO EL COMENTARIO NO COMPILA PORQUE ES CONSTANTE (ERA LA IDEA)
+    it.AvanzarItT();
+    ASSERT(it.ClaveActualItT() == "clave3");
+    ASSERT(it.SignificadoActualItT() == "signif3");
+    it.AvanzarItT();
+    ASSERT(it.ClaveActualItT() == "clave4");
+    ASSERT(it.SignificadoActualItT() == "signif4");
+    it.AvanzarItT();
+    ASSERT(it.HaySiguienteItT()==false);
+}
+
+void constructorPorCopia()
+    diccT<string> d;
+    d.agregarT("clave4", "signif4");
+    d.agregarT("clave3", "signif3");
+    d.agregarT("clave2", "signif2");
+    d.agregarT("clave1", "signif1");
+                        
+    diccT<string> m(d);
+                        
+    ASSERT(m.obtenerT("clave4")== d.obtenerT("clave4"));
+                    
+}
+
 /**
  * Testea:
  * 		ArbolCategorias::
@@ -59,8 +174,66 @@ Driver crearArbolDePrueba() {
     return d;
 }
 
-/**
- * Testea:
+/*void crearArbolCategorias()
+{
+    ArbolCategorias r("Muebles"); //Normal //Id:1
+    r.agregar("Muebles","Sillas");
+    r.agregar("Muebles","Mesas");
+    r.agregar("Muebles","Armarios");
+    r.agregar("Armarios","Cajoneras");
+    r.agregar("Armarios","Roperos");
+    r.agregar("Sillas","Comedor");
+    r.agregar("Sillas","Playa");
+    r.agregar("Sillas","Living");
+    r.agregar("Living","Sillones");
+    r.agregar("Living","Sofa");
+    r.agregar("Sillones","Simples");
+    r.agregar("Sillones","Dobles");//Id: 13
+    
+    ASSERT(r.id("Muebles")==1);
+    ASSERT(r.id("Comedor")==7);
+    ASSERT(r.id("Dobles")==13);
+    
+    ArbolCategorias r2(r); //Por copia
+    
+    ASSERT(r2.id("Muebles")==1);
+    ASSERT(r2.id("Comedor")==7);
+    ASSERT(r2.id("Dobles")==13);
+    
+    /** A PARTIR DE ACA TESTEO FUNCIONES QUE NECESITO PARA LINKLINKIT */
+    
+//    //UltimoId() anda
+//    ASSERT(r._ultId()==r2._ultId());
+//    ASSERT(r._ultId()==13);
+//    
+//    //itCat (Categorias() ) anda
+//    ArbolCategorias::itCat it = r.Categorias();
+//    ASSERT_EQ(it.HaySiguiente(),true);
+//    ASSERT(it.IdActualItCat()==1); //Empieza apuntando al primero agregado
+//    ASSERT(it.IdPadreActualItCat()==1);
+//    it.SiguienteItCatH();
+//    ASSERT_EQ(it.HaySiguienteItCat(),true);
+//    ASSERT(it.IdActualItCat()==2);
+//    ASSERT(it.IdPadreActualItCat()==1);
+//    it.SiguienteItCatH();
+//    it.SiguienteItCatH();
+//    it.SiguienteItCatH();
+//    ASSERT_EQ(it.HaySiguienteItCat(),true);
+//    ASSERT(it.IdActualItCat()==5);
+//    ASSERT(it.IdPadreActualItCat()==4);
+//    for (int i=0;i<9;i++)
+//    {it.SiguienteItCatH();}
+//    ASSERT_EQ(it.HaySiguienteItCat(),false);
+//    ASSERT(it.IdActualItCat()==13);
+//    ASSERT(it.IdPadreActualItCat()==10);
+//    it.SiguienteItCatH();
+//    ASSERT_EQ(it.HaySiguienteItCat(),false);
+//    //
+//    
+//}
+
+
+ /* Testea:
  * 		ArbolCategorias::
  * 			raiz()
  * 			hijas(cat)
@@ -69,7 +242,7 @@ Driver crearArbolDePrueba() {
  * 				HaySiguiente()
  * 				Avanzar()
  */
-void agregarCategorias() {
+void agregarCategorias(){
 	Driver d = crearArbolDePrueba();
 
 	ASSERT_EQ(d.raiz(), "cat1");
@@ -253,7 +426,7 @@ void losAccesosSonCorrectos()
     llt2.accederLink("sandro.com",7);
     
     
-//    LinkLinkIt::itOrdLlt it = llt2.linksOrdPorAccesoLlt("Muebles");
+//    LinkLinkIt::itOrdLlt it = llt2.linksOrdenadosPorAccesos("Muebles");
 //    ASSERT(it.nombreActualItLlt()=="sandro.com");
 //    it.siguienteItLlt();
 //    ASSERT(it.nombreActualItLlt()=="romero.com");
@@ -263,19 +436,26 @@ void losAccesosSonCorrectos()
 
 
 int main(void) {
-    RUN_TEST(driverCtor);
-    RUN_TEST(pruebaDiccString);
-    RUN_TEST(crearArbolDePrueba);
-    RUN_TEST(agregarCategorias);
-    RUN_TEST(agregaCategoriasConId);
-    RUN_TEST(crearLinkLinkIt);
-    RUN_TEST(probarCantLinks);
+//    RUN_TEST(driverCtor);
+//    RUN_TEST(pruebaDiccString);
+//    RUN_TEST(diccVacioEsVacio);
+//    RUN_TEST(construirDiccT);
+//    RUN_TEST(signifNoConstEsModificable);
+//    RUN_TEST(iteradorFunciona);
+//    RUN_TEST(iteradorConstFunciona);
+//    RUN_TEST(constructorPorCopia);
+//    RUN_TEST(crearArbolDePrueba);
+//    RUN_TEST(crearArbolCategorias);
+//    RUN_TEST(agregarCategorias);
+//    RUN_TEST(agregaCategoriasConId);
+//    RUN_TEST(crearLinkLinkIt);
+//    RUN_TEST(probarCantLinks);
     RUN_TEST(obtenerIesimoLink);
     RUN_TEST(obtenerCategoriaIesima);
     RUN_TEST(obtenerCantidadAccesos);
-    RUN_TEST(crearLinklinkitbis);
-    RUN_TEST(agregarLinksAnda);
-    RUN_TEST(losAccesosSonCorrectos);
+//    RUN_TEST(crearLinklinkitbis);
+//    RUN_TEST(agregarLinksAnda);
+//    RUN_TEST(losAccesosSonCorrectos);
 
 	return 0;
 }

@@ -91,7 +91,8 @@ const Link& Driver::obtenerIesimoLinkOrdenadoPorAccesos(const Categoria& c, int 
         ++j;
         it.Avanzar();
     }
-    return it.SiguienteLink();
+    Link link = it.SiguienteLink();
+    return link;
 }
 
 const Categoria& Driver::obtenerCategoriaIesimoLinkOrdenadoPorAccesos(const Categoria& c, int i)

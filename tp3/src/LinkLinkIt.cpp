@@ -79,7 +79,6 @@ Nat LinkLinkIt::InfoLink::puntajeDelLink(Fecha f) const {
         i--;
         res += accesos[i];
 	}
-
 	return res;
 }
 
@@ -98,8 +97,8 @@ LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& 
     while(it.HaySiguiente()) {
         f = max(it.Siguiente()->ultAcceso, f);
         it.Avanzar();
-    }
 
+    }
     it = lista.CrearIt();
     bool estaOrdenada = true;
     Nat ultPuntaje = it.Siguiente()->puntajeDelLink(f);
@@ -129,7 +128,7 @@ LinkLinkIt::IteradorLinks LinkLinkIt::linksOrdenadosPorAccesos(const Categoria& 
     return IteradorLinks(listaOrdenada, f);
 }
 
-LinkLinkIt::IteradorLinks::IteradorLinks(Lista<InfoLink*> ls, Fecha f) {
+LinkLinkIt::IteradorLinks::IteradorLinks(Lista<InfoLink*> ls, Fecha f) {printf("fecha: %d ",f);
     _it = ls.CrearIt();
     _ultAcceso = f;
 }
@@ -148,7 +147,11 @@ Nat LinkLinkIt::IteradorLinks::SiguienteAccesosRecientes() const {
 }
 
 bool LinkLinkIt::IteradorLinks::HaySiguiente() const {
-    return _it.HaySiguiente() && _it.Siguiente()->puntajeDelLink(_ultAcceso) > 0;
+    if (_it.HaySiguiente())
+        return _it.Siguiente()->puntajeDelLink(_ultAcceso) > 0;
+
+    else
+        return false;
 }
 
 void LinkLinkIt::IteradorLinks::Avanzar() {

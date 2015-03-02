@@ -1,4 +1,4 @@
-TP1 - Algoritmos y Estructuras de Datos II
+TPs - Algoritmos y Estructuras de Datos II
 ========
 
 2° Cuatrimestre 2012
